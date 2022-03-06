@@ -1,0 +1,77 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.errorTransition {
+  animation-name: drop-in;
+  animation-duration: 0.5s;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: red;
+  height: 3rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  /* @apply absolute top-0 bg-red-500 h-10 w-full font-bold flex items-center justify-center text-white */
+}
+
+.errorTransition-exit {
+  animation-name: drop-in;
+  animation-duration: 0.5s;
+  animation-direction: reverse;
+}
+
+@keyframes drop-in {
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  100% {
+    opacity: 1;
+    height:3rem;
+    /* transition: height 100ms; */
+  }
+}
+
+#navbar {
+  min-width: 4rem;
+}
