@@ -1,25 +1,26 @@
-import React from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import testAvatar from '../assets/logo192.png'
 import '../App.css'
-import axios from 'axios'
+import { auth } from '../firebase'
+import { signOut } from 'firebase/auth'
 
-class Navbar extends React.Component<any, any> {
-    constructor(props: any) {
-        super(props)
-        this.state = {
-            logout: false
+function Navbar() {
+    const navigate = useNavigate()
+    const [error, setError] = useState('')
+
+    async function handleLogout() :Promise<any> {        
+        try {
+            const response = await signOut(auth)
+            navigate('/')
+        } catch(err) {
+            setError('Ooops... Something went wrong, please try again later')
         }
     }
 
-    render(): React.ReactNode {
 
-        if (this.state.logout) {
-            return <Navigate to='/' />
-        }
-
-        return (
-            <div id='navbar' className='flex-col pt-2 pb-2 bg-green-500 items-center flex z-0'>
+    return (
+        <div id='navbar' className='flex-col pt-2 pb-2 bg-green-500 items-center flex z-0'>
 
                 <div className='w-full flex items-center justify-center pt-4'>
                     <img className='h-6 w-6 rounded-full' src={testAvatar} alt="user-avatar" />
@@ -56,14 +57,13 @@ class Navbar extends React.Component<any, any> {
 
 
                 <div className='flex flex-col mt-auto pb-4 cursor-pointer transform transition ease-in-out 150 hover:text-white w-full items-center justify-center gap-7'>
-                    <svg onClick={() => this.setState({ logout: true })} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {error ? <p className='bg-red-500 absolute left-12 rounded-xl pl-2 pr-2 p-1 text-white font-bold text-center w-full'>{error}</p> : ''}
+                    <svg onClick={handleLogout}  xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                     </svg>
                 </div>
 
             </div>
-        )
-    }
+    )
 }
-
 export default Navbar

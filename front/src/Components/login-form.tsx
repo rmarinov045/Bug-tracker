@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { RootStateOrAny, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../utils/auth'
 import ErrorField from './error'
@@ -10,6 +11,7 @@ function LoginForm() {
     const [error, setError] = useState('')
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     async function handleLogin(email: string, password: string): Promise<any> {
         const response = await login(email, password) // can be user or error
@@ -17,6 +19,7 @@ function LoginForm() {
         if (response.errorCode) {
             return setError('Incorrect username or password')
         } else {
+            dispatch((state :RootStateOrAny) => state.auth === true)    // update state that user is logged in
             navigate('admin')
             return
         }

@@ -4,7 +4,7 @@ import { createSlice, Slice } from '@reduxjs/toolkit'
 
 export const userSlice :Slice = createSlice({
     name: 'user',
-    initialState: { value: { email: '', firstName: '', lastName: '', position: '', company: '' } },
+    initialState: { auth: false, value: { email: '', firstName: '', lastName: '', position: '', company: '' } },
     reducers: {
         updateUserState: (state, action) => {
             state.value = action.payload // updates state to data passed as payload of the action
@@ -14,10 +14,13 @@ export const userSlice :Slice = createSlice({
         },
         register: (state, action) => {
             state.value = action.payload    // passed an object of with above interface and sets it in the state
+        },
+        authenticate: (state, action) => {
+            state.auth = action.payload
         }
     }
 })
 
-export const { updateUserState, login, register } = userSlice.actions
+export const { updateUserState, login, register, authenticate } = userSlice.actions
 
 export default userSlice.reducer

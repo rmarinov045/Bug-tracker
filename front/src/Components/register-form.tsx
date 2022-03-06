@@ -4,13 +4,17 @@ import ErrorField from './error'
 import { register } from '../features/userReducer'
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '../utils/auth'
+import axios from 'axios'
+import { updateUser }  from '../utils//auth'
+import { auth } from '../firebase'
 
 export interface userData {
     firstName: string,
     lastName: string,
     company: string,
     position: string,
-    email: string
+    email: string,
+    userId?: string
 }
 
 function RegisterForm() {
@@ -33,16 +37,41 @@ function RegisterForm() {
 
     async function handleSubmit(e :any) :Promise<any> {     // check type here
         e.preventDefault()
-        const user = { firstName, lastName, company, position, email }
-        const response = await registerUser(email, password)
-        
-        if(response.errorMessage) {
-            return setError(response.errorMessage)
-        } else {
+
+        if(password.length < 6) {
+            return setError('Password should be at least 6 symbols')
+        }
+
+        if (password !== confirmPass) {
+            return setError('Passwords do not match!')
+        }
+
+        if(!email.includes('@')) {
+            return setError('Please enter a valid email!')
+        }
+
+        try {
+            const response = await registerUser(email, password)
+            // response.uid
+
+            const updateUserName = await updateUser(auth.currentUser, firstName) // update current logged in User's name
+
+            const userId = response.uid
+
+            const user = { firstName, lastName, company, position, email, userId }
+            
+            // post to Firebase DB
+            const dbRes = await axios.post('https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json', JSON.stringify(user))
+            
             updateState(user)
             navigate('/register/confirm-email')
             return
+        } catch(err :any) {
+            if(err.message.includes('email-already-in-use'))
+            return setError('Email is already in use!')
         }
+        
+        
     }
 
     return (
