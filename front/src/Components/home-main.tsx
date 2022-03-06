@@ -3,7 +3,7 @@ import { Link, Navigate } from 'react-router-dom'
 import Navbar from '../Components/navbar'
 import axios from 'axios'
 
-// Rewrite with function component
+// Rewrite with function component and make sure to delelte Firebase localstore upon logout
 
 class HomeMain extends React.Component<any, any> {
     constructor(props: any) {

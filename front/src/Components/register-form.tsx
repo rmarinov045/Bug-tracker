@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux'
 import ErrorField from './error'
 import { register } from '../features/userReducer'
 import { useNavigate } from 'react-router-dom'
+import { registerUser } from '../utils/auth'
 
-interface userData {
+export interface userData {
     firstName: string,
     lastName: string,
     company: string,
@@ -20,6 +21,7 @@ function RegisterForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
+    const [error, setError] = useState('')
 
     const dispatch = useDispatch()
 
@@ -29,21 +31,22 @@ function RegisterForm() {
         dispatch(register(userData))
     }
 
-    function handleSubmit(e :any) {     // check type here
+    async function handleSubmit(e :any) :Promise<any> {     // check type here
         e.preventDefault()
         const user = { firstName, lastName, company, position, email }
-        updateState(user)
-
-        navigate('/register/confirm-email')
-
-        // add register to firebase here => need to create auth module handling the actions
+        const response = await registerUser(email, password)
         
+        if(response.errorMessage) {
+            return setError(response.errorMessage)
+        } else {
+            updateState(user)
+            navigate('/register/confirm-email')
+            return
+        }
     }
 
     return (
         <div className='h-screen w-full flex justify-center lg:items-center items-start pt-10 bg-gradient-to-br from-teal-200 via-teal-100 to-white'>
-
-            {ErrorField}
 
             <div className='flex flex-col md:w-2/3 lg:w-1/3 lg:min-w-fit bg-white rounded-xl shadow-xl p-3'>
 
@@ -51,8 +54,10 @@ function RegisterForm() {
                     <h1 className='lg:text-4xl text-3xl font-bold break-words'>Sign up to /placeholder/</h1>
                 </div>
 
+                {error ? <ErrorField errorMessage={error || ''} /> : ''}
+
                 <div className='mt-4'>
-                    <form action="" className='flex flex-col gap-4' onSubmit={handleSubmit}>
+                    <form action="" className='flex flex-col gap-4' onSubmit={(e) => handleSubmit(e)}>
                         <label htmlFor="firstName">First Name<span className='text-red-400 pl-1'>*</span></label>
                         <input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstName" className='pl-2 p-1 pr-2 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
