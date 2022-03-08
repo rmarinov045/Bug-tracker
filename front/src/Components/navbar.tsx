@@ -20,7 +20,7 @@ function Navbar() {
 
 
     return (
-        <div id='navbar' className='flex-col pt-2 pb-2 bg-green-500 items-center flex z-0'>
+        <div id='navbar' className='flex-col pt-2 pb-2 bg-green-500 items-center flex z-0 filter'>
 
                 <div className='w-full flex items-center justify-center pt-4'>
                     <img className='h-6 w-6 rounded-full' src={testAvatar} alt="user-avatar" />

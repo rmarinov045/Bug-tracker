@@ -23,9 +23,9 @@ export const registerUser = async function (email: string, password: string): Pr
         const [errorCode, errorMessage]: string[] = [err.code, err.message]
         return { errorCode, errorMessage }
     }
-
 }
 
+// handles updating user in Firebase authentication
 export const updateUser = async function (user: any, name: string) {
     try {
         const response = await updateProfile(user, {

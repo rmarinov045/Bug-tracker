@@ -7,6 +7,7 @@ import { registerUser } from '../utils/auth'
 import axios from 'axios'
 import { updateUser }  from '../utils//auth'
 import { auth } from '../firebase'
+import { postUser } from '../utils/api'
 
 export interface userData {
     firstName: string,
@@ -52,7 +53,7 @@ function RegisterForm() {
 
         try {
             const response = await registerUser(email, password)
-            // response.uid
+            // response.uid => user ID from Firebase ID 
 
             const updateUserName = await updateUser(auth.currentUser, firstName) // update current logged in User's name
 
@@ -61,7 +62,11 @@ function RegisterForm() {
             const user = { firstName, lastName, company, position, email, userId }
             
             // post to Firebase DB
-            const dbRes = await axios.post('https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json', JSON.stringify(user))
+            const dbRes = postUser(user)
+
+            if (!dbRes) {
+                setError('Failed to register. Please try again.')
+            } 
             
             updateState(user)
             navigate('/register/confirm-email')
