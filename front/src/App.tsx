@@ -8,12 +8,16 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import userReducer from './features/userReducer'
+import taskReducer from './features/taskReducer';
+import tasksReducer from './features/tasksReducer';
 
 
 // configure redux store
 const store = configureStore({
     reducer: {
-      user: userReducer
+      user: userReducer,
+      task: taskReducer,
+      tasks: tasksReducer
     }
 })
 // added router and store

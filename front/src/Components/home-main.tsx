@@ -1,37 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { RootStateOrAny, useSelector } from 'react-redux'
 import AddTask from './add-task'
 import Navbar from '../Components/navbar'
 import '../index.css'
 import { auth } from '../firebase'
-import { getAllTasks } from '../utils/api'
-import { taskData } from '../utils/api'
+import TasksContainer from './tasks-container'
 
 // create tasks container component and get tasks there, make sure to generate IDs for every task to use as key 
 
 function HomeMain() {
     const navigate = useNavigate()
-    const [tasks, setTasks] = useState<taskData[]>([])
     const [addTaskFieldOpened, setAddTaskFieldOpened] = useState(false)
+    const [currentUserName, setCurrentUserName] = useState('')
     // const user = useSelector((state :RootStateOrAny) => state.user.value)       // post data to DB upon register and then
                                                                                    // make get requests every time 
-    useEffect(() => {
-        async function getTasks() :Promise<any> {
-            const tasksResponse = await getAllTasks()
-            if (tasksResponse.data) {
-                setTasks(() => Object.values(tasksResponse.data))
-            }
-        }  
-        getTasks()
-        // set tasks state
-    }, [tasks])
-
     function toggleAddTaskMenu() {
         setAddTaskFieldOpened(!addTaskFieldOpened)
     }
 
-    const currentUserName :string | null | undefined = auth.currentUser?.displayName // gets current user name from firebase current user    
+    useEffect(() => {
+        const currentUserName :any = auth.currentUser?.displayName
+        setCurrentUserName(currentUserName)
+     }, []) // gets current user name from firebase current user    
+     
                                                                                     // Add separate page for add task feature
     // remove add task menu on outside click
     return (
@@ -52,12 +43,13 @@ function HomeMain() {
                         </svg>
                     </div>
 
-                    {tasks.length ? tasks.map((task :any) => <li key={task.id}>{task.taskName}</li>) : 'test'}
+                    {addTaskFieldOpened ? <AddTask /> : ''}
 
+                <TasksContainer />
+                    
                 </div>
             </div>
 
-            {addTaskFieldOpened ? <AddTask visible={ toggleAddTaskMenu } /> : ''}
 
         </div>
 

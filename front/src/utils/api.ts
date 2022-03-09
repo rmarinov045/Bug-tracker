@@ -6,6 +6,7 @@ export interface taskData {
     taskType: string,
     taskPriority: string,
     taskAuthor: string,
+    taskDescription: string
     id: string
 }
 

@@ -17,11 +17,12 @@ function AddTask(props :any) {
     const [taskPriority, setTaskPriority] = useState('')
     const [taskName, setTaskName] = useState('')
     const [taskAuthor, setTaskAuthor] = useState('')
+    const [taskDescription, setTaskDescription] = useState('')
     const [error, setError] = useState('')
 
     async function handleSubmit(e :any) :Promise<any> {
         e.preventDefault()
-        const data = { taskName, taskType, taskPriority, taskAuthor, id: generateTaskId() }
+        const data = { taskName, taskType, taskPriority, taskAuthor, taskDescription, id: generateTaskId() }
         const createResponse = await createTask(data)
 
         if(!createResponse) {
@@ -32,8 +33,8 @@ function AddTask(props :any) {
     // add keys to list items
         return (
         
-            <div className='absolute w-screen top-20 left-1/2 transform -translate-x-1/2 z-10'>
-                <div className='w-4/5 bg-white font-bold m-auto rounded-xl shadow-2xl min-h-fit p-2'>
+            <div className='absolute w-screen top-32 left-1/2 transform -translate-x-1/2 z-10'>
+                <div className='w-4/5 bg-white font-bold m-auto rounded-xl shadow-2xl min-h-fit p-2 border-2 border-green-500'>
                     <h1 className='text-3xl text-center font-bold'>Create a new issue..</h1>
                     <form onSubmit={handleSubmit} className='flex flex-col p-2 gap-2'>
                         <label htmlFor="issueName" className=''>Issue name</label>
@@ -77,6 +78,9 @@ function AddTask(props :any) {
     
                         <label htmlFor="issueName" className=''>Author</label>
                         <input onChange={(e) => setTaskAuthor(e.target.value)} className='transform transition ease-in-out 150 border-2 border-black pr-2 pl-2 p-1 rounded-xl focus:outline-none focus:border-green-500' type="text" name="issueName" />
+                        
+                        <label htmlFor="issueDescription" className=''>Description</label>
+                        <textarea onChange={(e) => setTaskDescription(e.target.value)} className='transform transition ease-in-out 150 border-2 border-black pr-2 pl-2 p-1 rounded-xl focus:outline-none focus:border-green-500' name="issueDescription"></textarea>
     
     
                         <button type='submit' className='mt-2 bg-black text-white font-bold rounded-xl pl-2 pr-2 p-1 shadow-xl w-1/2 self-center transition ease-in-out 150 hover:text-green-500 '>Create</button>
