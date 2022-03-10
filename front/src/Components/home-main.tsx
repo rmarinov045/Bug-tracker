@@ -6,24 +6,27 @@ import '../index.css'
 import { auth } from '../firebase'
 import TasksContainer from './tasks-container'
 
-// create tasks container component and get tasks there, make sure to generate IDs for every task to use as key 
-
 function HomeMain() {
     const navigate = useNavigate()
     const [addTaskFieldOpened, setAddTaskFieldOpened] = useState(false)
     const [currentUserName, setCurrentUserName] = useState('')
-    // const user = useSelector((state :RootStateOrAny) => state.user.value)       // post data to DB upon register and then
-                                                                                   // make get requests every time 
+
+    // const user = useSelector((state :RootStateOrAny) => state.user.value)       
     function toggleAddTaskMenu() {
         setAddTaskFieldOpened(!addTaskFieldOpened)
-    }
+    }   
 
     useEffect(() => {
-        const currentUserName :any = auth.currentUser?.displayName
-        setCurrentUserName(currentUserName)
-     }, []) // gets current user name from firebase current user    
+        
+        auth.onAuthStateChanged((user) => {     // needs to be done since firebase runs async check to server to see if user is logged
+            if (user) {
+                setCurrentUserName(user.displayName || '')
+            }
+        })
+
+     }, [currentUserName])   
      
-                                                                                    // Add separate page for add task feature
+    // Add separate page for add task feature
     // remove add task menu on outside click
     return (
 
@@ -43,7 +46,7 @@ function HomeMain() {
                         </svg>
                     </div>
 
-                    {addTaskFieldOpened ? <AddTask /> : ''}
+                    {addTaskFieldOpened ? <AddTask visible={toggleAddTaskMenu} /> : ''}
 
                 <TasksContainer />
                     

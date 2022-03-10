@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import { createTask } from '../utils/api' 
 import { useNavigate } from 'react-router-dom'
+import { RootStateOrAny, useDispatch } from 'react-redux'
+
 import ErrorField from './error'
+import { createTask } from '../utils/api' 
 import { generateTaskId } from '../utils/api'
+import { updateTasks } from '../features/tasksReducer'
 
 export const taskTypes: string[] = ['Major Bug', 'Minor Bug', 'Visual Bug', 'test1', 'test2']
 export const taskPriorities :string[] = ['Urgent', 'High', 'Medium', 'Low']
@@ -10,6 +13,7 @@ export const taskPriorities :string[] = ['Urgent', 'High', 'Medium', 'Low']
 function AddTask(props :any) {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     
     const { visible } = props
 
@@ -28,6 +32,7 @@ function AddTask(props :any) {
         if(!createResponse) {
             setError('Failed to create a task. Please try again with valid input')
         }
+        dispatch((state :RootStateOrAny) => updateTasks(data))  // not working
         visible()
     }   
     // add keys to list items

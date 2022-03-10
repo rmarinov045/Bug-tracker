@@ -19,8 +19,8 @@ function LoginForm() {
         if (response.errorCode) {
             return setError('Incorrect username or password')
         } else {
-            dispatch((state :RootStateOrAny) => state.auth === true)    // update state that user is logged in
-            navigate('admin')
+            dispatch((state :RootStateOrAny) => state.auth = true)    // update state that user is logged in
+            navigate('admin')   // update user state with data from DB
             return
         }
 

@@ -51,3 +51,18 @@ export async function getAllTasks() :Promise<any> {
 export function generateTaskId() {
     return (Date.now()).toString() // placeholder ID generation
 }
+
+// delete task
+
+export async function deleteTask(id :string) {
+    const currentTask = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?orderBy="id"&equalTo="${id}"`)
+    const currentTaskID = Object.keys(currentTask.data)[0]
+      
+    const response = axios.delete(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${currentTaskID}.json`)
+
+    if ((await response).status === 200) {
+        return {status: 'ok', message: 'Task Deleted'}
+    } else {
+        return {status: 'failed', message: 'Failed to delete task, please try again later'}
+    }
+}

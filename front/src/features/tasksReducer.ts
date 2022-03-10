@@ -7,10 +7,13 @@ export const tasksSlice :Slice = createSlice({
     reducers: {
         updateTasks: (state, action) => {
             state.value.push(action.payload)
+        },
+        deleteTask: (state, action) => {
+            state.value = state.value.map((task :any) => task.id !== action.payload)
         }
     }
 })
 
 export default tasksSlice.reducer
 
-export const { updateTasks } = tasksSlice.actions
+export const { updateTasks, deleteTask } = tasksSlice.actions
