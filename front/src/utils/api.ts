@@ -7,7 +7,8 @@ export interface taskData {
     taskPriority: string,
     taskAuthor: string,
     taskDescription: string
-    id: string
+    id: string,
+    currentUserId?: string
 }
 
 const postTaskURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'
@@ -64,5 +65,20 @@ export async function deleteTask(id :string) {
         return {status: 'ok', message: 'Task Deleted'}
     } else {
         return {status: 'failed', message: 'Failed to delete task, please try again later'}
+    }
+}
+
+// move task to completed in DB 
+
+const completeTaskURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/completed.json'
+
+export const completeTask = async (taskData :taskData) => {
+    const data = JSON.stringify(taskData)
+    
+    try {
+        const response = await axios.post(completeTaskURL, data)  
+        return true
+    } catch (err :any) {
+        return err.message
     }
 }

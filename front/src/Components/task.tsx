@@ -1,14 +1,13 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { RootStateOrAny, useDispatch } from 'react-redux'
 
-import { taskData, deleteTask } from '../utils/api'
+import { taskData, deleteTask, completeTask } from '../utils/api'
 import ErrorField from '../Components/error'
+import { auth } from '../firebase'
 
 function Task(props: taskData, update :Function) {
   const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id } = props
 
-  const [actionsOpened, setActionsOpened] = useState(false)
   const [error, setError] = useState('')
   const dispatch = useDispatch()
 
@@ -25,6 +24,22 @@ function Task(props: taskData, update :Function) {
     }
       dispatch((state :RootStateOrAny) => deleteTask(id)) // not working
   
+  }
+
+  async function handleComplete() {
+    const currentUserId = auth.currentUser?.uid
+
+    const response = await deleteTask(id)
+
+    const updateDBResponse = await completeTask({ taskName, taskType, taskPriority, taskDescription, taskAuthor, id, currentUserId })
+
+    if (updateDBResponse.status !== 'ok') {
+      setError(updateDBResponse.message)
+      setTimeout(() => {
+        setError('')
+      }, 2000)
+    }
+    
   }
 
   // fix styling for large screens
@@ -51,7 +66,7 @@ function Task(props: taskData, update :Function) {
         <div className='flex items-center justify-between'>
           <p className='font-bold text-sm'>Created by: {taskAuthor}</p>
           <div className='flex self-end gap-3'>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <svg onClick={() => handleComplete()} xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
