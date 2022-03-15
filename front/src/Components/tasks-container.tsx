@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector ,useDispatch, RootStateOrAny } from 'react-redux'
 
-import { updateTasks } from '../features/tasksReducer'
+import { updateAllTasks } from '../features/tasksReducer'
 import { taskData , getAllTasks } from '../utils/api'
 import Task from './task'
 
 function TasksContainer() {
 
     const [tasks, setTasks] = useState<taskData[]>([])
-    const tasksList = useSelector((state :RootStateOrAny) => state.tasks.value) // not working
+    const tasksList = useSelector((state :RootStateOrAny) => state.tasks.tasks) // not working
     
     const dispatch = useDispatch()
 
@@ -18,17 +18,15 @@ function TasksContainer() {
             
             if (tasksResponse.data && Object.values(tasksResponse.data).length > tasks.length) {
                 setTasks(() => Object.values(tasksResponse.data))
+                
+                dispatch(updateAllTasks(tasks))
+                
             }
         }  
         getTasks()
-        // set tasks state
     }, [tasksList])
 
-    
-
-    if (tasks) {
-      dispatch((state :RootStateOrAny) => tasks.forEach((task :any) => updateTasks(task)))
-    }
+    // transfer API call to redux async function
 
   return (
     <div className='mt-4 w-2/3 flex flex-col gap-4'>
