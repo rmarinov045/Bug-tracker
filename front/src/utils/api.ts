@@ -23,6 +23,18 @@ export async function postUser(user :userData) {
     }
 }
 
+// get user from DB
+
+export async function getUser(email :string) {
+    try {
+        const response = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?orderBy="email"&equalTo="${email}"`)
+        
+        return Object.values(response.data)
+    } catch(err) {
+        return false
+    }
+}
+
 // post task to DB
 
 export const createTask = async (taskData :taskData) => {

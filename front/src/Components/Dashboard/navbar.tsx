@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+
 import testAvatar from '../../assets/logo192.png'
 import '../../App.css'
+
+import { authenticate } from '../../features/userReducer'
 import { auth } from '../../firebase'
 import { signOut } from 'firebase/auth'
+import { useDispatch } from 'react-redux'
 
 function Navbar() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [error, setError] = useState('')
 
     async function handleLogout() :Promise<any> {        
         try {
             const response = await signOut(auth)
+            dispatch(authenticate(false))
             navigate('/')
         } catch(err) {
             setError('Ooops... Something went wrong, please try again later')

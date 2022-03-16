@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { RootStateOrAny, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { authenticate, getUserByEmail } from '../../features/userReducer'
+
 import { login } from '../../utils/auth'
 import ErrorField from '../Utils/error'
 
@@ -19,7 +21,10 @@ function LoginForm() {
         if (response.errorCode) {
             return setError('Incorrect username or password')
         } else {
-            dispatch((state :RootStateOrAny) => state.auth = true)    // update state that user is logged in
+            dispatch(getUserByEmail(email))
+
+            dispatch(authenticate(true))
+            
             navigate('admin')   // update user state with data from DB
             return
         }
