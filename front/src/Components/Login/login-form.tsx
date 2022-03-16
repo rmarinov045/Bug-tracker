@@ -1,3 +1,4 @@
+import { getAuth, onAuthStateChanged, reload } from 'firebase/auth'
 import React, { useState } from 'react'
 import { RootStateOrAny, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -25,7 +26,15 @@ function LoginForm() {
 
             dispatch(authenticate(true))
             
-            navigate('admin')   // update user state with data from DB
+            const auth = getAuth()  // Reloads user into local storage => may need to be in another function module
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    reload(user)
+                }
+            })
+
+            navigate('admin') 
             return
         }
 

@@ -6,10 +6,10 @@ import { getUser } from '../utils/api'
 export const getUserByEmail = createAsyncThunk(
     'users/getUserById',
     async (email :string, thunkAPI) => {
-        const response = await getUser(email)
-
+        const response :any = await getUser(email)
+       
         if(response) {
-            return response
+            return response[0]
         } else {
             return 'Error'
         }
