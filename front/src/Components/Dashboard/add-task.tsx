@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { RootStateOrAny, useDispatch } from 'react-redux'
 
-import ErrorField from './error'
-import { createTask } from '../utils/api' 
-import { generateTaskId } from '../utils/api'
-import { addTask } from '../features/tasksReducer'
+import ErrorField from '../Utils/error'
+import { createTask } from '../../utils/api' 
+import { generateTaskId } from '../../utils/util'
+import { addTask } from '../../features/tasksReducer'
 
 interface taskSettings {
     value: string,
@@ -30,8 +30,8 @@ function AddTask(props :any) {
     const [error, setError] = useState('')
 
     async function handleSubmit(e :any) :Promise<any> {
-        e.preventDefault()
-        const data = { taskName, taskType, taskPriority, taskAuthor, taskDescription, id: generateTaskId() }
+        e.preventDefault()      
+        const data = { taskName, taskType, taskPriority, taskAuthor, taskDescription, id: generateTaskId() }    // add created on for sorting
         const createResponse = await createTask(data)
 
         if(!createResponse) {

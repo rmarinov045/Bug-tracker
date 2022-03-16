@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { RootStateOrAny, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { login } from '../utils/auth'
-import ErrorField from './error'
+import { login } from '../../utils/auth'
+import ErrorField from '../Utils/error'
 
 function LoginForm() {
 

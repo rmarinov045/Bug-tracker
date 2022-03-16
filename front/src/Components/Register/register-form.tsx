@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import ErrorField from './error'
-import { register } from '../features/userReducer'
+import ErrorField from '../Utils/error'
+import { register } from '../../features/userReducer'
 import { useNavigate } from 'react-router-dom'
-import { registerUser } from '../utils/auth'
-import { updateUser }  from '../utils//auth'
-import { auth } from '../firebase'
-import { postUser } from '../utils/api'
+import { registerUser } from '../../utils/auth'
+import { updateUser }  from '../../utils/auth'
+import { auth } from '../../firebase'
+import { postUser } from '../../utils/api'
 
 export interface userData {
     firstName: string,

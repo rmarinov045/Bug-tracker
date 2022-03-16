@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import LoginForm from '../src/Components/login-form'
-import RegisterForm from '../src/Components/register-form'
-import ConfirmEmail from '../src/Components/confirm-email'
-import HomeMain from '../src/Components/home-main'
+import LoginForm from './Components/Login/login-form'
+import RegisterForm from './Components/Register/register-form'
+import ConfirmEmail from './Components/Register/confirm-email'
+import HomeMain from './Components/Dashboard/home-main'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'

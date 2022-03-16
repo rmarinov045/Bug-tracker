@@ -1,5 +1,5 @@
 import axios from "axios"
-import { userData } from '../Components/register-form'
+import { userData } from '../Components/Register/register-form'
 
 export interface taskData {
     taskName: string,
@@ -46,11 +46,6 @@ export async function getAllTasks() :Promise<any> {
         return null
     }
     return response
-}
-
-// generates IDs for DB
-export function generateTaskId() {
-    return (Date.now()).toString() // placeholder ID generation
 }
 
 // delete task

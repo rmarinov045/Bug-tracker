@@ -1,4 +1,32 @@
-import { Slice, createSlice } from '@reduxjs/toolkit'
+import { Slice, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { deleteTask } from '../utils/api'
+
+const priorityFilters :any = {
+    'Urgent': 3,
+    'High': 2,
+    'Medium': 1,
+    'Low': 0
+}
+
+const typeFilters :any = {
+    'Major Bug': 2,
+    'Minor bug': 1,
+    'Visual bug': 0
+}
+
+export const deleteTaskById = createAsyncThunk(
+    'tasks/deleteById',
+    async (taskId :string, thunkAPI) => {
+        const response = await deleteTask(taskId)
+
+        if (response.status === 'failed') {
+            return response.message
+        } else {
+            return taskId
+        }
+    }
+)
+
 
 // all tasks slice
 export const tasksSlice :Slice = createSlice({
@@ -8,15 +36,33 @@ export const tasksSlice :Slice = createSlice({
         addTask: (state, action) :any=> {
             state.tasks.push(action.payload)
         },
-        deleteTask: (state, action) => {
-            state.tasks = state.tasks.map((task :any) => task.id !== action.payload)
+        // deleteTask: (state, action) => {
+        //     state.tasks = state.tasks.map((task :any) => task.id !== action.payload)
+        // },
+        updateAllTasks: (state, action) :any => {            
+            state.tasks = [...action.payload]
         },
-        updateAllTasks: (state, action) :any => {
-            state.tasks = [...state.tasks, ...action.payload]
+        filterTasks: (state, action) :any => {
+            switch (action.payload) {
+                case 'Priority':
+                    state.tasks = [...state.tasks.sort((a :any, b :any) => priorityFilters[b.taskPriority] - priorityFilters[a.taskPriority])]
+                    break
+                case 'Type':
+                    state.tasks = [...state.tasks.sort((a :any, b :any)=> typeFilters[b.taskType] - typeFilters[a.taskType])]
+                    break
+                default: 
+                    state.tasks = [...state.tasks.sort((a :any, b :any) => a.id - b.id)]
+                    break
+            }
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(deleteTaskById.fulfilled, (state, action) => {            
+            state.tasks = [...state.tasks.filter((task :any) => task.id !== action.payload)]
+        })
     }
 })
 
 export default tasksSlice.reducer
 
-export const { addTask, deleteTask, updateAllTasks } = tasksSlice.actions
+export const { addTask, updateAllTasks, filterTasks, } = tasksSlice.actions
