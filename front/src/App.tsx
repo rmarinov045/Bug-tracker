@@ -36,7 +36,7 @@ function App() {
     <Routes>
     <Route path='/' element={<LoginForm />} />
     <Route path='/register' element={<RegisterForm />} />
-    <Route path='/register/confirm-email' element={<ConfirmEmail />} />
+    <Route path='/register/*' element={<ConfirmEmail />} />
     <Route path='*' element={<Navigate to='/' />} />
     <Route path='/admin' element={<HomeMain />} />
     </Routes>

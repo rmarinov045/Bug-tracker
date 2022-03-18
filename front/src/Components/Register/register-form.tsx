@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import ErrorField from '../Utils/error'
-import { register } from '../../features/userReducer'
 import { useNavigate } from 'react-router-dom'
-import { registerUser } from '../../utils/auth'
-import { updateUser }  from '../../utils/auth'
+
 import { auth } from '../../firebase'
+
+import { register } from '../../features/userReducer'
+import ErrorField from '../Utils/error'
+import { registerUser } from '../../utils/auth'
+import { updateUser } from '../../utils/auth'
 import { postUser } from '../../utils/api'
 
 export interface userData {
@@ -26,27 +28,33 @@ function RegisterForm() {
     const [password, setPassword] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
     const [error, setError] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
-    function updateState(userData :userData) {
+    function updateState(userData: userData) {
         dispatch(register(userData))
     }
 
-    async function handleSubmit(e :any) :Promise<any> {     // check type here
+    async function handleSubmit(e: any): Promise<any> {     // check type here
         e.preventDefault()
+        setError('')
+        setIsLoading(true)
 
-        if(password.length < 6) {
+        if (password.length < 6) {
+            setIsLoading(false)
             return setError('Password should be at least 6 symbols')
         }
 
         if (password !== confirmPass) {
+            setIsLoading(false)
             return setError('Passwords do not match!')
         }
 
-        if(!email.includes('@')) {
+        if (!email.includes('@')) {
+            setIsLoading(false)
             return setError('Please enter a valid email!')
         }
 
@@ -59,23 +67,28 @@ function RegisterForm() {
             const userId = response.uid
 
             const user = { firstName, lastName, company, position, email, userId }
-            
+
             // post to Firebase DB
             const dbRes = postUser(user)
 
             if (!dbRes) {
                 setError('Failed to register. Please try again.')
-            } 
-            
-            updateState(user)
+            }
+
+            // updateState(user) => should not be needed here
+
+            setIsLoading(false)
+
             navigate('/register/confirm-email')
+
             return
-        } catch(err :any) {
-            if(err.message.includes('email-already-in-use'))
-            return setError('Email is already in use!')
+        } catch (err: any) {
+            setIsLoading(false)
+            if (err.message.includes('email-already-in-use'))
+                return setError('Email is already in use!')
         }
-        
-        
+
+
     }
 
     return (
@@ -112,7 +125,38 @@ function RegisterForm() {
                         <label htmlFor="confirm-password">Confirm Password<span className='text-red-400 pl-1'>*</span></label>
                         <input onChange={(e) => setConfirmPass(e.target.value)} type="password" name="confirm-password" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
-                        <button type='submit' className='bg-green-500 mt-4 w-1/2 rounded-xl m-auto p-2 text-white font-bold filter hover:brightness-90 transition ease-in-out 150'>Register</button>
+                        <button type='submit' className='bg-green-500 mt-4 w-1/2 rounded-xl m-auto p-2 text-white font-bold filter hover:brightness-90 transition ease-in-out 150'>
+                            {isLoading ? <svg version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg" className='h-6 w-6 m-auto'
+                                viewBox="0 0 100 100" enableBackground="new 0 0 0 0">
+                                <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">
+                                    <animateTransform
+                                        attributeName="transform"
+                                        dur="1s"
+                                        type="translate"
+                                        values="0 15 ; 0 -15; 0 15"
+                                        repeatCount="indefinite"
+                                        begin="0.1" />
+                                </circle>
+                                <circle fill="#fff" stroke="none" cx="30" cy="50" r="6">
+                                    <animateTransform
+                                        attributeName="transform"
+                                        dur="1s"
+                                        type="translate"
+                                        values="0 10 ; 0 -10; 0 10"
+                                        repeatCount="indefinite"
+                                        begin="0.2" />
+                                </circle>
+                                <circle fill="#fff" stroke="none" cx="54" cy="50" r="6">
+                                    <animateTransform
+                                        attributeName="transform"
+                                        dur="1s"
+                                        type="translate"
+                                        values="0 5 ; 0 -5; 0 5"
+                                        repeatCount="indefinite"
+                                        begin="0.3" />
+                                </circle>
+                            </svg> : 'Register'}
+                        </button>
                     </form>
                 </div>
 
