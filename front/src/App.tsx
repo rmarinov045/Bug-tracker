@@ -15,6 +15,8 @@ import { Provider } from 'react-redux'
 import userReducer from './features/userReducer'
 import taskReducer from './features/taskReducer';
 import tasksReducer from './features/tasksReducer';
+import Completed from './Components/Completed-tasks/Completed';
+import completedTasksReducer from './features/completedTasksReducer';
 
 
 
@@ -23,7 +25,8 @@ const store = configureStore({
     reducer: {
       user: userReducer,
       task: taskReducer,
-      tasks: tasksReducer
+      tasks: tasksReducer,
+      completedTasks: completedTasksReducer
     }
 })
 
@@ -39,6 +42,7 @@ function App() {
     <Route path='/register/*' element={<ConfirmEmail />} />
     <Route path='*' element={<Navigate to='/' />} />
     <Route path='/admin' element={<HomeMain />} />
+    <Route path='/completed' element={<Completed />} />
     </Routes>
     </BrowserRouter>
     </Provider>

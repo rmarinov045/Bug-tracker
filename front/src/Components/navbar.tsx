@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import testAvatar from '../../assets/logo192.png'
-import '../../App.css'
+import testAvatar from '../assets/logo192.png'
+import '../App.css'
 
-import { authenticate } from '../../features/userReducer'
-import { auth } from '../../firebase'
+import { authenticate } from '../features/userReducer'
+import { auth } from '../firebase'
 import { signOut } from 'firebase/auth'
 import { useDispatch } from 'react-redux'
 
@@ -16,7 +16,7 @@ function Navbar() {
 
     async function handleLogout() :Promise<any> {        
         try {
-            const response = await signOut(auth)
+            await signOut(auth)
             dispatch(authenticate(false))
             navigate('/')
         } catch(err) {
@@ -48,7 +48,7 @@ function Navbar() {
                         </svg>
                     </div>
 
-                    <div className='cursor-pointer transform transition ease-in-out 150 hover:text-white w-full'>
+                    <div onClick={() => navigate('/completed')} className='cursor-pointer transform transition ease-in-out 150 hover:text-white w-full'>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 m-auto" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
                             <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />

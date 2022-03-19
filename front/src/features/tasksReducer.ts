@@ -1,5 +1,5 @@
 import { Slice, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { deleteTask } from '../utils/api'
+import { deleteTask, getAllTasks } from '../utils/api'
 
 const priorityFilters :any = {
     'Urgent': 3,
@@ -13,6 +13,19 @@ const typeFilters :any = {
     'Minor bug': 1,
     'Visual bug': 0
 }
+
+export const getTasks = createAsyncThunk(
+    'tasks/getTasks',
+   async (thunkAPI) => {
+       const response = await getAllTasks()
+        
+        if (response === null && response) {
+            throw new Error('Fail in loading tasks in tasksReducer')
+        }
+
+       return response
+   }
+)
 
 export const deleteTaskById = createAsyncThunk(
     'tasks/deleteById',
@@ -60,9 +73,12 @@ export const tasksSlice :Slice = createSlice({
         builder.addCase(deleteTaskById.fulfilled, (state, action) => {            
             state.tasks = [...state.tasks.filter((task :any) => task.id !== action.payload)]
         })
+        builder.addCase(getTasks.fulfilled, (state :any, action :any) => {
+            state.tasks = [...action.payload]
+        })
     }
 })
 
 export default tasksSlice.reducer
 
-export const { addTask, updateAllTasks, filterTasks, } = tasksSlice.actions
+export const { addTask, updateAllTasks, filterTasks} = tasksSlice.actions

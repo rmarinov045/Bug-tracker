@@ -62,7 +62,7 @@ function LoginForm() {
                 <div className="flex flex-col gap-8 w-full justify-center items-center mt-10">
                     <button onClick={() => handleLogin(email, password)} className="bg-green-500 pl-2 pr-2 pt-2 pb-2 w-1/2 text-white font-bold rounded-xl transform transition ease-in-out 150 filter hover:brightness-90" type="submit">
                         {isLoading ? <svg version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg" className='h-6 w-6 m-auto'
-                            viewBox="0 0 100 100" enable-background="new 0 0 0 0">
+                            viewBox="0 0 100 100" enableBackground="new 0 0 0 0">
                             <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">
                                 <animateTransform
                                     attributeName="transform"

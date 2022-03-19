@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
 
-import { updateAllTasks } from '../../features/tasksReducer'
-import { getAllTasks } from '../../utils/api'
+import { getTasks } from '../../features/tasksReducer'
 import Task from './task'
 import TaskLoader from '../Utils/task-loader'
 
@@ -16,23 +15,27 @@ function TasksContainer() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    async function getTasks(): Promise<any> {
-      const tasksResponse = await getAllTasks()
+    // async function getTasks(): Promise<any> {
+    //   const tasksResponse = await getAllTasks()
 
-      if (tasksResponse.data && Object.values(tasksResponse.data).length > tasks.length) {
+    //   if (tasksResponse.data && Object.values(tasksResponse.data).length > tasks.length) {
 
-        dispatch(updateAllTasks(Object.values(tasksResponse.data)))
+    //     dispatch(updateAllTasks(Object.values(tasksResponse.data)))
 
-      } else {
+    //   } else {
         
-        setTasksLoaded(true)
+    //     setTasksLoaded(true)
         
-      }
+    //   }
     
-    }
-    getTasks()
+    // }
+    // getTasks()
+    setTasksLoaded(true)
 
-  }, [tasks])
+    dispatch(getTasks())
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // transfer API call to redux async function
   

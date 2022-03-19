@@ -1,6 +1,17 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit'
 import { getUser } from '../utils/api'
 
+// Will need persisting state
+
+export interface User {
+    company: string,
+    email: string,
+    firstName: string,
+    lastName: string,
+    position: string,
+    userId: string
+}
+
 // create user slice and functionality to update state by using reducers
 
 export const getUserByEmail = createAsyncThunk(

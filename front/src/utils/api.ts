@@ -8,7 +8,7 @@ export interface taskData {
     taskAuthor: string,
     taskDescription: string
     id: string,
-    currentUserId?: string
+    completedBy?: string
 }
 
 const postTaskURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'
@@ -42,6 +42,11 @@ export const createTask = async (taskData :taskData) => {
     
     try {
         const response = await axios.post(postTaskURL, data)  
+
+        if (response.status !== 200) {
+            throw new Error()
+        }
+
         return true
     } catch (err :any) {
         return err.message
@@ -53,11 +58,12 @@ export const createTask = async (taskData :taskData) => {
 const getTasksURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'
 
 export async function getAllTasks() :Promise<any> {
-    const response = await axios.get(getTasksURL).then((res) => res)
+    const response = await axios.get(getTasksURL)
+    
     if (response.status !== 200) {
         return null
     }
-    return response
+    return Object.values(response.data)
 }
 
 // delete task
@@ -84,8 +90,25 @@ export const completeTask = async (taskData :taskData) => {
     
     try {
         const response = await axios.post(completeTaskURL, data)  
+
+        if (response.status !== 200) {
+            throw new Error()
+        }
+
         return true
     } catch (err :any) {
         return err.message
     }
+}
+
+// get completed tasks from DB 
+
+export const getAllCompletedTasks = async () => {
+    const response = await axios.get(completeTaskURL)
+
+    if (response.status !== 200) {
+        throw new Error('Could not fetch tasks.')
+    }
+
+    return Object.values(response.data)
 }
