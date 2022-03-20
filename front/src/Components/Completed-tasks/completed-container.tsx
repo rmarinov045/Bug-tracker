@@ -1,16 +1,17 @@
 import { User } from '../../features/userReducer'
 import React, { useEffect } from 'react'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
-import { getCompletedTasks } from '../../features/completedTasksReducer'
+import { getCompletedTasksByUserId } from '../../features/completedTasksReducer'
+import CompletedTask from './CompletedTask'
 
 function CompletedContainer() {
-  const currentUser: User = useSelector((state: RootStateOrAny) => state.user.value) // May need to be in parent
+  const currentUser: User = useSelector((state: RootStateOrAny) => state.user.value) // May need to be in parent, need completed tasks by current user
   const completedTasks = useSelector((state: RootStateOrAny) => state.completedTasks.completed)
-
+  
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getCompletedTasks())
+    dispatch(getCompletedTasksByUserId(currentUser.userId))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
     // make sure to style for big screens as well
@@ -34,8 +35,8 @@ function CompletedContainer() {
 
           <p className='font-bold text-center text-xs mb-2'>Issues you have resolved:</p>
           
-          <ul className='flex flex-col gap-2 items-center justify-center'>
-              <li className='w-full text-xs bg-slate-200 flex pl-2 pr-2 p-1'>Test task<span className='ml-auto'>...</span></li>
+          <ul className='flex flex-col items-center justify-center'>
+              {completedTasks.length ? completedTasks.map((task :any) => <CompletedTask task={task} key={task.id} />) : <li className='text-sm'>Nothing yet...</li>}
           </ul>
 
         </aside>

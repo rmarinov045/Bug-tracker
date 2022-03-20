@@ -1,14 +1,14 @@
 import { Slice, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getAllCompletedTasks } from "../utils/api";
+import { getAllCompletedTasksById } from "../utils/api";
 
-export const getCompletedTasks = createAsyncThunk(
-    'getCompletedTasks',
-    async (thunkAPI) => {
+export const getCompletedTasksByUserId = createAsyncThunk(
+    'getCompletedTasksByUserId',
+    async (userId :string ,thunkAPI) => {
         try {
-            const response = await getAllCompletedTasks()
+            const response = await getAllCompletedTasksById(userId)
             return response
         } catch (err :any) {
-            return err.message
+            return ''
         }
     }
 )
@@ -18,7 +18,7 @@ export const completedTasksSlice :Slice = createSlice({
     initialState: { completed: [] },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getCompletedTasks.fulfilled, (state :any, action) => {
+        builder.addCase(getCompletedTasksByUserId.fulfilled, (state :any, action) => {
             state.completed = [...action.payload]
         })
     }

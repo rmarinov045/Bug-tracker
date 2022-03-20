@@ -8,7 +8,8 @@ export interface taskData {
     taskAuthor: string,
     taskDescription: string
     id: string,
-    completedBy?: string
+    completedBy?: string,
+    completedOn?: string
 }
 
 const postTaskURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'
@@ -103,8 +104,8 @@ export const completeTask = async (taskData :taskData) => {
 
 // get completed tasks from DB 
 
-export const getAllCompletedTasks = async () => {
-    const response = await axios.get(completeTaskURL)
+export const getAllCompletedTasksById = async (userId :string) => {
+    const response = await axios.get(completeTaskURL + `?orderBy="completedBy"&equalTo="${userId}"`)
 
     if (response.status !== 200) {
         throw new Error('Could not fetch tasks.')

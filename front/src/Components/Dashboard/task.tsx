@@ -5,6 +5,7 @@ import { taskData, deleteTask, completeTask } from '../../utils/api'
 import ErrorField from '../Utils/error'
 import { auth } from '../../firebase'
 import { deleteTaskById } from '../../features/tasksReducer'
+import { generateTaskId } from '../../utils/util'
 
 function Task(props: taskData) {
   const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id } = props
@@ -26,7 +27,7 @@ function Task(props: taskData) {
   async function handleComplete() {
     const currentUserId = auth.currentUser?.uid
 
-    const updateDBResponse = await completeTask({ taskName, taskType, taskPriority, taskDescription, taskAuthor, id, 'completedBy': currentUserId })
+    const updateDBResponse = await completeTask({ taskName, taskType, taskPriority, taskDescription, taskAuthor, id, 'completedBy': currentUserId, "completedOn": generateTaskId() })
     
     const response = await deleteTask(id)
 
