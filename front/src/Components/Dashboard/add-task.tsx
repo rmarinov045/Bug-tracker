@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { RootStateOrAny, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import ErrorField from '../Utils/error'
 import { createTask } from '../../utils/api' 
@@ -17,7 +16,6 @@ export const taskPriorities :taskSettings[] = [{value: 'Urgent', id: 1}, {value:
 
 function AddTask(props :any) {
 
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     
     const { visible } = props

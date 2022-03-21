@@ -1,4 +1,4 @@
-import { Slice, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 export const taskSlice = createSlice({
     name: 'task',

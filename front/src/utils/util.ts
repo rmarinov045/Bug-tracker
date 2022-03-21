@@ -4,3 +4,9 @@ export function generateTaskId() {
 }
 
 // generates creation time => add once ID placeholder is gone
+
+// converts ms to date
+
+export const convertToDate = (milisecs :string) :string => {
+    return (new Date(Number(milisecs))).toString()
+}
