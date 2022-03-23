@@ -1,9 +1,13 @@
-import { User } from '../../features/userReducer'
 import React, { useEffect } from 'react'
+
+import { User } from '../../features/userReducer'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { getCompletedTasksByUserId } from '../../features/completedTasksReducer'
+
 import CompletedTask from './CompletedTask'
+
 import Chart from '../Utils/Chart'
+import ChartByType from '../Utils/ChartByType'
 
 function CompletedContainer() {
   const currentUser: User = useSelector((state: RootStateOrAny) => state.user.value) // May need to be in parent, need completed tasks by current user
@@ -28,10 +32,11 @@ function CompletedContainer() {
 
       </div>
 
-      <div className='flex mt-2 p-2 gap-10 items-start pl-10 flex-col-reverse'>
+      <div className='flex mt-2 p-2 gap-10 items-start pl-10 flex-row-reverse'>
 
-        <main className='w-1/2 p-2 h-64'>
-          { completedTasks.length ? <Chart tasks={completedTasks} /> : <></>}
+        <main className='w-1/2 p-2 border-2 border-slate-100 shadow-sm flex flex-col'>
+          { completedTasks.length ? <Chart tasks={completedTasks} /> : <></> }
+          { completedTasks.length ? <ChartByType tasks={completedTasks} /> : <></> }
         </main>
 
         <aside className='w-1/2 p-2 border-2 border-slate-100 shadow-sm'>
