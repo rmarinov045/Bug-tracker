@@ -12,14 +12,14 @@ import ChartByType from '../Utils/ChartByType'
 function CompletedContainer() {
   const currentUser: User = useSelector((state: RootStateOrAny) => state.user.value) // May need to be in parent, need completed tasks by current user
   const completedTasks = useSelector((state: RootStateOrAny) => state.completedTasks.completed)
-  
+
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getCompletedTasksByUserId(currentUser.userId))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-    // make sure to style for big screens as well
+  // make sure to style for big screens as well
   return (
     <div className='w-full'>
 
@@ -32,19 +32,19 @@ function CompletedContainer() {
 
       </div>
 
-      <div className='flex mt-2 p-2 gap-10 items-start pl-10 flex-row-reverse'>
+      <div className='flex mt-2 p-2 gap-10 items-start pl-10 flex-row-reverse h-5/6'>
 
-        <main className='w-1/2 p-2 border-2 border-slate-100 shadow-sm flex flex-col'>
-          { completedTasks.length ? <Chart tasks={completedTasks} /> : <></> }
-          { completedTasks.length ? <ChartByType tasks={completedTasks} /> : <></> }
-        </main>
+        {completedTasks.length > 0 ? <main className='w-1/2 p-2 border-2 border-slate-100 shadow-sm flex flex-col'>
+          {completedTasks.length ? <Chart tasks={completedTasks} /> : <></>}
+          {completedTasks.length ? <ChartByType tasks={completedTasks} /> : <></>}
+        </main> : <></>}
 
-        <aside className='w-1/2 p-2 border-2 border-slate-100 shadow-sm'>
+        <aside id='completed-task-container' className='w-1/2 p-2 border-2 border-slate-100 shadow-sm mr-auto min-h-full max-h-full overflow-y-scroll'>
 
           <p className='font-bold text-center text-xs mb-2'>Issues you have resolved:</p>
-          
+
           <ul className='flex flex-col items-center justify-center'>
-              {completedTasks.length ? completedTasks.map((task :any) => <CompletedTask task={task} key={task.id} />) : <li className='text-sm'>Nothing yet...</li>}
+            {completedTasks.length ? completedTasks.map((task: any) => <CompletedTask task={task} key={task.id} />) : <li className='text-sm'>Nothing yet...</li>}
           </ul>
 
         </aside>

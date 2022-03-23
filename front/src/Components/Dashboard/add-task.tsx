@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 
 import ErrorField from '../Utils/error'
 import { createTask } from '../../utils/api' 
@@ -17,6 +17,7 @@ export const taskPriorities :taskSettings[] = [{value: 'Urgent', id: 1}, {value:
 function AddTask(props :any) {
 
     const dispatch = useDispatch()
+    const userId = useSelector((state :RootStateOrAny) => state.user.value.userId)
     
     const { visible } = props
 
@@ -29,7 +30,7 @@ function AddTask(props :any) {
 
     async function handleSubmit(e :any) :Promise<any> {
         e.preventDefault()      
-        const data = { taskName, taskType, taskPriority, taskAuthor, taskDescription, id: generateTaskId() }    // add created on for sorting
+        const data = { taskName, taskType, taskPriority, taskAuthor, taskDescription, id: generateTaskId(), authorId: userId }    // add created on for sorting
         const createResponse = await createTask(data)
 
         if(!createResponse) {

@@ -17,6 +17,7 @@ import taskReducer from './features/taskReducer';
 import tasksReducer from './features/tasksReducer';
 import Completed from './Components/Completed-tasks/Completed';
 import completedTasksReducer from './features/completedTasksReducer';
+import Profile from './Components/Profile/Profile';
 
 
 
@@ -43,6 +44,7 @@ function App() {
     <Route path='*' element={<Navigate to='/' />} />
     <Route path='/admin' element={<HomeMain />} />
     <Route path='/completed' element={<Completed />} />
+    <Route path='/profile' element={<Profile />} />
     </Routes>
     </BrowserRouter>
     </Provider>

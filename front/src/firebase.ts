@@ -17,3 +17,5 @@ export default app
 // Initial firebase confing and exposing firebase and auth module to react app
 
 // To do: Make sure firebase database usage is set up
+
+// To do: Set up firebase rules and give token to user + define actions he is allowed to do in DB

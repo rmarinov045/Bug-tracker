@@ -8,7 +8,7 @@ import { deleteTaskById } from '../../features/tasksReducer'
 import { generateTaskId } from '../../utils/util'
 
 function Task(props: taskData) {
-  const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id } = props
+  const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id, authorId } = props
 
   const [error, setError] = useState('')
   const [taskMenuOpened, setTaskMenuOpened] = useState(false)
@@ -27,7 +27,7 @@ function Task(props: taskData) {
   async function handleComplete() {
     const currentUserId = auth.currentUser?.uid
 
-    const updateDBResponse = await completeTask({ taskName, taskType, taskPriority, taskDescription, taskAuthor, id, 'completedBy': currentUserId, "completedOn": generateTaskId() })
+    const updateDBResponse = await completeTask({ taskName, taskType, taskPriority, taskDescription, taskAuthor, id, 'completedBy': currentUserId, "completedOn": generateTaskId(), authorId })
     
     const response = await deleteTask(id)
 

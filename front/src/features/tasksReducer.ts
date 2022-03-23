@@ -49,9 +49,6 @@ export const tasksSlice :Slice = createSlice({
         addTask: (state, action) :any=> {
             state.tasks.push(action.payload)
         },
-        // deleteTask: (state, action) => {
-        //     state.tasks = state.tasks.map((task :any) => task.id !== action.payload)
-        // },
         updateAllTasks: (state, action) :any => {            
             state.tasks = [...action.payload]
         },

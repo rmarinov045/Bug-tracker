@@ -76,12 +76,12 @@
   min-width: 4rem;
 }
 
-#task-container::-webkit-scrollbar {
+#completed-task-container::-webkit-scrollbar, #task-container::-webkit-scrollbar {
     background-color: white;
     width: 3px;
 }
 
-#task-container::-webkit-scrollbar-thumb {
+#completed-task-container::-webkit-scrollbar-thumb, #task-container::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #22c55e;
 }

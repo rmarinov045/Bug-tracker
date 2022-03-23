@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit'
-import { getUser } from '../utils/api'
+import { getUser, updateUser } from '../utils/api'
 
 // Will need persisting state
 
@@ -27,19 +27,28 @@ export const getUserByEmail = createAsyncThunk(
     }
 )
 
+export const updateUserById = createAsyncThunk(
+    'users/updateUserById',
+    async (userData :User, thunkAPI) => {
+        const response :any = await updateUser(userData)
+        
+        return response
+    }
+)
+        // add rejected handling for extraReducers
 export const userSlice :Slice = createSlice({
     name: 'user',
     initialState: { auth: false, value: {} },
     reducers: {
-        // updateUserState: (state, action) => {
-        //     state.value = action.payload // updates state to data passed as payload of the action
-        // },
         authenticate: (state, action) => {
             state.auth = action.payload
         }
     },
     extraReducers: (builder) => {
         builder.addCase(getUserByEmail.fulfilled, (state, action) => {
+            state.value = action.payload
+        })
+        builder.addCase(updateUserById.fulfilled, (state, action) => {
             state.value = action.payload
         })
     }
