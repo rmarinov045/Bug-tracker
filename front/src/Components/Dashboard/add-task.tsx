@@ -49,8 +49,8 @@ function AddTask(props :any) {
     // 'X' close button to screen and implement closing functionality
         return (
         
-            <div className='absolute w-screen top-32 left-1/2 transform -translate-x-1/2 z-10'>
-                <div className='w-4/5 bg-white font-bold m-auto rounded-xl shadow-2xl min-h-fit p-2 border-2 border-green-500'>
+            <div className='fixed w-9/12 left-1/2 -translate-x-1/2 transform z-10'>
+                <div className='w-full bg-white font-bold m-auto rounded-xl shadow-2xl min-h-fit p-2 border-2 border-green-500'>
                     <h1 className='text-3xl text-center font-bold'>Create a new issue..</h1>
                     <form onSubmit={handleSubmit} className='flex flex-col p-2 gap-2'>
                         <label htmlFor="issueName" className=''>Issue name</label>
@@ -92,8 +92,6 @@ function AddTask(props :any) {
     
     
                         <button type='submit' className='mt-2 bg-black text-white font-bold rounded-xl pl-2 pr-2 p-1 shadow-xl w-1/2 self-center transition ease-in-out 150 hover:text-green-500 '>Create</button>
-                        {/* Add additional fields and submit button, then edit state and make post request to firebase tasks section */}
-                        {/* Make sure to render tasks on load after post request to DB */}
     
                         {error ? <ErrorField errorMessage={error} /> : '' }
     
