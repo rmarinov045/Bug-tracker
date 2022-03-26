@@ -8,6 +8,7 @@ import { authenticate } from '../features/userReducer'
 import { auth } from '../firebase'
 import { signOut } from 'firebase/auth'
 import { useDispatch } from 'react-redux'
+import { persistor } from '../store'
 
 function Navbar() {
     const navigate = useNavigate()
@@ -18,6 +19,7 @@ function Navbar() {
         try {
             await signOut(auth)
             dispatch(authenticate(false))
+            await persistor.purge()
             navigate('/')
         } catch(err) {
             setError('Ooops... Something went wrong, please try again later')

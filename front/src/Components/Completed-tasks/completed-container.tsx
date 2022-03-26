@@ -8,7 +8,7 @@ import CompletedTask from './CompletedTask'
 
 import Chart from '../Utils/Chart'
 import ChartByType from '../Utils/ChartByType'
-
+// change persisted Reducer upon rename or migration !!!!
 function CompletedContainer() {
   const currentUser: User = useSelector((state: RootStateOrAny) => state.user.value) // May need to be in parent, need completed tasks by current user
   const completedTasks = useSelector((state: RootStateOrAny) => state.completedTasks.completed)
