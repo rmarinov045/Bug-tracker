@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
-// import { useDispatch } from 'react-redux'
+
 import { useNavigate } from 'react-router-dom'
 
-// import { auth } from '../../firebase'
+import { postUser } from '../../utils/api'
 
-// import { register } from '../../features/userReducer'
 import ErrorField from '../Utils/error'
 import { registerUser } from '../../utils/auth'
-// import { updateUser } from '../../utils/auth'
-import { postUser } from '../../utils/api'
 
 export interface userData {
     firstName: string,
@@ -30,13 +27,7 @@ function RegisterForm() {
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    // const dispatch = useDispatch()
-
     const navigate = useNavigate()
-
-    // function updateState(userData: userData) {
-    //     dispatch(register(userData))
-    // }
 
     async function handleSubmit(e: any): Promise<any> {     // check type here
         e.preventDefault()
@@ -60,9 +51,6 @@ function RegisterForm() {
 
         try {
             const response = await registerUser(email, password)
-            // response.uid => user ID from Firebase ID 
-
-            // const updateUserName = await updateUser(auth.currentUser, firstName) // update current logged in User's name
 
             const userId = response.uid
 
@@ -74,8 +62,6 @@ function RegisterForm() {
             if (!dbRes) {
                 setError('Failed to register. Please try again.')
             }
-
-            // updateState(user) => should not be needed here
 
             setIsLoading(false)
 

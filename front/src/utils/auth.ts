@@ -8,7 +8,7 @@ export const login = async function (email: string, password: string): Promise<a
         const response = await signInWithEmailAndPassword(auth, email, password)
         const user = await response.user
         return user
-    } catch(err :any) {
+    } catch (err: any) {
         const [errorCode, errorMessage]: string[] = [err.code, err.message]
         return { errorCode, errorMessage }
     }
@@ -31,8 +31,23 @@ export const updateUser = async function (user: any, name: string) {
         await updateProfile(user, {
             displayName: name
         })
-    } catch(err: any) {
+    } catch (err: any) {
         const [errorCode, errorMessage]: string[] = [err.code, err.message]
         return { errorCode, errorMessage }
     }
 }
+
+// Generate Firebase ID token => to be done server-side
+
+export const generateAuthToken = async () :Promise<string | undefined | unknown> => {
+    try {
+        const authToken :string | undefined = await auth.currentUser?.getIdToken(true)
+        return authToken
+    } catch(error) {
+        return error
+    }
+}
+
+// get user auth token
+
+export const getAuthToken = async () => await auth.currentUser?.getIdToken(true)

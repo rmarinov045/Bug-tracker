@@ -34,7 +34,7 @@ function CompletedContainer() {
 
       <div className='flex mt-2 p-2 gap-10 items-start pl-10 flex-row-reverse h-5/6'>
 
-        {completedTasks.length > 0 ? <main className='w-1/2 p-2 border-2 border-slate-100 shadow-sm flex flex-col'>
+        {completedTasks.length > 0 ? <main className='w-1/2 p-2 border-2 border-slate-100 shadow-sm flex h-full flex-col'>
           {completedTasks.length ? <Chart tasks={completedTasks} /> : <></>}
           {completedTasks.length ? <ChartByType tasks={completedTasks} /> : <></>}
         </main> : <></>}

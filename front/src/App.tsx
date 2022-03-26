@@ -18,17 +18,16 @@ import tasksReducer from './features/tasksReducer';
 import Completed from './Components/Completed-tasks/Completed';
 import completedTasksReducer from './features/completedTasksReducer';
 import Profile from './Components/Profile/Profile';
-
-
+import PrivateRoute from './Components/PrivateRoute';
 
 // configure redux store
 const store = configureStore({
-    reducer: {
-      user: userReducer,
-      task: taskReducer,
-      tasks: tasksReducer,
-      completedTasks: completedTasksReducer
-    }
+  reducer: {
+    user: userReducer,
+    task: taskReducer,
+    tasks: tasksReducer,
+    completedTasks: completedTasksReducer
+  }
 })
 
 // added router and store
@@ -36,17 +35,17 @@ const store = configureStore({
 function App() {
   return (
     <Provider store={store}>
-    <BrowserRouter>
-    <Routes>
-    <Route path='/' element={<LoginForm />} />
-    <Route path='/register' element={<RegisterForm />} />
-    <Route path='/register/*' element={<ConfirmEmail />} />
-    <Route path='*' element={<Navigate to='/' />} />
-    <Route path='/admin' element={<HomeMain />} />
-    <Route path='/completed' element={<Completed />} />
-    <Route path='/profile' element={<Profile />} />
-    </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<LoginForm />} />
+          <Route path='/register' element={<RegisterForm />} />
+          <Route path='/register/*' element={<ConfirmEmail />} />
+          <Route path='*' element={<Navigate to='/' />} />
+          <Route path='/admin' element={<PrivateRoute component={<HomeMain />}><HomeMain /></PrivateRoute>} />
+          <Route path='/completed' element={<PrivateRoute><Completed /></PrivateRoute>} />
+          <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
+        </Routes>
+      </BrowserRouter>
     </Provider>
   );
 }
