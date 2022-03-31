@@ -1,5 +1,5 @@
 import { Slice, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { deleteTask, getAllTasks } from '../utils/api'
+import { deleteTask, editTask, getAllTasks } from '../utils/api'
 
 const priorityFilters :any = {
     'Urgent': 3,
@@ -40,6 +40,20 @@ export const deleteTaskById = createAsyncThunk(
     }
 )
 
+export const editTaskById = createAsyncThunk(
+    'tasks/editById',
+    async (task :any, thunkAPI) => {
+        const response = await editTask(task)
+        
+        if (response.status === 'failed') {
+            return 'Error'
+        } else {
+            return task
+        }
+        
+    }
+)
+
 
 // all tasks slice
 export const tasksSlice :Slice = createSlice({
@@ -72,6 +86,9 @@ export const tasksSlice :Slice = createSlice({
         })
         builder.addCase(getTasks.fulfilled, (state :any, action :any) => {
             state.tasks = [...action.payload]
+        })
+        builder.addCase(editTaskById.fulfilled, (state :any, action :any) => {
+            state.tasks = [...state.tasks.filter((x :any) => x.id !== action.payload.id), action.payload]
         })
     }
 })

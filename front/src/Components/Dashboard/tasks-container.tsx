@@ -15,29 +15,12 @@ function TasksContainer() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // async function getTasks(): Promise<any> {
-    //   const tasksResponse = await getAllTasks()
-
-    //   if (tasksResponse.data && Object.values(tasksResponse.data).length > tasks.length) {
-
-    //     dispatch(updateAllTasks(Object.values(tasksResponse.data)))
-
-    //   } else {
-        
-    //     setTasksLoaded(true)
-        
-    //   }
-    
-    // }
-    // getTasks()
     setTasksLoaded(true)
 
     dispatch(getTasks())
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // transfer API call to redux async function
   
   return (
     tasksLoaded ?

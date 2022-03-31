@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { taskData, deleteTask, completeTask } from '../../utils/api'
@@ -6,13 +6,37 @@ import ErrorField from '../Utils/error'
 import { auth } from '../../firebase'
 import { deleteTaskById } from '../../features/tasksReducer'
 import { generateTaskId } from '../../utils/util'
+import EditTask from './EditTask'
+
+export const typeColors: { [char: string]: string } = {
+  "Visual bug": '#fb923c',
+  'Minor bug': '#a3e635',
+  'Major bug': '#991b1b'
+}
+
+export const priorityColors: { [char: string]: string } = {
+  'Low': '#34d399',
+  'Medium': '#fbbf24',
+  'High': '#ea580c',
+  'Urgent': '#dc2626'
+}
 
 function Task(props: taskData) {
   const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id, authorId } = props
 
   const [error, setError] = useState('')
+
   const [taskMenuOpened, setTaskMenuOpened] = useState(false)
+  const [edit, setEdit] = useState(false)
+  
+  const [typeColor, setTypeColor] = useState('')
+  const [priorityColor, setPriorityColor] = useState('')
+
   const dispatch = useDispatch()
+
+  function toggleEdit() :void {
+    setEdit(!edit)
+  }
 
   async function handleDelete(id: string) {
 
@@ -46,6 +70,11 @@ function Task(props: taskData) {
 
   }
 
+  useEffect(() => {
+    setTypeColor(typeColors[taskType])
+    setPriorityColor(priorityColors[taskPriority])
+  }, [taskType, taskPriority])
+
   // fix styling for large screens
 
   // add edit functionality
@@ -59,8 +88,8 @@ function Task(props: taskData) {
         <div className='flex w-full items-center border-b-2 border-black pb-4'>
           <p className='font-bold text-sm whitespace-nowrap text-ellipsis w-2/3 overflow-hidden'>{taskName}</p>
           <div className='flex gap-2 w-full justify-end'>
-            <p className='bg-orange-400 font-bold rounded-xl text-xs p-1 text-center flex items-center'>{taskType}</p>
-            <p className='bg-red-400 font-bold rounded-xl text-xs p-1 text-center flex items-center'>{taskPriority}</p>
+            <p style={{ backgroundColor: typeColor }} className='bg-orange-400 font-bold rounded-xl text-xs p-2 text-center flex items-center'>{taskType}</p>
+            <p style={{ backgroundColor: priorityColor }} className='bg-red-400 font-bold rounded-xl text-xs p-2 text-center flex items-center'>{taskPriority}</p>
           </div>
         </div>
         <div className='mt-2 w-full'>
@@ -77,6 +106,8 @@ function Task(props: taskData) {
         </div>
       </div>
 
+      {edit ? <EditTask task={props} visible={toggleEdit} /> : <></>}
+
       {taskMenuOpened ?
         <div className='relative rounded-xl w-full mt-2 flex p-1 pr-2 pl-2 items-center justify-center transform transition ease-in-out 150'>
 
@@ -87,7 +118,7 @@ function Task(props: taskData) {
           </div>
 
           <div className='w-1/3 flex justify-center bg-orange-500 p-1 hover:text-white cursor-pointer'>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
+            <svg onClick={() => toggleEdit()} xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
               <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
               <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" />
             </svg>

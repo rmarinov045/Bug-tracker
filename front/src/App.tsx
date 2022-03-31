@@ -30,9 +30,9 @@ function App() {
             <Route path='/register' element={<RegisterForm />} />
             <Route path='/register/*' element={<ConfirmEmail />} />
             <Route path='*' element={<Navigate to='/' />} />
-            <Route path='/admin' element={<PrivateRoute component={<HomeMain />}><HomeMain /></PrivateRoute>} />
-            <Route path='/completed' element={<PrivateRoute><Completed /></PrivateRoute>} />
-            <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route path='/admin' element={<PrivateRoute component={<HomeMain />}></PrivateRoute>} />
+            <Route path='/completed' element={<PrivateRoute component={<Completed />}></PrivateRoute>} />
+            <Route path='/profile' element={<PrivateRoute component={<Profile />}></PrivateRoute>} />
           </Routes>
         </BrowserRouter>
       </PersistGate>

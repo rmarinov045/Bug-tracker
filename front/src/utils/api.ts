@@ -144,3 +144,23 @@ export const getAllCompletedTasksById = async (userId :string) => {
 
     return Object.values(response.data)
 }
+
+// edit task in DB
+
+export const editTask = async (task :any) => {
+
+    try {
+        const response = await axios.put(postTaskURL + `?orderBy="id"&equalTo="${task.id}"`)
+
+        if (response.status !== 200) {
+            throw new Error('Could not edit task')
+        }
+
+        return response.data
+
+    } catch(err :any) {
+        return { status: 'Failed', message: err.message }
+    }
+
+
+}

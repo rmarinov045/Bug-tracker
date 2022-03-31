@@ -1,7 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { typeColors, priorityColors } from '../Dashboard/task'
 
 function CompletedTask({ task } :any) {
   const [taskInfo, setTaskInfo] = useState(false)
+  const [typeColor, setTypeColor] = useState('')
+  const [priorityColor, setPriorityColor] = useState('')
+
+  useEffect(() => {
+    setTypeColor(typeColors[task.taskType])
+    setPriorityColor(priorityColors[task.taskPriority])
+  }, [task.taskType, task.taskPriority])
 
   return (
     <>
@@ -10,8 +18,8 @@ function CompletedTask({ task } :any) {
       </svg></li>
       {taskInfo ? <div className='flex flex-col gap-2 items-start justify-start w-full p-2 bg-slate-200 border-b-2 border-green-400'>
                       <div className='flex w-full justify-start gap-2'>
-                      <li className='bg-orange-400 p-1 text-xs font-bold rounded-xl'>{task.taskType}</li>
-                      <li className='bg-red-400 p-1 text-xs font-bold rounded-xl'>{task.taskPriority}</li>
+                      <li style={{backgroundColor: typeColor}} className='bg-orange-400 p-2 text-xs font-bold rounded-xl'>{task.taskType}</li>
+                      <li style={{backgroundColor: priorityColor}} className='bg-red-400 p-2 text-xs font-bold rounded-xl'>{task.taskPriority}</li>
                       </div>
                       <li className='w-full text-xs border-2 border-slate-300 rounded-xl p-1'>{task.taskDescription}</li>
                       <li className='font-bold text-xs'>Created by: {task.taskAuthor}</li>
