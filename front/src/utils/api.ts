@@ -150,7 +150,8 @@ export const getAllCompletedTasksById = async (userId :string) => {
 export const editTask = async (task :any) => {
 
     try {
-        const response = await axios.put(postTaskURL + `?orderBy="id"&equalTo="${task.id}"`)
+        const taskDBId = await getTaskById(task.id)
+        const response = await axios.put(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskDBId}.json`, task)
 
         if (response.status !== 200) {
             throw new Error('Could not edit task')
@@ -160,6 +161,26 @@ export const editTask = async (task :any) => {
 
     } catch(err :any) {
         return { status: 'Failed', message: err.message }
+    }
+
+
+}
+
+// get task by ID from DB 
+
+export const getTaskById = async (id :string) => {
+
+    try {
+        const response = await axios.get(postTaskURL + `?orderBy="id"&equalTo="${id}"`)
+
+        if (response.status !== 200) {
+            throw new Error('Could not find task')
+        }
+
+        return Object.keys(response.data)[0]
+
+    } catch(err :any) {
+        return err.message
     }
 
 

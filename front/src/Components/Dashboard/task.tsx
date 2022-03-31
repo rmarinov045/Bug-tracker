@@ -37,7 +37,7 @@ function Task(props: taskData) {
   function toggleEdit() :void {
     setEdit(!edit)
   }
-
+  // export to ext file (task functionalities)
   async function handleDelete(id: string) {
 
     const response = dispatch(deleteTaskById(id))
