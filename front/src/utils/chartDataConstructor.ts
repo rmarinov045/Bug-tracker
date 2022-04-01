@@ -1,5 +1,5 @@
 import { convertToDate } from "./util"
-import { taskData } from '../utils/api'
+import { taskData } from '../api/taskService'
 
 // Converts and returns data in required format for charts
 
@@ -19,7 +19,6 @@ export const scatterChartDataCreator = (data :any) :scatterChartData[] => {
     
     const dates = [...data].sort((a :any, b :any) => Number(a.completedOn) - Number(b.completedOn)).map((x:any) => convertToDate(x.completedOn)).map((x :string) => x.slice(0, 15))
     const dataMap :any = {}
-    console.log(dates);
     
     dates.forEach((date :any) => dataMap[date] = dataMap[date] + 1 || 1)
 

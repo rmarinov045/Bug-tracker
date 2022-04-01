@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit'
-import { getUser, updateUser } from '../utils/api'
+import { getUser, updateUser } from '../api/userService'
 
 // Will need persisting state
 
@@ -42,6 +42,9 @@ export const userSlice :Slice = createSlice({
     reducers: {
         authenticate: (state, action) => {
             state.auth = action.payload
+        },
+        reset: (state, action) => {
+            state.value = {}
         }
     },
     extraReducers: (builder) => {
@@ -54,6 +57,6 @@ export const userSlice :Slice = createSlice({
     }
 })
 
-export const { updateUserState, login, register, authenticate } = userSlice.actions
+export const { updateUserState, login, register, authenticate, reset } = userSlice.actions
 
 export default userSlice.reducer

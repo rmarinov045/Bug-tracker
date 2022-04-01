@@ -27,8 +27,6 @@ const user = persistReducer(persistConfig, userReducer)
 
 export const store = configureStore({
     reducer: {
-        // user: userReducer,
-        // task: taskReducer,
         tasks: tasksReducer,
         completedTasks: completedTasksReducer,
         user

@@ -1,5 +1,5 @@
 import { Slice, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { deleteTask, editTask, getAllTasks } from '../utils/api'
+import { deleteTask, editTask, getAllTasks } from '../api/taskService'
 
 const priorityFilters :any = {
     'Urgent': 3,

@@ -1,5 +1,5 @@
 import { Slice, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getAllCompletedTasksById } from "../utils/api";
+import { getAllCompletedTasksById } from "../api/taskService";
 
 export const getCompletedTasksByUserId = createAsyncThunk(
     'getCompletedTasksByUserId',

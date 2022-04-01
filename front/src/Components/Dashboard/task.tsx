@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { taskData, deleteTask, completeTask } from '../../utils/api'
+import { taskData, deleteTask, completeTask } from '../../api/taskService'
 
 import { auth } from '../../firebase'
 

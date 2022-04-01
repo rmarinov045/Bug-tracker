@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { authenticate, getUserByEmail } from '../../features/userReducer'
 
-import { login } from '../../utils/auth'
+import { login } from '../../auth/auth'
 import ErrorField from '../Utils/error'
 
 function LoginForm() {

@@ -6,8 +6,8 @@ import { getCompletedTasksByUserId } from '../../features/completedTasksReducer'
 
 import CompletedTask from './CompletedTask'
 
-import Chart from '../Utils/Chart'
-import ChartByType from '../Utils/ChartByType'
+import Chart from '../Charts/Chart'
+import ChartByType from '../Charts/ChartByType'
 // change persisted Reducer upon rename or migration !!!!
 function CompletedContainer() {
   const currentUser: User = useSelector((state: RootStateOrAny) => state.user.value) // May need to be in parent, need completed tasks by current user
@@ -21,7 +21,7 @@ function CompletedContainer() {
   }, [])
   // make sure to style for big screens as well
   return (
-    <div className='w-full'>
+    <div className='w-full overflow-x-hidden'>
 
       <div className='flex items-center justify-center p-2 mt-3 border-b-2 w-2/3 m-auto border-slate-500'>
 
@@ -34,7 +34,7 @@ function CompletedContainer() {
 
       <div className='flex mt-2 p-2 gap-10 items-start pl-10 flex-row-reverse h-5/6'>
 
-        {completedTasks.length > 0 ? <main className='w-1/2 p-2 border-2 border-slate-100 shadow-sm flex h-full flex-col'>
+        {completedTasks.length > 0 ? <main className='w-1/2 p-2 border-2 border-slate-100 shadow-sm flex h-full flex-col overflow-y-scroll'>
           {completedTasks.length ? <Chart tasks={completedTasks} /> : <></>}
           {completedTasks.length ? <ChartByType tasks={completedTasks} /> : <></>}
         </main> : <></>}

@@ -14,7 +14,7 @@ function Profile() {
         <div className='flex h-screen w-full'>
             <Navbar />
             <main className='w-full p-4'>
-                <div className='flex w-full gap-10'>
+                <div className='flex w-full flex-col items-center gap-10'>
                     <ProfileCard user={user} />
                     <ProfileFull user={user} />
                 </div>

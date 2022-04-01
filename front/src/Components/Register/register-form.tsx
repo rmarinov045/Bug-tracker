@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useReducer, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import { postUser } from '../../utils/api'
+import { postUser } from '../../api/userService'
 
 import ErrorField from '../Utils/error'
-import { registerUser } from '../../utils/auth'
+
+import { registerUser } from '../../auth/auth'
 
 export interface userData {
     firstName: string,
@@ -13,51 +14,79 @@ export interface userData {
     company: string,
     position: string,
     email: string,
+    password?: string,
     userId?: string
 }
 
+const initialState :userData = {
+    firstName: '',
+    lastName: '',
+    company: '',
+    position: '',
+    email: '',
+    password: '',
+    userId: ''
+}
+
+function setUserData(state :any, action :any) {
+    switch (action.type) {
+        case 'firstName':
+            return {...state, firstName: action.payload}
+        case 'lastName':
+            return {...state, lastName: action.payload}
+        case 'company':
+            return {...state, company: action.payload}
+        case 'position': 
+            return {...state, position: action.payload}
+        case 'email':
+            return {...state, email: action.payload}
+        case 'password':
+            return {...state, password: action.payload}
+    }
+}
+
 function RegisterForm() {
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [company, setCompany] = useState('')
-    const [position, setPosition] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+
+    const [state, dispatch] = useReducer(setUserData, initialState)
+
     const [confirmPass, setConfirmPass] = useState('')
     
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    // switch to useReducer for local state
-
     const navigate = useNavigate()
+
+    function handleChange(e :any) {
+        const { name, value } = e.target
+        dispatch({ type: name, payload: value })
+    }
 
     async function handleSubmit(e: any): Promise<any> {     // check type here
         e.preventDefault()
         setError('')
         setIsLoading(true)
 
-        if (password.length < 6) {
+        if (state.password.length < 6) {
             setIsLoading(false)
             return setError('Password should be at least 6 symbols')
         }
 
-        if (password !== confirmPass) {
+        if (state.password !== confirmPass) {
             setIsLoading(false)
             return setError('Passwords do not match!')
         }
 
-        if (!email.includes('@')) {
+        if (!state.email.includes('@')) {
             setIsLoading(false)
             return setError('Please enter a valid email!')
         }
 
         try {
-            const response = await registerUser(email, password)
+            const response = await registerUser(state.email, state.password)
 
             const userId = response.uid
 
-            const user = { firstName, lastName, company, position, email, userId }
+            const user = { ...state, userId }
 
             // post to Firebase DB
             const dbRes = postUser(user)
@@ -76,8 +105,6 @@ function RegisterForm() {
             if (err.message.includes('email-already-in-use'))
                 return setError('Email is already in use!')
         }
-
-
     }
 
     return (
@@ -94,22 +121,22 @@ function RegisterForm() {
                 <div className='mt-4'>
                     <form action="" className='flex flex-col gap-4' onSubmit={(e) => handleSubmit(e)}>
                         <label htmlFor="firstName">First Name<span className='text-red-400 pl-1'>*</span></label>
-                        <input onChange={(e) => setFirstName(e.target.value)} type="text" name="firstName" className='pl-2 p-1 pr-2 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
+                        <input onChange={(e) => handleChange(e)} value={state.firstName} type="text" name="firstName" className='pl-2 p-1 pr-2 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
                         <label htmlFor="lastName">Last Name<span className='text-red-400 pl-1'>*</span></label>
-                        <input onChange={(e) => setLastName(e.target.value)} type="text" name="lastName" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
+                        <input onChange={(e) => handleChange(e)} value={state.lastName} type="text" name="lastName" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
                         <label htmlFor="company">Company<span className='text-red-400 pl-1'>*</span></label>
-                        <input onChange={(e) => setCompany(e.target.value)} type="text" name="company" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
+                        <input onChange={(e) => handleChange(e)} value={state.company} type="text" name="company" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
                         <label htmlFor="position">Position<span className='text-red-400 pl-1'>*</span></label>
-                        <input onChange={(e) => setPosition(e.target.value)} type="text" name="position" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
+                        <input onChange={(e) => handleChange(e)} value={state.position} type="text" name="position" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
                         <label htmlFor="email">Email<span className='text-red-400 pl-1'>*</span></label>
-                        <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
+                        <input onChange={(e) => handleChange(e)} value={state.email} type="email" name="email" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
                         <label htmlFor="password">Password<span className='text-red-400 pl-1'>*</span></label>
-                        <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
+                        <input onChange={(e) => handleChange(e)} value={state.password} type="password" name="password" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
                         <label htmlFor="confirm-password">Confirm Password<span className='text-red-400 pl-1'>*</span></label>
                         <input onChange={(e) => setConfirmPass(e.target.value)} type="password" name="confirm-password" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />

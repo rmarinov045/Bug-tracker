@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import testAvatar from '../assets/logo192.png'
 import '../App.css'
 
-import { authenticate } from '../features/userReducer'
+import { authenticate, reset } from '../features/userReducer'
 import { auth } from '../firebase'
 import { signOut } from 'firebase/auth'
 import { useDispatch } from 'react-redux'
@@ -19,6 +19,7 @@ function Navbar() {
         try {
             await signOut(auth)
             dispatch(authenticate(false))
+            dispatch(reset(null))
             await persistor.purge()
             navigate('/')
         } catch(err) {
@@ -28,7 +29,7 @@ function Navbar() {
 
 
     return (
-        <div id='navbar' className='flex-col h-full pt-2 pb-2 bg-green-500 items-center flex z-0 filter'>
+        <div id='navbar' className='flex-col h-screen pt-2 pb-2 bg-green-500 items-center flex z-0 filter'>
 
                 <div className='w-full flex items-center justify-center pt-4'>
                     <img className='h-6 w-6 rounded-full' src={testAvatar} alt="user-avatar" />
