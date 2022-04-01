@@ -10,7 +10,6 @@ import Filter from '../Utils/Filter'
 function HomeMain() {
     const userFirstName = useSelector((state :RootStateOrAny) => state.user.value.firstName)
 
-    // Add separate page for add task feature
     // remove add task menu on outside click
     return (
 

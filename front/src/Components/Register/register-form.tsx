@@ -24,8 +24,11 @@ function RegisterForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
+    
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+
+    // switch to useReducer for local state
 
     const navigate = useNavigate()
 

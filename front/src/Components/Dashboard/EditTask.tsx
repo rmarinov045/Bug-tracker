@@ -1,6 +1,7 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { editTaskById } from '../../features/tasksReducer'
+import Modal from '../Utils/Modal'
 import { taskTypes, taskPriorities } from './add-task'
 
 function reducer(state :any, action :any) {
@@ -24,6 +25,9 @@ function EditTask(props :any) {
 
     const [state, dispatch] = useReducer(reducer, initialState)
 
+    const [error, setError] = useState('')
+    const [bgColor, setBgColor] = useState('#16a34a')
+
     const dispatchAction = useDispatch()
 
     function handleDropdownFocus(elementId: string, arrowType: string): void {
@@ -34,13 +38,28 @@ function EditTask(props :any) {
 
     async function handleSubmit(e :any) {
         e.preventDefault()
+        
+        for (const field of [...Object.values(state)]) {
+            if (field === '') {
+                setError('Please fill all fields!')
+                setBgColor('#dc2626')
+                setTimeout(() => setError(''), 3000)
+                return
+            }
+        }
+
         dispatchAction(editTaskById(state))
         props.visible()
     }
 
     return (
 
-        <div className='fixed w-9/12 left-1/2 -translate-x-1/2 transform z-10'>
+        <>
+
+        <Modal message={error} bgColor={bgColor} />
+
+        <div className='fixed w-9/12 left-1/2 -translate-x-1/2 z-10'>
+
             <div className='w-full bg-white font-bold m-auto rounded-xl shadow-2xl min-h-fit p-2 border-2 border-green-500'>
                 <div className='flex items-center'>
                     <h1 className='text-3xl text-center font-bold m-auto'>Edit issue..</h1>
@@ -89,6 +108,7 @@ function EditTask(props :any) {
                 </form>
             </div>
         </div>
+        </>
     )
 }
 

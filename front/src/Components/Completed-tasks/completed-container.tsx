@@ -44,7 +44,7 @@ function CompletedContainer() {
           <p className='font-bold text-center text-xs mb-2'>Issues you have resolved:</p>
 
           <ul className='flex flex-col items-center justify-center'>
-            {completedTasks.length ? completedTasks.map((task: any) => <CompletedTask task={task} key={task.id} />) : <li className='text-sm'>Nothing yet...</li>}
+            {completedTasks.length ? [...completedTasks].sort((a, b) => Number(b.completedOn) - Number(a.completedOn)).map((task: any) => <CompletedTask task={task} key={task.id} />) : <li className='text-sm'>Nothing yet...</li>}
           </ul>
 
         </aside>
