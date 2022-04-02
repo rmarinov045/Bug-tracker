@@ -46,7 +46,7 @@ function LoginForm() {
     return (
         <div className="flex flex-col justify-center w-2/3 lg:w-1/2 m-auto h-screen">
             <div className="flex flex-col justify-center items-center">
-                <p className="font-extrabold text-2xl lg:text-4xl">Log in to /placeholder/</p>
+                <p className="font-extrabold text-2xl lg:text-4xl">Log in to SIGNUM</p>
                 <hr className="mt-4 w-full" />
 
                 {error ? <ErrorField errorMessage={error} /> : ''}

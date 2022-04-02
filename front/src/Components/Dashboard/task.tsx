@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { taskData, deleteTask, completeTask } from '../../api/taskService'
+import { deleteTask, completeTask } from '../../api/taskService'
 
 import { auth } from '../../firebase'
 
@@ -9,7 +9,6 @@ import { deleteTaskById } from '../../features/tasksReducer'
 import { generateTaskId } from '../../utils/util'
 
 import EditTask from './EditTask'
-import Modal from '../Utils/Modal'
 
 export const typeColors: { [char: string]: string } = {
   "Visual bug": '#fb923c',
@@ -24,35 +23,35 @@ export const priorityColors: { [char: string]: string } = {
   'Urgent': '#dc2626'
 }
 
-function Task(props: taskData) {
+function Task(props: any) {
   const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id, authorId } = props
 
-  const [error, setError] = useState('')
+  const error = props.setError
+  const modalColor = props.setModalColor
 
   const [taskMenuOpened, setTaskMenuOpened] = useState(false)
   const [edit, setEdit] = useState(false)
   
   const [typeColor, setTypeColor] = useState('')
   const [priorityColor, setPriorityColor] = useState('')
-  const [modalColor, setModalColor] = useState('#dc2626')
 
   const dispatch = useDispatch()
 
   function toggleEdit() :void {
     setEdit(!edit)
   }
-  // export to ext file (task functionalities)
+
   async function handleDelete(id: string) {
 
     const response = dispatch(deleteTaskById(id))
 
     if (typeof response === 'string') {
-      setError(response)
+      error(response)
     }
 
-    setError('Issue resolved successfully!')
-    setModalColor('#dc2626')
-    setTimeout(() => setError(''), 2000)
+    error('Issue deleted')
+    modalColor('#dc2626')
+    setTimeout(() => error(''), 4000)
 
   }
 
@@ -64,22 +63,22 @@ function Task(props: taskData) {
     const response = await deleteTask(id)
 
     if (updateDBResponse.status !== 'ok' || response.status !== 'ok') {
-      setError(updateDBResponse.message)
+      error(updateDBResponse.message)
       setTimeout(() => {
-        setError('')
-      }, 5000)
+        error('')
+      }, 4000)
     }
 
     const res = dispatch(deleteTaskById(id))
 
     if (typeof res === 'string') {
-      setError(res)
+      error(res)
     }
 
-    setError('Issue resolved successfully!')
-    setModalColor('#16a34a')
+    error('Issue resolved successfully!')
+    modalColor('#16a34a')
 
-    setTimeout(() => setError(''), 5000)
+    setTimeout(() => error(''), 4000)
 
   }
 
@@ -94,8 +93,6 @@ function Task(props: taskData) {
 
   return (
 
-    <>
-      <Modal message={error} bgColor={modalColor} />
     <div className='flex flex-col'>
       <div className='bg-gray-200 rounded-xl p-2 transform transition ease-in-out 150 min-w-full'>
         <div className='flex w-full items-center border-b-2 border-black pb-4'>
@@ -148,7 +145,6 @@ function Task(props: taskData) {
 
     </div>
 
-    </>
   )
 }
 

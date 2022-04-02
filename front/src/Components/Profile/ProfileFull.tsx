@@ -24,7 +24,7 @@ function ProfileFull(props :any) {
     }
 
     return (
-        <div className='w-1/2 flex flex-col gap-10 border-2 border-slate-50 shadow-md p-2'>
+        <div className='w-3/4 flex flex-col gap-10 border-2 border-slate-50 shadow-md p-2'>
             <div className='flex gap-7 items-center justify-center border-b-2 p-2 w-full'>
                 <label className='font-bold w-40' htmlFor="firstName">First Name</label>
                 <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full' value={userData.firstName} type="text" name="firstName" id="firstName" />

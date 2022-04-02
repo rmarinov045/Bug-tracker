@@ -19,7 +19,7 @@ function AddTask(props: any) {
     const dispatch = useDispatch()
     const userId = useSelector((state: RootStateOrAny) => state.user.value.userId)
 
-    const { visible } = props
+    const { visible, updateModalMessage, updateModalColor } = props
 
     const [taskType, setTaskType] = useState('')
     const [taskPriority, setTaskPriority] = useState('')
@@ -37,6 +37,11 @@ function AddTask(props: any) {
             setError('Failed to create a task. Please try again with valid input')
         }
         dispatch(addTask(data))
+        updateModalMessage('Task created successfully!')
+        updateModalColor('#16a34a')
+
+        setTimeout(() => updateModalMessage(''), 4000)
+
         visible()
     }
 
@@ -60,7 +65,7 @@ function AddTask(props: any) {
                     <label htmlFor="issueName" className=''>Issue name</label>
                     <input onChange={(e) => setTaskName(e.target.value)} className='transform transition ease-in-out 150 border-2 border-black pr-2 pl-2 p-1 rounded-xl focus:outline-none focus:border-green-500' type="text" name="issueName" />
                     <label className=''>Issue type</label>
-                    <div onClick={() => handleDropdownFocus('drop-down-type', 'arrow-type')} tabIndex={0} className='transform cursor-pointer transition ease-in-out 150 border-2 border-black pr-2 pl-2 p-1 rounded-xl focus:border-green-500 focus:text-green-500'>
+                    <div onClick={() => handleDropdownFocus('drop-down-type', 'arrow-type')} tabIndex={0} className='focus:outline-none transform cursor-pointer transition ease-in-out 150 border-2 border-black pr-2 pl-2 p-1 rounded-xl focus:border-green-500 focus:text-green-500'>
                         <span className='flex items-center'>{taskType} <svg id='arrow-type' xmlns="http://www.w3.org/2000/svg" className="transform transition ease-in-out 150 h-6 w-6 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                         </svg></span>
@@ -74,7 +79,7 @@ function AddTask(props: any) {
 
                     </div>
                     <label className=''>Issue priority</label>
-                    <div onClick={() => handleDropdownFocus('drop-down-priority', 'arrow-priority')} tabIndex={0} className='transform cursor-pointer transition ease-in-out 150 border-2 border-black pr-2 pl-2 p-1 rounded-xl focus:border-green-500 focus:text-green-500'>
+                    <div onClick={() => handleDropdownFocus('drop-down-priority', 'arrow-priority')} tabIndex={0} className='focus:outline-none transform cursor-pointer transition ease-in-out 150 border-2 border-black pr-2 pl-2 p-1 rounded-xl focus:border-green-500 focus:text-green-500'>
                         <span className='flex items-center'>{taskPriority} <svg id='arrow-priority' xmlns="http://www.w3.org/2000/svg" className="transform transition ease-in-out 150 h-6 w-6 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                         </svg></span>

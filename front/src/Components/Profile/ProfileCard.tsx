@@ -6,7 +6,7 @@ function ProfileCard(props :any) {
 
     return (
 
-        <div className='w-5/12'>
+        <div className='w-3/5'>
             <div className='bg-slate-50 p-2 pt-10 items-center justify-start flex flex-col shadow-md gap-5 min-w-full self-start'>
                 <div className='w-32 h-32 bg-blue-300 rounded-full flex items-center justify-center'>
                     <img src="rounded-full" alt="userProfileImage" />

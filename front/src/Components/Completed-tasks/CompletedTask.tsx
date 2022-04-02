@@ -23,7 +23,7 @@ function CompletedTask({ task }: any) {
             <li style={{ backgroundColor: typeColor }} className='bg-orange-400 p-2 text-xs font-bold rounded-xl'>{task.taskType}</li>
             <li style={{ backgroundColor: priorityColor }} className='bg-red-400 p-2 text-xs font-bold rounded-xl'>{task.taskPriority}</li>
           </div>
-          <li className='w-full text-xs border-2 border-slate-300 rounded-xl p-1'>{task.taskDescription}</li>
+          <li className='w-full text-xs border-2 border-slate-600 bg-white rounded min-h-[10rem] p-1'>{task.taskDescription}</li>
           <li className='font-bold text-xs flex w-full justify-between'>Created by: {task.taskAuthor} <p className=''>Completed on: {convertToDate(task.completedOn)}</p></li>
         </div> : <></>}
       </div>

@@ -1,4 +1,5 @@
 import axios from "axios"
+import { getAuthToken } from "../auth/auth"
 
 export interface taskData {
     taskName: string,
@@ -17,10 +18,11 @@ const postTaskURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebas
 // post task to DB
 
 export const createTask = async (taskData :taskData) => {
+    const userToken = await getAuthToken()
     const data = JSON.stringify(taskData)
     
     try {
-        const response = await axios.post(postTaskURL, data)  
+        const response = await axios.post(postTaskURL + `?auth=${userToken}`, data)  
 
         if (response.status !== 200) {
             throw new Error()
@@ -37,7 +39,8 @@ export const createTask = async (taskData :taskData) => {
 const getTasksURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'
 
 export async function getAllTasks() :Promise<any> {
-    const response = await axios.get(getTasksURL)
+    const userToken = await getAuthToken()
+    const response = await axios.get(getTasksURL + `?auth=${userToken}`)
     
     if (response.status !== 200) {
         return null
@@ -48,10 +51,11 @@ export async function getAllTasks() :Promise<any> {
 // delete task
 
 export async function deleteTask(id :string) {
-    const currentTask = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?orderBy="id"&equalTo="${id}"`)
+    const userToken = await getAuthToken()
+    const currentTask = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?orderBy="id"&equalTo="${id}&auth=${userToken}"`)
     const currentTaskID = Object.keys(currentTask.data)[0]
       
-    const response = axios.delete(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${currentTaskID}.json`)
+    const response = axios.delete(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${currentTaskID}.json?auth=${userToken}`)
 
     if ((await response).status === 200) {
         return {status: 'ok', message: 'Task Deleted'}
@@ -65,10 +69,11 @@ export async function deleteTask(id :string) {
 const completeTaskURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/completed.json'
 
 export const completeTask = async (taskData :taskData) => {
+    const userToken = await getAuthToken()
     const data = JSON.stringify(taskData)
     
     try {
-        const response = await axios.post(completeTaskURL, data)  
+        const response = await axios.post(completeTaskURL + `?auth=${userToken}`, data)  
 
         if (response.status !== 200) {
             throw new Error()
@@ -83,7 +88,9 @@ export const completeTask = async (taskData :taskData) => {
 // get completed tasks from DB 
 
 export const getAllCompletedTasksById = async (userId :string) => {
-    const response = await axios.get(completeTaskURL + `?orderBy="completedBy"&equalTo="${userId}"`)
+    const userToken = await getAuthToken()
+
+    const response = await axios.get(completeTaskURL + `?orderBy="completedBy"&equalTo="${userId}"&auth=${userToken}`)
 
     if (response.status !== 200) {
         throw new Error('Could not fetch tasks.')
@@ -96,9 +103,11 @@ export const getAllCompletedTasksById = async (userId :string) => {
 
 export const editTask = async (task :any) => {
 
+    const userToken = await getAuthToken()
+
     try {
         const taskDBId = await getTaskById(task.id)
-        const response = await axios.put(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskDBId}.json`, task)
+        const response = await axios.put(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskDBId}.json?auth=${userToken}`, task)
 
         if (response.status !== 200) {
             throw new Error('Could not edit task')
@@ -117,8 +126,10 @@ export const editTask = async (task :any) => {
 
 export const getTaskById = async (id :string) => {
 
+    const userToken = getAuthToken()
+
     try {
-        const response = await axios.get(postTaskURL + `?orderBy="id"&equalTo="${id}"`)
+        const response = await axios.get(postTaskURL + `?orderBy="id"&equalTo="${id}"&auth=${userToken}`)
 
         if (response.status !== 200) {
             throw new Error('Could not find task')
