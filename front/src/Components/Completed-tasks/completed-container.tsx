@@ -9,6 +9,7 @@ import CompletedTask from './CompletedTask'
 import Chart from '../Charts/Chart'
 import ChartByType from '../Charts/ChartByType'
 import TaskLoader from '../Utils/task-loader'
+import SmallSpinner from '../Utils/SmallSpinner'
 
 // change persisted Reducer upon rename or migration !!!!
 
@@ -41,10 +42,10 @@ function CompletedContainer() {
 
       <div className='flex mt-2 p-2 gap-10 items-start pl-10 flex-row-reverse h-5/6'>
 
-        {completedTasks.length > 0 ? <main className='w-1/2 p-2 border-2 border-slate-100 shadow-sm flex h-full flex-col overflow-y-scroll'>
+        {loaded ? completedTasks.length > 0 ? <main className='w-1/2 p-2 border-2 border-slate-100 shadow-sm flex h-full flex-col overflow-y-scroll'>
           {completedTasks.length ? <Chart tasks={completedTasks} /> : <></>}
           {completedTasks.length ? <ChartByType tasks={completedTasks} /> : <></>}
-        </main> : <></>}
+        </main> : <></> : <SmallSpinner />}
 
         <aside id='completed-task-container' className='w-1/2 p-2 border-2 border-slate-100 shadow-sm mr-auto min-h-full max-h-full overflow-y-scroll'>
 
