@@ -8,19 +8,26 @@ import CompletedTask from './CompletedTask'
 
 import Chart from '../Charts/Chart'
 import ChartByType from '../Charts/ChartByType'
+import TaskLoader from '../Utils/task-loader'
+
 // change persisted Reducer upon rename or migration !!!!
+
 function CompletedContainer() {
-  const currentUser: User = useSelector((state: RootStateOrAny) => state.user.value) // May need to be in parent, need completed tasks by current user
+  const currentUser: User = useSelector((state: RootStateOrAny) => state.user.value) 
   const completedTasks = useSelector((state: RootStateOrAny) => state.completedTasks.completed)
+
+  const loaded = useSelector((state :RootStateOrAny) => state.completedTasks.loaded)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getCompletedTasksByUserId(currentUser.userId))
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // make sure to style for big screens as well
-  return (
+  return ( 
+
     <div className='w-full overflow-x-hidden'>
 
       <div className='flex items-center justify-center p-2 mt-3 border-b-2 w-2/3 m-auto border-slate-500'>
@@ -44,7 +51,9 @@ function CompletedContainer() {
           <p className='font-bold text-center text-xs mb-2'>Issues you have resolved:</p>
 
           <ul className='flex flex-col items-center justify-center'>
-            {completedTasks.length ? [...completedTasks].sort((a, b) => Number(b.completedOn) - Number(a.completedOn)).map((task: any) => <CompletedTask task={task} key={task.id} />) : <li className='text-sm'>Nothing yet...</li>}
+          {loaded
+          ? completedTasks.length ? [...completedTasks].sort((a, b) => Number(b.completedOn) - Number(a.completedOn)).map((task: any) => <CompletedTask task={task} key={task.id} />) : <li className='text-sm'>Nothing yet...</li>
+          : <TaskLoader /> }
           </ul>
 
         </aside>

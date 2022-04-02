@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
 
 import { getTasks } from '../../features/tasksReducer'
@@ -10,15 +10,12 @@ import '../../App.css'
 function TasksContainer(props: any) {
 
   const tasks = useSelector((state: RootStateOrAny) => state.tasks.tasks)
-  const [tasksLoaded, setTasksLoaded] = useState(false)
+  const tasksLoaded = useSelector((state : RootStateOrAny) => state.tasks.loaded)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    setTasksLoaded(true)
-
     dispatch(getTasks())
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

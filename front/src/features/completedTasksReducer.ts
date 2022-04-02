@@ -15,11 +15,13 @@ export const getCompletedTasksByUserId = createAsyncThunk(
 
 export const completedTasksSlice :Slice = createSlice({
     name: 'completed-tasks',
-    initialState: { completed: [] },
+    initialState: { completed: [], loaded: false },
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getCompletedTasksByUserId.fulfilled, (state :any, action) => {
+            state.loaded = false
             state.completed = [...action.payload]
+            state.loaded = true
         })
     }
 })
