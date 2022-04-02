@@ -78,6 +78,9 @@ export const tasksSlice :Slice = createSlice({
                     state.tasks = [...state.tasks.sort((a :any, b :any) => a.id - b.id)]
                     break
             }
+        },
+        searchTasks: (state, action) :any => {
+            state.tasks = [...state.tasks.filter((x :any) => x.taskName.toLowerCase().includes(action.payload))]
         }
     },
     extraReducers: (builder) => {
@@ -97,4 +100,4 @@ export const tasksSlice :Slice = createSlice({
 
 export default tasksSlice.reducer
 
-export const { addTask, updateAllTasks, filterTasks} = tasksSlice.actions
+export const { addTask, updateAllTasks, filterTasks, searchTasks} = tasksSlice.actions
