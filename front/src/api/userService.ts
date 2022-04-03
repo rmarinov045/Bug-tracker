@@ -6,7 +6,7 @@ import { getAuthToken } from "../auth/auth"
 // post user to DB
 
 export async function postUser(user :userData) {
-    const userToken = getAuthToken()
+    const userToken = await getAuthToken()
 
     try {
         await axios.post(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${userToken}`, JSON.stringify(user))
@@ -18,7 +18,7 @@ export async function postUser(user :userData) {
 // get user from DB
 
 export async function getUser(email :string) {
-    const userToken = getAuthToken()
+    const userToken = await getAuthToken()
 
     try {
         const response = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?orderBy="email"&equalTo="${email}"&auth=${userToken}`)
@@ -32,7 +32,7 @@ export async function getUser(email :string) {
 // get user DB id 
 
 export async function getUserDBId(email:string) {
-    const userToken = getAuthToken()
+    const userToken = await getAuthToken()
 
     try {
         const currentUser = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?orderBy="email"&equalTo="${email}"&auth=${userToken}`)
@@ -48,7 +48,7 @@ export async function getUserDBId(email:string) {
 // update user in DB
 
 export async function updateUser(userData :User) {
-    const userToken = getAuthToken()
+    const userToken = await getAuthToken()
 
     try {
         const id = await getUserDBId(userData.email)

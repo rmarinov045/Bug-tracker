@@ -126,7 +126,7 @@ export const editTask = async (task :any) => {
 
 export const getTaskById = async (id :string) => {
 
-    const userToken = getAuthToken()
+    const userToken = await getAuthToken()
 
     try {
         const response = await axios.get(postTaskURL + `?orderBy="id"&equalTo="${id}"&auth=${userToken}`)
