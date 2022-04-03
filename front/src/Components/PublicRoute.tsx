@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebase'
 import Spinner from './Utils/Spinner'
-
+// add cleanup function
 function PublicRoute({ component } :any) {
 
     const navigate = useNavigate()
@@ -12,9 +12,10 @@ function PublicRoute({ component } :any) {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
-                navigate('/admin')
                 setLoading(false)
+                navigate('/admin')
             }
+            setLoading(false)
         })
         return () => {}
     }, [navigate])

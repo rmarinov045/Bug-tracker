@@ -38,11 +38,13 @@ function ProfileCard(props: any) {
 
     useEffect(() => {
         async function getImage() {
-            dispatch(getUserProfilePic())
-            setLoading(false)
+            const res = await dispatch(getUserProfilePic())
+            if (res) {
+                setLoading(false)
+            }
         }
         getImage()
-
+        
     }, [dispatch, updateImg])
 
     return (

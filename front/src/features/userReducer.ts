@@ -57,6 +57,7 @@ export const userSlice :Slice = createSlice({
         },
         reset: (state, action) => {
             state.value = {}
+            state.imageUrl = ''
         }
     },
     extraReducers: (builder) => {

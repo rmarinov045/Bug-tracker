@@ -11,15 +11,15 @@ function PrivateRoute({ component }: any) {
   const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate()
-
+  // add cleanup function
   useEffect(() => {    
     auth.onAuthStateChanged(user => {
       if (user) {
         setUserAuth(true)
+        setLoading(false)
       } else {
         navigate('/')
       }
-      setLoading(false)
     })
 
     return () => {}
