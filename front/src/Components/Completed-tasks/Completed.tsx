@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../navbar'
-import CompletedContainer from './completed-container'
+import Navbar from '../Navbar'
+import CompletedContainer from './CompletedContainer'
 
 function Completed() {
   return (

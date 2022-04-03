@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit'
 import { getUser, updateUser } from '../api/userService'
-
-// Will need persisting state
+import { downloadImage } from '../firebase'
 
 export interface User {
     company: string,
@@ -25,7 +24,7 @@ export const getUserByEmail = createAsyncThunk(
             return 'Error'
         }
     }
-)
+) 
 
 export const updateUserById = createAsyncThunk(
     'users/updateUserById',
@@ -35,10 +34,23 @@ export const updateUserById = createAsyncThunk(
         return response
     }
 )
+
+export const getUserProfilePic = createAsyncThunk(
+    'users/getProfileImg',
+    async (thunkAPI) => {
+        try {
+            const response = await downloadImage()
+            return response
+        } catch (err) {
+            console.log(err);
+        }
+    }
+)
+
         // add rejected handling for extraReducers
 export const userSlice :Slice = createSlice({
     name: 'user',
-    initialState: { auth: false, value: {} },
+    initialState: { auth: false, value: {}, imageUrl: '' },
     reducers: {
         authenticate: (state, action) => {
             state.auth = action.payload
@@ -54,9 +66,12 @@ export const userSlice :Slice = createSlice({
         builder.addCase(updateUserById.fulfilled, (state, action) => {
             state.value = action.payload
         })
+        builder.addCase(getUserProfilePic.fulfilled, (state, action) => {
+            state.imageUrl = action.payload || ''
+        })
     }
 })
 
-export const { updateUserState, login, register, authenticate, reset } = userSlice.actions
+export const { updateUserState, login, register, authenticate, reset,  } = userSlice.actions
 
 export default userSlice.reducer

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { convertToDate } from '../../utils/util'
-import { typeColors, priorityColors } from '../Dashboard/task'
+import { typeColors, priorityColors } from '../Dashboard/Task'
 
 function CompletedTask({ task }: any) {
   const [taskInfo, setTaskInfo] = useState(false)

@@ -89,8 +89,6 @@ function Task(props: any) {
 
   // fix styling for large screens
 
-  // add success edit modal
-
   return (
 
     <div className='flex flex-col'>
@@ -103,11 +101,11 @@ function Task(props: any) {
           </div>
         </div>
         <div className='mt-2 w-full'>
-          <p className='text-sm whitespace-nowrap text-ellipsis w-2/3 overflow-hidden'>{taskDescription}</p>
+          <p className='text-sm whitespace-nowrap text-ellipsis w-full p-2 bg-gray-300 rounded overflow-hidden min-h-[2rem]'>{taskDescription}</p>
           <br />
         </div>
         <div className='flex items-center justify-between'>
-          <p className='font-bold inline text-sm whitespace-nowrap text-ellipsis w-2/3 overflow-hidden'>Created by: {taskAuthor}</p>
+          <p className='font-bold inline text-sm whitespace-nowrap text-ellipsis w-2/3 overflow-hidden'>Creator: {taskAuthor}</p>
           <div className='flex self-end gap-3'>
             <svg onClick={() => setTaskMenuOpened(!taskMenuOpened)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer hover:text-green-500 transform transition ease-in-out 150" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />

@@ -2,7 +2,7 @@ import React, { useReducer, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { editTaskById } from '../../features/tasksReducer'
 import Modal from '../Utils/Modal'
-import { taskTypes, taskPriorities } from './add-task'
+import { taskTypes, taskPriorities } from './AddTask'
 
 function reducer(state :any, action :any) {
     switch (action.type) {

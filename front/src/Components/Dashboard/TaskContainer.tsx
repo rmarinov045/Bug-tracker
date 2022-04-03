@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Task from './task'
-import TaskLoader from '../Utils/task-loader'
+import Task from './Task'
+import TaskLoader from '../Utils/TaskLoader'
 
 import '../../App.css'
 

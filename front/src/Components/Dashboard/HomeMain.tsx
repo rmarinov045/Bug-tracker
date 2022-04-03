@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-import Navbar from '../navbar'
-import TasksContainer from './tasks-container'
+import Navbar from '../Navbar'
+import TasksContainer from './TaskContainer'
 
 import '../../App.css'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'

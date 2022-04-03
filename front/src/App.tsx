@@ -11,10 +11,10 @@ import { Provider } from 'react-redux'
 
 import { PersistGate } from 'redux-persist/integration/react'
 
-import LoginForm from './Components/Login/login-form'
-import RegisterForm from './Components/Register/register-form'
-import ConfirmEmail from './Components/Register/confirm-email'
-import HomeMain from './Components/Dashboard/home-main'
+import LoginForm from './Components/Login/LoginForm'
+import RegisterForm from './Components/Register/RegisterForm'
+import ConfirmEmail from './Components/Register/ConfirmEmail'
+import HomeMain from './Components/Dashboard/HomeMain'
 import Completed from './Components/Completed-tasks/Completed';
 import Profile from './Components/Profile/Profile';
 import Spinner from './Components/Utils/Spinner';

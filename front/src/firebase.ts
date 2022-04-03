@@ -1,5 +1,6 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 
 const app :FirebaseApp = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,6 +14,27 @@ const app :FirebaseApp = initializeApp({
 
 export const auth = getAuth(app)
 export default app
+
+// handling profile pic image upload to FB => move to another module if necessary
+
+const storage = getStorage(app)
+
+export const uploadImage = async(file :any) => {
+    const currentUserId = auth.currentUser?.uid
+
+    const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
+    uploadBytes(storageRef, file)
+    return getDownloadURL(storageRef)
+
+}
+
+export const downloadImage = async() => {
+    const currentUserId = auth.currentUser?.uid
+
+    const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
+
+    return getDownloadURL(storageRef)
+}
 
 // Initial firebase confing and exposing firebase and auth module to react app
 
