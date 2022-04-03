@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import { useDispatch } from 'react-redux'
-
 import { useNavigate } from 'react-router-dom'
 
 import { auth } from '../firebase'
@@ -9,7 +7,7 @@ import Spinner from './Utils/Spinner'
 
 function PrivateRoute({ component }: any) {
   const [userAuth, setUserAuth] = useState(false)
-  const dispatch = useDispatch()
+
   const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate()
@@ -23,7 +21,9 @@ function PrivateRoute({ component }: any) {
       }
       setLoading(false)
     })
-  }, [dispatch, navigate])
+
+    return () => {}
+  }, [navigate])
   
   return loading ? <Spinner /> : userAuth ? <>{component}</> : null
   
