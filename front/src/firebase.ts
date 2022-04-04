@@ -1,6 +1,6 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 
 const app :FirebaseApp = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -34,6 +34,20 @@ export const downloadImage = async() => {
     const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
 
     return getDownloadURL(storageRef)
+}
+
+export const deleteImage = async() => {
+    const currentUserId = auth.currentUser?.uid
+
+    const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
+    
+    try {
+        const res = await deleteObject(storageRef)
+        return res
+    } catch(err :any) {
+        return err.message
+    }
+    
 }
 
 // Initial firebase confing and exposing firebase and auth module to react app

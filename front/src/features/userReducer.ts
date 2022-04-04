@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit'
-import { getUser, updateUser } from '../api/userService'
-import { downloadImage } from '../firebase'
+import { deleteUserImage, getUser, updateUser } from '../api/userService'
+import { deleteImage, downloadImage } from '../firebase'
 
 export interface User {
     company: string,
@@ -41,8 +41,21 @@ export const getUserProfilePic = createAsyncThunk(
         try {
             const response = await downloadImage()
             return response
-        } catch (err) {
-            console.log(err);
+        } catch (err :any) {
+            return ''
+        }
+    }
+)
+
+export const deleteUserProfilePic = createAsyncThunk(
+    'users/deleteProfileImg',
+    async (thunkAPI) => {
+        try {
+            await deleteUserImage()
+            await deleteImage()
+            return ''
+        } catch(err :any) {
+            return ''
         }
     }
 )
@@ -69,6 +82,9 @@ export const userSlice :Slice = createSlice({
         })
         builder.addCase(getUserProfilePic.fulfilled, (state, action) => {
             state.imageUrl = action.payload || ''
+        })
+        builder.addCase(deleteUserProfilePic.fulfilled, (state, action) => {
+            state.imageUrl = action.payload
         })
     }
 })

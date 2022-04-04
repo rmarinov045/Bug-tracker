@@ -24,10 +24,10 @@ function Profile() {
     return (
         <>
             <Modal message={modalMessage} bgColor={modalColor} />
-            <div className='flex h-screen w-full'>
+            <div className='flex h-screen w-full overflow-x-hidden'>
                 <Navbar />
-                <main className='w-full p-4'>
-                    <div className='flex w-full flex-col items-center gap-10'>
+                <main className='w-full p-4 overflow-y-scroll'>
+                    <div className='flex flex-col items-center gap-10'>
                         <ProfileCard updateModal={updateModal} user={user} />
                         <ProfileFull updateModal={updateModal} user={user} />
                     </div>

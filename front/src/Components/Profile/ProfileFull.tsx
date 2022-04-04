@@ -1,11 +1,14 @@
-import { updateUserById, User } from '../../features/userReducer'
+import { deleteUserProfilePic, updateUserById, User } from '../../features/userReducer'
 import React, { useState } from 'react'
 import { useAppDispatch } from '../../store'
+import { RootStateOrAny, useSelector } from 'react-redux'
 
 function ProfileFull(props: any) {
     const user: User = props.user
     const [userData, setUserData] = useState(user)
     const [loading, setLoading] = useState(false)
+
+    const userProfileImage = useSelector((state: RootStateOrAny) => state.user.imageUrl)
 
     const dispatch = useAppDispatch()
 
@@ -29,9 +32,18 @@ function ProfileFull(props: any) {
         if (updateAction) {
             setLoading(false)
         }
-        
 
         props.updateModal('Profile updated', '#16a34a')
+    }
+
+    async function handleImageDelete(e: any) {
+        e.preventDefault()
+
+        const deleteAction = await dispatch(deleteUserProfilePic())
+
+        if (deleteAction) {
+            props.updateModal('Profile image removed successfully!', '#16a34a')
+        }
     }
 
     return (
@@ -51,6 +63,9 @@ function ProfileFull(props: any) {
             <div className='flex gap-7 items-center justify-center border-b-2 p-2 focus-within:border-green-500 transition ease-in-out 150'>
                 <label className='font-bold w-40' htmlFor="position">Position</label>
                 <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full' value={userData.position} type="text" name="firstName" id="position" />
+            </div>
+            <div>
+                {userProfileImage ? <button onClick={(e) => handleImageDelete(e)} className='font-bold text-xs text-red-600 hover:underline transition ease-in-out 150'>Remove profile picture</button> : <></>}
             </div>
             <div className='flex gap-7 items-center justify-center'>
                 <button className='p-2 transition ease-in-out 150 hover:brightness-90 bg-blue-400 text-white font-bold rounded-md'>{loading ? <svg version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg" className='h-6 w-6 m-auto'
@@ -87,6 +102,7 @@ function ProfileFull(props: any) {
             </div>
         </form>
     )
+
 }
 
 export default ProfileFull

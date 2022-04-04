@@ -29,6 +29,8 @@ function ProfileCard(props: any) {
             
             await updateUserImage(uploadResponse)
 
+            await dispatch(getUserProfilePic())
+
             props.updateModal('Profile picture updated!', '#16a34a')
             setUpdateImg(!updateImg)
         } catch (err) {

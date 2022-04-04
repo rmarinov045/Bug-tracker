@@ -80,3 +80,20 @@ export async function updateUserImage(URL :string) {
         return err.message
     }
 }
+
+// remove user image in DB
+
+export async function deleteUserImage() {
+    const userToken = await getAuthToken()
+    const userEmail = auth.currentUser?.email
+
+    try {
+        const id = await getUserDBId(userEmail || '')
+
+        const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}&updateMask.fieldPaths=profileImageUrl`, JSON.stringify({ profileImageUrl: null }))
+    
+        return response
+    } catch (err :any) {
+        return err.message
+    }
+}
