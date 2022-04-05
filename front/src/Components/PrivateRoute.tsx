@@ -22,7 +22,9 @@ function PrivateRoute({ component }: any) {
       }
     })
 
-    return () => {}
+    return () => {
+      auth.currentUser?.reload()
+    }
   }, [navigate])
   
   return loading ? <Spinner /> : userAuth ? <>{component}</> : null

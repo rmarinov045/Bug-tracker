@@ -17,7 +17,9 @@ function PublicRoute({ component } :any) {
             }
             setLoading(false)
         })
-        return () => {}
+        return () => {
+            auth.currentUser?.reload()
+        }
     }, [navigate])
 
     return (
