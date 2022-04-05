@@ -58,7 +58,7 @@ export const editTaskById = createAsyncThunk(
 // all tasks slice
 export const tasksSlice :Slice = createSlice({
     name: 'tasks',
-    initialState: { tasks: [], loaded: false },
+    initialState: { tasks: [], loaded: false, filtered: [] },
     reducers: {
         addTask: (state, action) :any=> {
             state.tasks.push(action.payload)
@@ -80,7 +80,7 @@ export const tasksSlice :Slice = createSlice({
             }
         },
         searchTasks: (state, action) :any => {
-            state.tasks = [...state.tasks.filter((x :any) => x.taskName.toLowerCase().includes(action.payload))]
+            state.filtered = [...state.tasks.filter((x :any) => x.taskName.toLowerCase().includes(action.payload))]
         }
     },
     extraReducers: (builder) => {

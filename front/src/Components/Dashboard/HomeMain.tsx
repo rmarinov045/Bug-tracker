@@ -15,9 +15,11 @@ function HomeMain() {
 
     const [error, setError] = useState('')
     const [modalColor, setModalColor] = useState('#dc2626')
+    const [filtered, setFiltered] = useState(false)
 
     const tasks = useSelector((state: RootStateOrAny) => state.tasks.tasks)
     const tasksLoaded = useSelector((state: RootStateOrAny) => state.tasks.loaded)
+    const filteredTasks = useSelector((state :RootStateOrAny) => state.tasks.filtered)
 
     function updateModalMessage(message: string) {
         setError(message)
@@ -27,19 +29,21 @@ function HomeMain() {
         setModalColor(bgColor)
     }
 
-    function handleSearch(search :string) {        
+    function handleSearch(search: string) {
         dispatch(searchTasks(search.toLowerCase()))
+        setFiltered(true)
 
         if (!search) {
             dispatch(getTasks())
+            setFiltered(false)
         }
     }
 
     const dispatch = useDispatch()
-  
+
     useEffect(() => {
-      dispatch(getTasks())
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+        dispatch(getTasks())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // remove add task menu on outside click
@@ -61,15 +65,14 @@ function HomeMain() {
 
                     <div className='flex w-full p-2 mt-3 items-center justify-center'>
 
-                        <SearchField handleSearch={handleSearch} />
-
-                        <div>
+                        <div className='flex-col'>
                             <h1 className='font-bold text-xl'>Current issues:</h1>
+                            <SearchField handleSearch={handleSearch} />
                         </div>
 
                     </div>
 
-                    <TasksContainer tasks={tasks} tasksLoaded={tasksLoaded} updateModalMessage={updateModalMessage} updateModalColor={updateModalColor} />
+                    <TasksContainer tasks={filtered ? filteredTasks : tasks} tasksLoaded={tasksLoaded} updateModalMessage={updateModalMessage} updateModalColor={updateModalColor} />
 
                 </div>
             </div>
