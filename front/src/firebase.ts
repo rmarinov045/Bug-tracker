@@ -1,5 +1,5 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
+import { getAuth, sendEmailVerification, sendPasswordResetEmail } from 'firebase/auth'
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 
 const app :FirebaseApp = initializeApp({
@@ -33,7 +33,7 @@ export const downloadImage = async() => {
 
     const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
 
-    return getDownloadURL(storageRef)
+    return getDownloadURL(storageRef) || ''
 }
 
 export const deleteImage = async() => {
@@ -46,6 +46,31 @@ export const deleteImage = async() => {
         return res
     } catch(err :any) {
         return err.message
+    }
+}
+
+export const resetPassword = async() => {
+    
+    try {
+        await sendPasswordResetEmail(auth, auth.currentUser?.email || '')     
+        return true
+    } catch (err) {
+        return err
+    }
+}
+
+export const sendVerificationEmail = async() => {
+    const user = auth.currentUser
+
+    if (user) {
+        try {
+            await sendEmailVerification(user)
+            return true
+        } catch (err) {
+            return err
+        }
+    } else {
+        return null
     }
     
 }

@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { sendVerificationEmail } from '../../firebase'
 
-function confirmEmail() {
+function ConfirmEmail() {
+
+    const [emailSent, setEmailSent] = useState(false)
+
+    useEffect(() => {
+        if (!emailSent) {
+            sendVerificationEmail()
+            setEmailSent(true)
+        }
+    }, [emailSent])
+
     return (
         <div className='w-full h-screen flex items-center justify-center flex-col'>
 
@@ -10,13 +21,13 @@ function confirmEmail() {
                 <h1 className='font-bold'>Please check your inbox for more instructions on how to confirm your email</h1>
             </div>
 
-            <Link to='/admin' className='mt-10 font-bold flex gap-2'><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <Link to='/login' className='mt-10 font-bold flex gap-2'><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>Go to dashboard!</Link>
+            </svg>Go back to login!</Link>
 
         </div>
     )
 }
 
-export default confirmEmail
+export default ConfirmEmail
 

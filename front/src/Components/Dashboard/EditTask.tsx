@@ -58,7 +58,7 @@ function EditTask(props :any) {
 
         <Modal message={error} bgColor={bgColor} />
 
-        <div className='fixed w-9/12 left-1/2 -translate-x-1/2 z-10'>
+        <div className='fixed w-9/12 left-1/2 -translate-x-1/2 z-10 top-1/2 -translate-y-1/2'>
 
             <div className='w-full bg-white font-bold m-auto rounded-xl shadow-2xl min-h-fit p-2 border-2 border-green-500'>
                 <div className='flex items-center'>

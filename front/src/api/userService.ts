@@ -68,11 +68,11 @@ export async function updateUser(userData :User) {
 export async function updateUserImage(URL :string) {
     const userToken = await getAuthToken()
     const userEmail = auth.currentUser?.email
-
+    
     try {
         const id = await getUserDBId(userEmail || '')
-
-        const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}&updateMask.fieldPaths=profileImageUrl`, JSON.stringify({ profileImageUrl: URL }))
+        
+        const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}&updateMask.fieldPaths=profileImageUrl`, JSON.stringify({ profileImageUrl: URL || '' }))
 
         return response 
 
@@ -90,7 +90,7 @@ export async function deleteUserImage() {
     try {
         const id = await getUserDBId(userEmail || '')
 
-        const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}&updateMask.fieldPaths=profileImageUrl`, JSON.stringify({ profileImageUrl: null }))
+        const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}&updateMask.fieldPaths=profileImageUrl`, JSON.stringify({ profileImageUrl: '' }))
     
         return response
     } catch (err :any) {

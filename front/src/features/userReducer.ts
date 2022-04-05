@@ -51,8 +51,8 @@ export const deleteUserProfilePic = createAsyncThunk(
     'users/deleteProfileImg',
     async (thunkAPI) => {
         try {
-            await deleteUserImage()
-            await deleteImage()
+            await deleteUserImage() // deletes in DB
+            await deleteImage() // deletes in FB store
             return ''
         } catch(err :any) {
             return ''

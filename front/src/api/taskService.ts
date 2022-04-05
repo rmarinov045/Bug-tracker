@@ -52,9 +52,9 @@ export async function getAllTasks() :Promise<any> {
 
 export async function deleteTask(id :string) {
     const userToken = await getAuthToken()
-    const currentTask = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?orderBy="id"&equalTo="${id}&auth=${userToken}"`)
+    const currentTask = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?orderBy="id"&equalTo="${id}"&auth=${userToken}"`)
     const currentTaskID = Object.keys(currentTask.data)[0]
-      
+    
     const response = axios.delete(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${currentTaskID}.json?auth=${userToken}`)
 
     if ((await response).status === 200) {

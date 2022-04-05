@@ -51,7 +51,7 @@ function HomeMain() {
 
             <Navbar />
 
-            <div id='home-admin' className='flex h-screen w-full filter'>
+            <div id='home-admin' className='flex h-screen w-full filter overflow-x-hidden'>
 
                 <div className="w-full flex flex-col pt-10 items-center">
 

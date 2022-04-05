@@ -11,7 +11,7 @@ function PublicRoute({ component } :any) {
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
-            if (user) {
+            if (user && user.emailVerified) {
                 setLoading(false)
                 navigate('/admin')
             }

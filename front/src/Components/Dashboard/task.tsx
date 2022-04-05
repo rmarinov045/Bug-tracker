@@ -11,9 +11,9 @@ import { generateTaskId } from '../../utils/util'
 import EditTask from './EditTask'
 
 export const typeColors: { [char: string]: string } = {
-  "Visual bug": '#fb923c',
-  'Minor bug': '#a3e635',
-  'Major bug': '#991b1b'
+  'Visual bug': '#fb923c',
+  'Minor Bug': '#a3e635',
+  'Major Bug': '#ef4444'
 }
 
 export const priorityColors: { [char: string]: string } = {
@@ -25,7 +25,7 @@ export const priorityColors: { [char: string]: string } = {
 
 function Task(props: any) {
   const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id, authorId } = props
-
+  
   const error = props.setError
   const modalColor = props.setModalColor
 
@@ -92,7 +92,7 @@ function Task(props: any) {
   return (
 
     <div className='flex flex-col'>
-      <div className='bg-gray-200 rounded-xl p-2 transform transition ease-in-out 150 min-w-full'>
+      <div className='bg-indigo-50 rounded-xl p-2 transform transition ease-in-out 150 min-w-full'>
         <div className='flex w-full items-center border-b-2 border-black pb-4'>
           <p className='font-bold text-sm whitespace-nowrap text-ellipsis w-2/3 overflow-hidden'>{taskName}</p>
           <div className='flex gap-2 w-full justify-end'>
@@ -101,7 +101,7 @@ function Task(props: any) {
           </div>
         </div>
         <div className='mt-2 w-full'>
-          <p className='text-sm whitespace-nowrap text-ellipsis w-full p-2 bg-gray-300 rounded overflow-hidden min-h-[2rem]'>{taskDescription}</p>
+          <div className='text-sm whitespace-pre-wrap w-full p-2 bg-indigo-100 rounded min-h-[2rem]'>{taskDescription}</div>
           <br />
         </div>
         <div className='flex items-center justify-between'>

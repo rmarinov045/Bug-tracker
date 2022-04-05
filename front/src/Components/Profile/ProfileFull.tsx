@@ -2,6 +2,7 @@ import { deleteUserProfilePic, updateUserById, User } from '../../features/userR
 import React, { useState } from 'react'
 import { useAppDispatch } from '../../store'
 import { RootStateOrAny, useSelector } from 'react-redux'
+import { resetPassword } from '../../firebase'
 
 function ProfileFull(props: any) {
     const user: User = props.user
@@ -40,10 +41,23 @@ function ProfileFull(props: any) {
         e.preventDefault()
 
         const deleteAction = await dispatch(deleteUserProfilePic())
-
+        
         if (deleteAction) {
             props.updateModal('Profile image removed successfully!', '#16a34a')
         }
+    }
+
+    async function handlePasswordReset(e :any) {
+        e.preventDefault()
+
+        const res : Error | any = await resetPassword()
+        
+        if (res.code) {
+            props.updateModal('Failed to reset password. Please try again later.', '#dc2626')
+            return
+        }
+
+        props.updateModal('Please check your inbox for a confirmation email.', '#16a34a')
     }
 
     return (
@@ -98,7 +112,7 @@ function ProfileFull(props: any) {
                             begin="0.3" />
                     </circle>
                 </svg> : 'Update Profile'}</button>
-                <button className='p-2 transition ease-in-out 150 hover:brightness-90 bg-red-400 text-white font-bold rounded-md'>Reset Password</button>
+                <button onClick={(e) => handlePasswordReset(e)} className='p-2 transition ease-in-out 150 hover:brightness-90 bg-red-400 text-white font-bold rounded-md'>Reset Password</button>
             </div>
         </form>
     )

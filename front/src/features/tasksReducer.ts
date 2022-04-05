@@ -29,7 +29,7 @@ export const getTasks = createAsyncThunk(
 
 export const deleteTaskById = createAsyncThunk(
     'tasks/deleteById',
-    async (taskId :string, thunkAPI) => {
+    async (taskId :string, thunkAPI) => {        
         const response = await deleteTask(taskId)
 
         if (response.status === 'failed') {

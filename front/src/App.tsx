@@ -29,7 +29,7 @@ function App() {
           <Routes>
             <Route path='/' element={<PublicRoute component={<LoginForm />} />} />
             <Route path='/register' element={<PublicRoute component={<RegisterForm />} />} />
-            <Route path='/register/*' element={<PublicRoute component={<ConfirmEmail />} />} />
+            <Route path='/register/confirm-email' element={<PublicRoute component={<ConfirmEmail />} />} />
             <Route path='*' element={<Navigate to='/' />} />
             <Route path='/admin' element={<PrivateRoute component={<HomeMain />}></PrivateRoute>} />
             <Route path='/completed' element={<PrivateRoute component={<Completed />}></PrivateRoute>} />
