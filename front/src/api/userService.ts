@@ -2,7 +2,8 @@ import axios from "axios"
 import { User } from "../features/userReducer"
 import { userData } from '../Components/Register/RegisterForm'
 import { getAuthToken } from "../auth/auth"
-import { auth } from "../firebase"
+import { auth, storage } from "../firebase"
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 // post user to DB
 
@@ -97,3 +98,56 @@ export async function deleteUserImage() {
         return err.message
     }
 }
+
+export const uploadImage = async(file :any) => {
+    const currentUserId = auth.currentUser?.uid
+    
+    const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
+    
+    uploadBytes(storageRef, file)
+
+    const downloadUrl = await getDownloadURL(storageRef)
+
+    if (downloadUrl) {
+        return downloadUrl
+    } else {
+        return ''
+    }
+
+}
+
+export const downloadImage = async() => {
+    const currentUserId = auth.currentUser?.uid
+
+    const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
+
+    try {
+        return await getDownloadURL(storageRef) || ''
+    } catch (err :any) {
+        throw new Error (err.message)
+    }
+}
+
+export const downloadUserImageById = async(id :string) => {
+    const storageRef = ref(storage, 'ProfilePics/' + id)
+
+    try {
+        return await getDownloadURL(storageRef)
+    } catch (err :any) {
+        throw new Error (err.message)
+    }
+}
+
+export const deleteImage = async() => {
+    const currentUserId = auth.currentUser?.uid
+
+    const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
+    
+    try {
+        const res = await deleteObject(storageRef)
+        return res
+    } catch(err :any) {
+        return err.message
+    }
+}
+

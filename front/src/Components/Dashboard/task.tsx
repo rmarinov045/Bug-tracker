@@ -5,10 +5,14 @@ import { deleteTask, completeTask } from '../../api/taskService'
 
 import { auth } from '../../firebase'
 
+import { downloadUserImageById } from '../../api/userService'
+
 import { deleteTaskById } from '../../features/tasksReducer'
 import { generateTaskId } from '../../utils/util'
 
 import EditTask from './EditTask'
+
+import defaultUserImage from '../../assets/profile.jpeg'
 
 export const typeColors: { [char: string]: string } = {
   'Visual bug': '#fb923c',
@@ -34,6 +38,8 @@ function Task(props: any) {
   
   const [typeColor, setTypeColor] = useState('')
   const [priorityColor, setPriorityColor] = useState('')
+
+  const [authorImage, setAuthorImage] = useState('')
 
   const dispatch = useDispatch()
 
@@ -85,7 +91,17 @@ function Task(props: any) {
   useEffect(() => {
     setTypeColor(typeColors[taskType])
     setPriorityColor(priorityColors[taskPriority])
-  }, [taskType, taskPriority])
+
+    async function getImages() {
+      try {
+        const imageUrl = await downloadUserImageById(authorId)
+        setAuthorImage(imageUrl)
+      } catch (err) {
+        return
+      }
+    }
+    getImages()
+  }, [taskType, taskPriority, authorId])
 
   // fix styling for large screens
 
@@ -105,7 +121,7 @@ function Task(props: any) {
           <br />
         </div>
         <div className='flex items-center justify-between'>
-          <p className='font-bold inline text-sm whitespace-nowrap text-ellipsis w-2/3 overflow-hidden'>Creator: {taskAuthor}</p>
+          <div className='font-bold text-sm whitespace-nowrap text-ellipsis w-2/3 overflow-hidden'><p className='flex items-center gap-2'>Creator: <img src={authorImage || defaultUserImage} className='h-8 w-8 rounded-full' alt='Assignee' /></p></div>
           <div className='flex self-end gap-3'>
             <svg onClick={() => setTaskMenuOpened(!taskMenuOpened)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 cursor-pointer hover:text-green-500 transform transition ease-in-out 150" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />

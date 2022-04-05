@@ -17,20 +17,20 @@ export const taskPriorities: taskSettings[] = [{ value: 'Urgent', id: 1 }, { val
 function AddTask(props: any) {
 
     const dispatch = useDispatch()
-    const userId = useSelector((state: RootStateOrAny) => state.user.value.userId)
+    const user = useSelector((state: RootStateOrAny) => state.user.value)
+    const userId = user.userId
 
     const { visible, updateModalMessage, updateModalColor } = props
 
     const [taskType, setTaskType] = useState('')
     const [taskPriority, setTaskPriority] = useState('')
     const [taskName, setTaskName] = useState('')
-    const [taskAuthor, setTaskAuthor] = useState('')
     const [taskDescription, setTaskDescription] = useState('')
     const [error, setError] = useState('')
 
     async function handleSubmit(e: any): Promise<any> {
         e.preventDefault()
-        const data = { taskName, taskType, taskPriority, taskAuthor, taskDescription, id: generateTaskId(), authorId: userId }    // add created on for sorting
+        const data = { taskName, taskType, taskPriority, taskAuthor: user.firstName, taskDescription, id: generateTaskId(), authorId: userId }    // add created on for sorting
         const createResponse = await createTask(data)
 
         if (!createResponse) {
@@ -92,9 +92,6 @@ function AddTask(props: any) {
                         </div>
 
                     </div>
-
-                    <label htmlFor="issueName" className=''>Author</label>
-                    <input onChange={(e) => setTaskAuthor(e.target.value)} className='transform transition ease-in-out 150 border-2 border-black pr-2 pl-2 p-1 rounded-xl focus:outline-none focus:border-green-500' type="text" name="issueName" />
 
                     <label htmlFor="issueDescription" className=''>Description</label>
                     <textarea onChange={(e) => setTaskDescription(e.target.value)} className='transform transition ease-in-out 150 border-2 border-black pr-2 pl-2 p-1 rounded-xl focus:outline-none focus:border-green-500' name="issueDescription"></textarea>

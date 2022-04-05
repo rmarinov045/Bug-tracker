@@ -1,6 +1,6 @@
 import { FirebaseApp, initializeApp } from 'firebase/app'
-import { getAuth, sendEmailVerification, sendPasswordResetEmail } from 'firebase/auth'
-import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
+import { getAuth } from 'firebase/auth'
+import { getStorage } from 'firebase/storage'
 
 const app :FirebaseApp = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -17,63 +17,7 @@ export default app
 
 // handling profile pic image upload to FB => move to another module if necessary
 
-const storage = getStorage(app)
-
-export const uploadImage = async(file :any) => {
-    const currentUserId = auth.currentUser?.uid
-
-    const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
-    uploadBytes(storageRef, file)
-    return getDownloadURL(storageRef)
-
-}
-
-export const downloadImage = async() => {
-    const currentUserId = auth.currentUser?.uid
-
-    const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
-
-    return getDownloadURL(storageRef) || ''
-}
-
-export const deleteImage = async() => {
-    const currentUserId = auth.currentUser?.uid
-
-    const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
-    
-    try {
-        const res = await deleteObject(storageRef)
-        return res
-    } catch(err :any) {
-        return err.message
-    }
-}
-
-export const resetPassword = async() => {
-    
-    try {
-        await sendPasswordResetEmail(auth, auth.currentUser?.email || '')     
-        return true
-    } catch (err) {
-        return err
-    }
-}
-
-export const sendVerificationEmail = async() => {
-    const user = auth.currentUser
-
-    if (user) {
-        try {
-            await sendEmailVerification(user)
-            return true
-        } catch (err) {
-            return err
-        }
-    } else {
-        return null
-    }
-    
-}
+export const storage = getStorage(app)
 
 // Initial firebase confing and exposing firebase and auth module to react app
 

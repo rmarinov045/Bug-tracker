@@ -1,5 +1,5 @@
 import { auth } from "../firebase"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
 
 // handles login with email and password and returns user object if successfull
 export const login = async function (email: string, password: string): Promise<any> {
@@ -51,3 +51,29 @@ export const generateAuthToken = async () :Promise<string | undefined | unknown>
 // get user auth token
 
 export const getAuthToken = async () => await auth.currentUser?.getIdToken(true)
+
+export const resetPassword = async() => {
+    
+    try {
+        await sendPasswordResetEmail(auth, auth.currentUser?.email || '')     
+        return true
+    } catch (err) {
+        return err
+    }
+}
+
+export const sendVerificationEmail = async() => {
+    const user = auth.currentUser
+
+    if (user) {
+        try {
+            await sendEmailVerification(user)
+            return true
+        } catch (err) {
+            return err
+        }
+    } else {
+        return null
+    }
+    
+}

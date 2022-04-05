@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit'
 import { deleteUserImage, getUser, updateUser } from '../api/userService'
-import { deleteImage, downloadImage } from '../firebase'
+import { deleteImage, downloadImage } from '../api/userService'
 
 export interface User {
     company: string,

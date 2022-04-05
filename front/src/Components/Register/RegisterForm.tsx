@@ -86,10 +86,10 @@ function RegisterForm() {
 
             const userId = response.uid
 
-            const user = { ...state, userId }
+            const user = { ...state, userId, profileImageUrl: userId }
 
             // post to Firebase DB
-            const dbRes = postUser(user)
+            const dbRes = await postUser(user)
 
             if (!dbRes) {
                 setError('Failed to register. Please try again.')

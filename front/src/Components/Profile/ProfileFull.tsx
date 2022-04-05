@@ -2,7 +2,7 @@ import { deleteUserProfilePic, updateUserById, User } from '../../features/userR
 import React, { useState } from 'react'
 import { useAppDispatch } from '../../store'
 import { RootStateOrAny, useSelector } from 'react-redux'
-import { resetPassword } from '../../firebase'
+import { resetPassword } from '../../auth/auth'
 
 function ProfileFull(props: any) {
     const user: User = props.user

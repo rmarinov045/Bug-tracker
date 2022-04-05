@@ -2,7 +2,7 @@ import { getUserProfilePic, User } from '../../features/userReducer'
 import React, { useEffect, useState } from 'react'
 
 import defaultProfileImage from '../../assets/profile.jpeg'
-import { uploadImage } from '../../firebase'
+import { uploadImage } from '../../api/userService'
 import { RootStateOrAny, useSelector } from 'react-redux'
 import { useAppDispatch } from '../../store'
 import SmallSpinner from '../Utils/SmallSpinner'

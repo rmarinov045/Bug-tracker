@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { sendVerificationEmail } from '../../firebase'
+import { sendVerificationEmail } from '../../auth/auth'
 
 function ConfirmEmail() {
 
