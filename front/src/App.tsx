@@ -19,7 +19,7 @@ import Completed from './Components/Completed-tasks/Completed';
 import Profile from './Components/Profile/Profile';
 import Spinner from './Components/Utils/Spinner';
 import PublicRoute from './Components/PublicRoute';
-import Schedule from './Components/Projects/Projects';
+import Projects from './Components/Projects/Projects';
 
 // added router and store
 function App() {
@@ -31,7 +31,8 @@ function App() {
             <Route path='/' element={<PublicRoute component={<LoginForm />} />} />
             <Route path='/register' element={<PublicRoute component={<RegisterForm />} />} />
             <Route path='/register/confirm-email' element={<PublicRoute component={<ConfirmEmail />} />} />
-            <Route path='*' element={<PrivateRoute component={<Schedule />} />} />
+            <Route path='*' element={<PublicRoute component={<LoginForm />} />} />
+            <Route path='/projects' element={<PrivateRoute component={<Projects />} />} />
             <Route path='/admin' element={<PrivateRoute component={<HomeMain />}></PrivateRoute>} />
             <Route path='/completed' element={<PrivateRoute component={<Completed />}></PrivateRoute>} />
             <Route path='/profile' element={<PrivateRoute component={<Profile />}></PrivateRoute>} />
