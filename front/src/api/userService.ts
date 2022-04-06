@@ -119,8 +119,8 @@ export const uploadImage = async(file :any) => {
 export const downloadImage = async() => {
     const currentUserId = auth.currentUser?.uid
 
-    const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
-
+    const storageRef = ref(storage, 'ProfilePics/' + (currentUserId || 'profile.jpeg'))
+    
     try {
         return await getDownloadURL(storageRef) || ''
     } catch (err :any) {
@@ -129,7 +129,7 @@ export const downloadImage = async() => {
 }
 
 export const downloadUserImageById = async(id :string) => {
-    const storageRef = ref(storage, 'ProfilePics/' + id)
+    const storageRef = ref(storage, 'ProfilePics/' + (id || 'profile.jpeg'))
 
     try {
         return await getDownloadURL(storageRef)

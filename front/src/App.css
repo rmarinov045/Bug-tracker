@@ -76,12 +76,16 @@
   min-width: 4rem;
 }
 
-#completed-task-container::-webkit-scrollbar, #task-container::-webkit-scrollbar {
+#completed-task-container::-webkit-scrollbar, #task-container::-webkit-scrollbar,
+#scheduled-tasks-container::-webkit-scrollbar
+{
     background-color: white;
     width: 3px;
 }
 
-#completed-task-container::-webkit-scrollbar-thumb, #task-container::-webkit-scrollbar-thumb {
+#completed-task-container::-webkit-scrollbar-thumb, #task-container::-webkit-scrollbar-thumb,
+#scheduled-tasks-container::-webkit-scrollbar-thumb
+ {
     border-radius: 10px;
     background-color: #282c34;
 }

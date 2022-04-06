@@ -1,16 +1,37 @@
 import React, { useEffect, useState } from 'react'
+import { downloadUserImageById } from '../../api/userService'
 import { convertToDate } from '../../utils/util'
 import { typeColors, priorityColors } from '../Dashboard/Task'
+
+import defaultProfileImage from '../../assets/profile.jpeg'
 
 function CompletedTask({ task }: any) {
   const [taskInfo, setTaskInfo] = useState(false)
   const [typeColor, setTypeColor] = useState('')
   const [priorityColor, setPriorityColor] = useState('')
+  const [profileImage, setProfileImage] = useState('')
+
+
 
   useEffect(() => {
     setTypeColor(typeColors[task.taskType])
     setPriorityColor(priorityColors[task.taskPriority])
-  }, [task.taskType, task.taskPriority])
+
+    async function getImages() {
+      try {
+        try {
+          const response = await downloadUserImageById(task.authorId || '')        
+          setProfileImage(response)
+        } catch (err :any) {
+          throw new Error(err.message)
+        }
+     } catch (err) {
+        return null
+     }
+    }
+    getImages()
+
+  }, [task.taskType, task.taskPriority, task.authorId])
 
   return (
     <>
@@ -24,7 +45,7 @@ function CompletedTask({ task }: any) {
             <li style={{ backgroundColor: priorityColor }} className='bg-red-400 p-2 text-xs font-bold rounded-xl'>{task.taskPriority}</li>
           </div>
           <li className='w-full text-xs border-2 border-slate-600 bg-white rounded min-h-[10rem] p-1'>{task.taskDescription}</li>
-          <li className='font-bold text-xs flex w-full justify-between'>Created by: {task.taskAuthor} <p className=''>Completed on: {convertToDate(task.completedOn)}</p></li>
+          <li className='font-bold text-xs flex w-full justify-between items-center gap-2'>Creator: <img className='h-6 w-6 rounded-full mr-auto' src={profileImage || defaultProfileImage} alt='Creator' /><p className=''>Completed on: {convertToDate(task.completedOn)}</p></li>
         </div> : <></>}
       </div>
     </>

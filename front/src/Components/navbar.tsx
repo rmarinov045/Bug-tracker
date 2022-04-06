@@ -37,15 +37,15 @@ function Navbar() {
 
             <div className='flex flex-col gap-2 pt-10 items-center w-full'>
 
-                <NavLink to='/admin' className='cursor-pointer min-h-[3rem] flex items-center transform transition ease-in-out 150 hover:text-white w-full'>
+                <NavLink to='/schedule-issue' className='cursor-pointer min-h-[3rem] mb-10 flex items-center transform transition ease-in-out 150 hover:text-white w-full'>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 m-auto" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clipRule="evenodd" />
+                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
                     </svg>
                 </NavLink>
 
-                <NavLink to='/' className='cursor-pointer min-h-[3rem] flex items-center transform transition ease-in-out 150 hover:text-white w-full'>
+                <NavLink to='/admin' className='cursor-pointer min-h-[3rem] flex items-center transform transition ease-in-out 150 hover:text-white w-full'>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 m-auto" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                        <path fillRule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clipRule="evenodd" />
                     </svg>
                 </NavLink>
 
