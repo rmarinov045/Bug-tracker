@@ -10,7 +10,8 @@ export interface taskData {
     id: string,
     authorId: string,
     completedBy?: string,
-    completedOn?: string
+    completedOn?: string,
+    project: string | 'default',
 }
 
 const postTaskURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'
@@ -38,9 +39,9 @@ export const createTask = async (taskData :taskData) => {
 
 const getTasksURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'
 
-export async function getAllTasks() :Promise<any> {
+export async function getAllTasks(projectId :string) :Promise<any> {
     const userToken = await getAuthToken()
-    const response = await axios.get(getTasksURL + `?auth=${userToken}`)
+    const response = await axios.get(getTasksURL + `?auth=${userToken}&orderBy="project"&equalTo="${projectId}"`)
     
     if (response.status !== 200) {
         return null
@@ -87,10 +88,10 @@ export const completeTask = async (taskData :taskData) => {
 
 // get completed tasks from DB 
 
-export const getAllCompletedTasksById = async (userId :string) => {
+export const getAllCompletedTasksByIdAndProject = async (userId :string, projectId: string) => {
     const userToken = await getAuthToken()
 
-    const response = await axios.get(completeTaskURL + `?orderBy="completedBy"&equalTo="${userId}"&auth=${userToken}`)
+    const response = await axios.get(completeTaskURL + `?orderBy="completedBy"&equalTo="${userId}"&auth=${userToken}&orderBy="project"&equalTo="${projectId || 'default'}"`)
 
     if (response.status !== 200) {
         throw new Error('Could not fetch tasks.')

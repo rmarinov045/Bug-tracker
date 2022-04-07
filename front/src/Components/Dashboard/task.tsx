@@ -28,7 +28,7 @@ export const priorityColors: { [char: string]: string } = {
 }
 
 function Task(props: any) {
-  const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id, authorId } = props
+  const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id, authorId, project } = props
   
   const error = props.setError
   const modalColor = props.setModalColor
@@ -64,7 +64,7 @@ function Task(props: any) {
   async function handleComplete() {
     const currentUserId = auth.currentUser?.uid
 
-    const updateDBResponse = await completeTask({ taskName, taskType, taskPriority, taskDescription, taskAuthor, id, 'completedBy': currentUserId, "completedOn": generateTaskId(), authorId })
+    const updateDBResponse = await completeTask({ taskName, taskType, taskPriority, taskDescription, taskAuthor, id, 'completedBy': currentUserId, "completedOn": generateTaskId(), authorId, project })
 
     const response = await deleteTask(id)
 

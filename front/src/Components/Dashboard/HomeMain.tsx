@@ -36,7 +36,7 @@ function HomeMain() {
         setFiltered(true)
 
         if (!search) {
-            dispatch(getTasks())
+            dispatch(getTasks(project.id))
             setFiltered(false)
         }
     }
@@ -44,7 +44,7 @@ function HomeMain() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getTasks())
+        dispatch(getTasks(project.id))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

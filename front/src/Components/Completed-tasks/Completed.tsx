@@ -13,7 +13,7 @@ function Completed() {
 
       <ProjectModal project={project} />
 
-      <CompletedContainer />
+      <CompletedContainer project={project} />
     </div>
 
   )

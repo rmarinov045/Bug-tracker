@@ -16,8 +16,8 @@ const typeFilters :any = {
 
 export const getTasks = createAsyncThunk(
     'tasks/getTasks',
-   async (thunkAPI) => {
-       const response = await getAllTasks()
+   async (projectId :string, thunkAPI) => {
+       const response = await getAllTasks(projectId || 'default')
         
         if (response === null && response) {
             throw new Error('Fail in loading tasks in tasksReducer')

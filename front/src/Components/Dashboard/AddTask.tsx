@@ -14,10 +14,12 @@ interface taskSettings {
 export const taskTypes: taskSettings[] = [{ value: 'Major Bug', id: 1 }, { value: 'Minor bug', id: 2 }, { value: 'Visual bug', id: 3 }]
 export const taskPriorities: taskSettings[] = [{ value: 'Urgent', id: 1 }, { value: 'High', id: 2 }, { value: 'Medium', id: 3 }, { value: 'Low', id: 4 }]
 
-function AddTask(props: any) {
+function AddTask(props: { visible :Function, updateModalMessage :Function, updateModalColor :Function }) {
 
     const dispatch = useDispatch()
+
     const user = useSelector((state: RootStateOrAny) => state.user.value)
+    const project = useSelector((state: RootStateOrAny) => state.user.currentProject)
     const userId = user.userId
 
     const { visible, updateModalMessage, updateModalColor } = props
@@ -28,9 +30,9 @@ function AddTask(props: any) {
     const [taskDescription, setTaskDescription] = useState('')
     const [error, setError] = useState('')
 
-    async function handleSubmit(e: any): Promise<any> {
+    async function handleSubmit(e: any): Promise<void> {
         e.preventDefault()
-        const data = { taskName, taskType, taskPriority, taskAuthor: user.firstName, taskDescription, id: generateTaskId(), authorId: userId }    // add created on for sorting
+        const data = { taskName, taskType, taskPriority, taskAuthor: user.firstName, taskDescription, id: generateTaskId(), authorId: userId, project: project.id }    // add created on for sorting
         const createResponse = await createTask(data)
 
         if (!createResponse) {
@@ -42,7 +44,7 @@ function AddTask(props: any) {
 
         setTimeout(() => updateModalMessage(''), 4000)
 
-        visible()
+        visible(false)
     }
 
     function handleDropdownFocus(elementId: string, arrowType: string): void {
@@ -57,7 +59,7 @@ function AddTask(props: any) {
             <div className='w-full bg-white font-bold m-auto rounded-xl shadow-2xl min-h-fit p-2 border-2 border-green-500'>
                 <div className='flex items-center'>
                     <h1 className='text-3xl text-center font-bold m-auto'>Create a new issue..</h1>
-                    <div onClick={visible} className='cursor-pointer'><svg xmlns="http://www.w3.org/2000/svg" className="transform transition ease-in-out 150 hover:brightness-75 h-10 w-10 text-red-500 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <div onClick={() => visible(false)} className='cursor-pointer'><svg xmlns="http://www.w3.org/2000/svg" className="transform transition ease-in-out 150 hover:brightness-75 h-10 w-10 text-red-500 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg></div>
                 </div>
