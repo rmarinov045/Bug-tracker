@@ -16,9 +16,8 @@ import storage from 'redux-persist/lib/storage'
 import completedTasksReducer from './features/completedTasksReducer';
 import userReducer from './features/userReducer'
 import tasksReducer from './features/tasksReducer';
-import projectReducer from "./features/projectReducer";
-
 import { useDispatch } from "react-redux";
+import projectReducer from "./features/projectReducer";
 
 const persistConfig = {
     key: 'root',

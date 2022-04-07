@@ -63,7 +63,7 @@ export const deleteUserProfilePic = createAsyncThunk(
         // add rejected handling for extraReducers
 export const userSlice :Slice = createSlice({
     name: 'user',
-    initialState: { auth: false, value: {}, imageUrl: '' },
+    initialState: { auth: false, value: {}, imageUrl: '', currentProject: { name: 'default', id: 'default' } },
     reducers: {
         authenticate: (state, action) => {
             state.auth = action.payload
@@ -71,6 +71,9 @@ export const userSlice :Slice = createSlice({
         reset: (state, action) => {
             state.value = {}
             state.imageUrl = ''
+        },
+        openProject: (state, action) => {
+            state.currentProject = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -89,6 +92,6 @@ export const userSlice :Slice = createSlice({
     }
 })
 
-export const { updateUserState, login, register, authenticate, reset,  } = userSlice.actions
+export const { updateUserState, login, register, authenticate, reset, openProject  } = userSlice.actions
 
 export default userSlice.reducer

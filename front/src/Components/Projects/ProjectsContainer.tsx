@@ -17,7 +17,7 @@ function ProjectsContainer({ projects = [] }: any) {
                     <ul className='w-full'>
                         <div className='w-full min-h-[10rem] grid grid-cols-3 justify-items-center p-1 gap-1'>
 
-                            {projects.map((x: any) => <ProjectCard setModalMessage={setModalMessage} setModalColor={setModalColor} project={x} />)}
+                            {projects.map((x: any) => <ProjectCard key={x.id} setModalMessage={setModalMessage} setModalColor={setModalColor} project={x} />)}
 
 
                             <li onClick={() => setAddMenu(!addMenu)} className='w-full min-h-[10rem] rounded bg-slate-100 text-green-500 flex flex-col items-center justify-center font-bold text-xl text-center overflow-x-hidden cursor-pointer transition ease-in-out 200 hover:text-green-600'>

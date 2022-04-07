@@ -9,9 +9,11 @@ import Filter from '../Utils/Filter'
 import Modal from '../Utils/Modal'
 import { getTasks, searchTasks } from '../../features/tasksReducer'
 import SearchField from '../Utils/SearchField'
+import ProjectModal from '../Utils/ProjectModal'
 
 function HomeMain() {
     const userFirstName = useSelector((state: RootStateOrAny) => state.user.value.firstName)
+    const project = useSelector((state :RootStateOrAny) => state.user.currentProject)
 
     const [error, setError] = useState('')
     const [modalColor, setModalColor] = useState('#dc2626')
@@ -46,7 +48,6 @@ function HomeMain() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // remove add task menu on outside click
     return (
 
         <div className='flex h-screen w-full'>
@@ -56,6 +57,8 @@ function HomeMain() {
             <Navbar />
 
             <div id='home-admin' className='flex h-screen w-full filter overflow-x-hidden'>
+
+                <ProjectModal project={project} />
 
                 <div className="w-full flex flex-col pt-10 items-center">
 
