@@ -91,13 +91,13 @@ export const completeTask = async (taskData :taskData) => {
 export const getAllCompletedTasksByIdAndProject = async (userId :string, projectId: string) => {
     const userToken = await getAuthToken()
 
-    const response = await axios.get(completeTaskURL + `?orderBy="completedBy"&equalTo="${userId}"&auth=${userToken}&orderBy="project"&equalTo="${projectId || 'default'}"`)
+    const response = await axios.get(completeTaskURL + `?orderBy="completedBy"&equalTo="${userId}"&auth=${userToken}`)
 
     if (response.status !== 200) {
         throw new Error('Could not fetch tasks.')
     }
 
-    return Object.values(response.data)
+    return Object.values(response.data).filter((x :any) => x.project === projectId)
 }
 
 // edit task in DB
