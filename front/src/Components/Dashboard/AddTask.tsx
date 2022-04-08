@@ -32,11 +32,19 @@ function AddTask(props: { visible :Function, updateModalMessage :Function, updat
 
     async function handleSubmit(e: any): Promise<void> {
         e.preventDefault()
+
+        if (!taskName || !taskPriority || !taskType) {
+            setError('Please enter a name, priority and type')
+            return
+        }
+
+
         const data = { taskName, taskType, taskPriority, taskAuthor: user.firstName, taskDescription, id: generateTaskId(), authorId: userId, project: project.id }    // add created on for sorting
         const createResponse = await createTask(data)
 
         if (!createResponse) {
-            setError('Failed to create a task. Please try again with valid input')
+            setError('Failed to create a task. Please try again later')
+            return
         }
         dispatch(addTask(data))
         updateModalMessage('Task created successfully!')
@@ -55,7 +63,7 @@ function AddTask(props: { visible :Function, updateModalMessage :Function, updat
 
     return (
 
-        <div className='fixed w-9/12 left-1/2 -translate-x-1/2 transform z-10'>
+        <div className='fixed w-9/12 left-1/2 ml-2  xl:w-1/2 -translate-x-1/2 transform z-10'>
             <div className='w-full bg-white font-bold m-auto rounded-xl shadow-2xl min-h-fit p-2 border-2 border-green-500'>
                 <div className='flex items-center'>
                     <h1 className='text-3xl text-center font-bold m-auto'>Create a new issue..</h1>

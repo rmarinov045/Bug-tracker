@@ -61,7 +61,7 @@ function ProfileFull(props: any) {
     }
 
     return (
-        <form onSubmit={(e) => handleUpdate(e)} className='w-3/4 flex flex-col gap-10 border-2 border-slate-50 shadow-md p-2'>
+        <form onSubmit={(e) => handleUpdate(e)} className='w-3/4 xl:w-1/2 flex flex-col gap-10 border-2 border-slate-50 shadow-md p-2 bg-white'>
             <div className='flex gap-7 items-center justify-center border-b-2 p-2 w-full focus-within:border-green-500 transition ease-in-out 150'>
                 <label className='font-bold w-40' htmlFor="firstName">First Name</label>
                 <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full' value={userData.firstName} type="text" name="firstName" id="firstName" />

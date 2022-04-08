@@ -10,7 +10,7 @@ function Filter(props :any) {
     const dispatch = useDispatch()
 
     return (
-        <div className='w-1/12 min-w-fit z-20 fixed right-2 rounded-3xl top-28 bg-slate-600 flex flex-col items-center p-1 pt-3 pb-3 mt-2 ml-auto gap-5'>
+        <div className='w-1/12 min-w-fit max-w-[5rem] z-20 fixed right-2 rounded-3xl top-28 bg-slate-600 flex flex-col items-center p-1 pt-3 pb-3 mt-2 ml-auto gap-5'>
             <div className='flex w-full h-fit items-center justify-center text-slate-200'>
                 <svg onClick={() => setAddTaskFieldOpened(true)} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 transform transition ease-in-out 150 cursor-pointer hover:text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />

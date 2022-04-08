@@ -68,9 +68,9 @@ function HomeMain() {
 
                     <div className='flex w-full p-2 mt-3 items-center justify-center'>
 
-                        <div className='flex-col'>
-                            <h1 className='font-bold text-xl'>Current issues:</h1>
+                        <div className='flex-col w-full'>
                             <SearchField handleSearch={handleSearch} />
+                            <h1 className='font-bold text-center text-xl lg:text-2xl'>Current issues:</h1>
                         </div>
 
                     </div>

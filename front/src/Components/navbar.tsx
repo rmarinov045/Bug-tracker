@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import testAvatar from '../assets/logo192.png'
+import logo from '../assets/logo-new.jpg'
 import '../App.css'
 
 import { authenticate, reset } from '../features/userReducer'
@@ -32,7 +32,7 @@ function Navbar() {
         <div id='navbar' className='flex-col h-full pt-2 pb-2 bg-green-500 items-center flex z-0 filter'>
 
             <div className='w-full flex items-center justify-center pt-4'>
-                <img src={testAvatar} alt="logo" className='h-6 w-6' />
+                <img src={logo} alt="logo" className='h-12 w-12 rounded-full' />
             </div>
 
             <div className='flex flex-col gap-2 pt-10 items-center w-full'>

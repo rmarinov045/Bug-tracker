@@ -21,6 +21,19 @@ function LoginForm() {
 
     async function handleLogin(email: string, password: string): Promise<any> {
         setIsLoading(true)
+
+        if (!email || !password) {
+            setError('Please fill all fields')
+            setIsLoading(false)
+            return
+        }
+
+        if (!email.includes('@')) {
+            setIsLoading(false)
+            setError('Please enter a valid email address')
+            return
+        }
+
         const response = await login(email, password) // can be user or error
 
         if (response.errorCode) {
@@ -46,15 +59,15 @@ function LoginForm() {
     }
 
     return (
-        <div className="flex flex-col justify-center w-2/3 lg:w-1/2 m-auto h-screen">
+        <div className="flex flex-col justify-center w-2/3 lg:w-1/3 m-auto h-screen">
             <div className="flex flex-col justify-center items-center">
-                <p className="font-extrabold text-2xl lg:text-4xl flex items-center gap-4">Log in to <img src={logo} className='h-20 w-28' alt='logo' /></p>
+                <p className="font-extrabold text-3xl lg:text-4xl flex items-center gap-4">Log in to <img src={logo} className='h-20 w-28' alt='logo' /></p>
                 <hr className="mt-4 w-full" />
 
                 {error ? <ErrorField errorMessage={error} /> : ''}
 
             </div>
-            <div className="flex flex-col mt-6">
+            <div className="flex flex-col mt-6 w-full md:mx-auto">
                 <form action="" className="flex flex-col gap-6 items-start">
                     <label className="pl-2 font-bold text-xl" htmlFor="email">Email:</label>
                     <input onChange={(e) => setEmail(e.target.value)} className="pl-2 pr-2 p-1 w-full border-b-2 border-black transform transition ease-in-out 150 focus:outline-none focus:border-green-500" name="email" type="email" placeholder="lorem@ipsum.com" />

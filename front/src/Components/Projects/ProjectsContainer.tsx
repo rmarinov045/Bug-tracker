@@ -34,7 +34,7 @@ function ProjectsContainer({ projects = [] }: any) {
     return (
         <>
             <Modal message={modalMessage} bgColor={modalColor} />
-            <section className='w-full'>
+            <section className='w-full xl:w-2/3 xl:m-auto'>
                 <div className='w-full p-2'>
                     <ul className='w-full'>
                         <div className='w-full min-h-[10rem] grid grid-cols-3 justify-items-center p-1 gap-1'>
