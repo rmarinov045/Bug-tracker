@@ -10,6 +10,7 @@ import { RootStateOrAny, useSelector } from 'react-redux'
 function Projects() {
 
     const projects = useSelector((state :RootStateOrAny) => state.projects.list)
+    const projectsLoaded = useSelector((state: RootStateOrAny) => state.projects.loaded)
 
     const dispatch = useAppDispatch()
 
@@ -33,7 +34,7 @@ function Projects() {
                     </div>
                 </section>
 
-                <ProjectsContainer projects={Object.values(projects)} />
+                <ProjectsContainer projects={Object.values(projects)} loaded={projectsLoaded} />
 
             </main>
 

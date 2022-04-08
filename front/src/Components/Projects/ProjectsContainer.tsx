@@ -7,8 +7,9 @@ import { useAppDispatch } from '../../store'
 import { openProject } from '../../features/userReducer'
 import { useNavigate } from 'react-router-dom'
 import { RootStateOrAny, useSelector } from 'react-redux'
+import SmallSpinner from '../Utils/SmallSpinner'
 
-function ProjectsContainer({ projects = [] }: { projects: Project[] }) {
+function ProjectsContainer({ projects = [], loaded }: { projects: Project[], loaded: boolean }) {
 
     const [addMenu, setAddMenu] = useState(false)
     const [modalMessage, setModalMessage] = useState('')
@@ -44,14 +45,13 @@ function ProjectsContainer({ projects = [] }: { projects: Project[] }) {
                                 <p className='w-full text-ellipsis overflow-x-hidden p-2'>Default</p>
                                 {currentProject.id === 'default' ? <p className='text-xs'>(Currently opened)</p> : <></>}
                                 <div className='container flex w-full items-center justify-center gap-10 mt-5'>
-                                    <svg onClick={() => handleOpen('default', 'default')} xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 hover:text-white transition ease-in-out 250 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    {currentProject.id === 'default' ? <></> : <svg onClick={() => handleOpen('default', 'default')} xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 hover:text-white transition ease-in-out 250 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                                    </svg>
+                                    </svg>}
                                 </div>
                             </li>
 
-                            {projects.map((x: any) => <ProjectCard currentProject={currentProject} handleOpen={handleOpen} key={x.id} setModalMessage={setModalMessage} setModalColor={setModalColor} project={x} />)}
-
+                            {loaded ? projects.map((x: any) => <ProjectCard currentProject={currentProject} handleOpen={handleOpen} key={x.id} setModalMessage={setModalMessage} setModalColor={setModalColor} project={x} />) : <SmallSpinner />}
 
                             <li onClick={() => setAddMenu(!addMenu)} className='w-full min-h-[10rem] rounded bg-slate-100 text-green-500 flex flex-col items-center justify-center font-bold text-xl text-center overflow-x-hidden cursor-pointer transition ease-in-out 200 hover:text-green-600'>
                                 <div className='container flex w-full items-center justify-center gap-10'>
