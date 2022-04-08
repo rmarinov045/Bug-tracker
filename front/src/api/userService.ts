@@ -1,44 +1,43 @@
 import axios from "axios"
-import { User } from "../features/userReducer"
-import { userData } from '../Components/Register/RegisterForm'
+import { UserData } from '../types'
 import { getAuthToken } from "../auth/auth"
 import { auth, storage } from "../firebase"
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 // post user to DB
 
-export async function postUser(user :userData) {
+export async function postUser(user: UserData) {
     const userToken = await getAuthToken()
 
     try {
         await axios.post(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${userToken}`, JSON.stringify(user))
-    } catch(err) {
+    } catch (err) {
         return false
     }
 }
 
 // get user from DB
 
-export async function getUser(email :string) {
+export async function getUser(email: string) {
     const userToken = await getAuthToken()
 
     try {
         const response = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?orderBy="email"&equalTo="${email}"&auth=${userToken}`)
-        
+
         return Object.values(response.data)
-    } catch(err) {
+    } catch (err) {
         return false
     }
 }
 
 // get user DB id 
 
-export async function getUserDBId(email:string) {
+export async function getUserDBId(email: string) {
     const userToken = await getAuthToken()
 
     try {
         const currentUser = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?orderBy="email"&equalTo="${email}"&auth=${userToken}`)
-        
+
         const id = Object.keys(currentUser.data)[0]
 
         return id
@@ -49,35 +48,35 @@ export async function getUserDBId(email:string) {
 
 // update user in DB
 
-export async function updateUser(userData :User) {
+export async function updateUser(userData: UserData) {
     const userToken = await getAuthToken()
 
     try {
         const id = await getUserDBId(userData.email)
-         
+
         const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}`, JSON.stringify(userData))
-    
+
         return response.data
-        
-    } catch(err :any) {
+
+    } catch (err: any) {
         return err.message
-    } 
+    }
 }
 
 // update user image in DB 
 
-export async function updateUserImage(URL :string) {
+export async function updateUserImage(URL: string) {
     const userToken = await getAuthToken()
     const userEmail = auth.currentUser?.email
-    
+
     try {
         const id = await getUserDBId(userEmail || '')
-        
+
         const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}&updateMask.fieldPaths=profileImageUrl`, JSON.stringify({ profileImageUrl: URL || '' }))
 
-        return response 
+        return response
 
-    } catch (err :any) {
+    } catch (err: any) {
         return err.message
     }
 }
@@ -92,18 +91,18 @@ export async function deleteUserImage() {
         const id = await getUserDBId(userEmail || '')
 
         const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}&updateMask.fieldPaths=profileImageUrl`, JSON.stringify({ profileImageUrl: '' }))
-    
+
         return response
-    } catch (err :any) {
+    } catch (err: any) {
         return err.message
     }
 }
 
-export const uploadImage = async(file :any) => {
+export const uploadImage = async (file: File) => {
     const currentUserId = auth.currentUser?.uid
-    
+
     const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
-    
+
     uploadBytes(storageRef, file)
 
     const downloadUrl = await getDownloadURL(storageRef)
@@ -116,37 +115,37 @@ export const uploadImage = async(file :any) => {
 
 }
 
-export const downloadImage = async() => {
+export const downloadImage = async () => {
     const currentUserId = auth.currentUser?.uid
 
     const storageRef = ref(storage, 'ProfilePics/' + (currentUserId || 'profile.jpeg'))
-    
+
     try {
         return await getDownloadURL(storageRef) || ''
-    } catch (err :any) {
-        throw new Error (err.message)
+    } catch (err: any) {
+        throw new Error(err.message)
     }
 }
 
-export const downloadUserImageById = async(id :string) => {
+export const downloadUserImageById = async (id: string) => {
     const storageRef = ref(storage, 'ProfilePics/' + (id || 'profile.jpeg'))
 
     try {
         return await getDownloadURL(storageRef)
-    } catch (err :any) {
-        throw new Error (err.message)
+    } catch (err: any) {
+        throw new Error(err.message)
     }
 }
 
-export const deleteImage = async() => {
+export const deleteImage = async () => {
     const currentUserId = auth.currentUser?.uid
 
     const storageRef = ref(storage, 'ProfilePics/' + currentUserId)
-    
+
     try {
         const res = await deleteObject(storageRef)
         return res
-    } catch(err :any) {
+    } catch (err: any) {
         return err.message
     }
 }

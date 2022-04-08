@@ -1,20 +1,17 @@
-import React, { useState } from 'react'
+import React, { SyntheticEvent, useState } from 'react'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 
 import ErrorField from '../Utils/Error'
 import { createTask } from '../../api/taskService'
 import { generateTaskId } from '../../utils/util'
 import { addTask } from '../../features/tasksReducer'
+import { taskSettings } from '../../types'
 
-interface taskSettings {
-    value: string,
-    id: number
-}
 
 export const taskTypes: taskSettings[] = [{ value: 'Major Bug', id: 1 }, { value: 'Minor bug', id: 2 }, { value: 'Visual bug', id: 3 }]
 export const taskPriorities: taskSettings[] = [{ value: 'Urgent', id: 1 }, { value: 'High', id: 2 }, { value: 'Medium', id: 3 }, { value: 'Low', id: 4 }]
 
-function AddTask(props: { visible :Function, updateModalMessage :Function, updateModalColor :Function }) {
+function AddTask(props: { visible: Function, updateModalMessage: Function, updateModalColor: Function }) {
 
     const dispatch = useDispatch()
 
@@ -30,7 +27,7 @@ function AddTask(props: { visible :Function, updateModalMessage :Function, updat
     const [taskDescription, setTaskDescription] = useState('')
     const [error, setError] = useState('')
 
-    async function handleSubmit(e: any): Promise<void> {
+    async function handleSubmit(e: SyntheticEvent): Promise<void> {
         e.preventDefault()
 
         if (!taskName || !taskPriority || !taskType) {
@@ -109,7 +106,7 @@ function AddTask(props: { visible :Function, updateModalMessage :Function, updat
 
                     <button type='submit' className='mt-2 bg-black text-white font-bold rounded-xl pl-2 pr-2 p-1 shadow-xl w-1/2 self-center transition ease-in-out 150 hover:text-green-500 '>Create</button>
 
-                    {error ? <ErrorField errorMessage={error} /> : ''}
+                    {error ? <ErrorField errorMessage={error} /> : <></>}
 
                 </form>
             </div>

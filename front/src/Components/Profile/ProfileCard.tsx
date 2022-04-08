@@ -1,5 +1,6 @@
-import { getUserProfilePic, User } from '../../features/userReducer'
+import { getUserProfilePic } from '../../features/userReducer'
 import React, { useEffect, useState } from 'react'
+import { UserData } from '../../types'
 
 import defaultProfileImage from '../../assets/profile.jpeg'
 import { uploadImage } from '../../api/userService'
@@ -8,25 +9,25 @@ import { useAppDispatch } from '../../store'
 import SmallSpinner from '../Utils/SmallSpinner'
 import { updateUserImage } from '../../api/userService'
 
-function ProfileCard(props: any) {
-    const user: User = props.user
+function ProfileCard(props: { updateModal: Function, user: UserData }) {
+    const user: UserData = props.user
 
     const [hover, setHover] = useState(false)
     const [loading, setLoading] = useState(true)
     const [updateImg, setUpdateImg] = useState(false)
 
-    const imageUrl = useSelector((state :RootStateOrAny) => state.user.imageUrl)
+    const imageUrl = useSelector((state: RootStateOrAny) => state.user.imageUrl)
 
     const dispatch = useAppDispatch()
 
-    async function handleFileUpload(e :any) {
+    async function handleFileUpload(e: any) {
         e.preventDefault()
-        
+
         const file = e.target.files[0]
-        
+
         try {
             const uploadResponse = await uploadImage(file)
-            
+
             if (uploadResponse) {
                 await updateUserImage(uploadResponse)
             }
@@ -46,7 +47,7 @@ function ProfileCard(props: any) {
             }
         }
         getImage()
-        
+
     }, [dispatch, updateImg])
 
     return (
@@ -58,12 +59,12 @@ function ProfileCard(props: any) {
 
                     <form onInput={(e) => handleFileUpload(e)} className='h-32 w-32 absolute text-slate-500 rounded-full z-10 cursor-pointer'>
 
-                    <label className='h-full w-full flex items-center justify-center cursor-pointer' htmlFor="upload-avatar">
-                        <svg style={hover ? { display: 'block' } : { display: 'none' }} xmlns="http://www.w3.org/2000/svg" className="cursor-pointer h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                        </svg>
-                    </label>
-                    <input className='hidden' accept='image/*' type="file" name="uploadAvatar" id="upload-avatar" />
+                        <label className='h-full w-full flex items-center justify-center cursor-pointer' htmlFor="upload-avatar">
+                            <svg style={hover ? { display: 'block' } : { display: 'none' }} xmlns="http://www.w3.org/2000/svg" className="cursor-pointer h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </label>
+                        <input className='hidden' accept='image/*' type="file" name="uploadAvatar" id="upload-avatar" />
 
                     </form>
                 </div>

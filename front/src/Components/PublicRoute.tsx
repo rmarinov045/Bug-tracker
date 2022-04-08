@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactChild, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebase'
 import Spinner from './Utils/Spinner'
 // add cleanup function
-function PublicRoute({ component } :any) {
+function PublicRoute({ component }: { component: ReactChild }) {
 
     const navigate = useNavigate()
 
@@ -23,7 +23,7 @@ function PublicRoute({ component } :any) {
     }, [navigate])
 
     return (
-        loading ? <Spinner /> : <>{component}</> 
+        loading ? <Spinner /> : <>{component}</>
     )
 }
 

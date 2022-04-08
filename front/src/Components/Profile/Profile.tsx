@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { RootStateOrAny, useSelector } from 'react-redux'
 
-import { User } from '../../features/userReducer'
+import { UserData } from '../../types'
 
 import Navbar from '../Navbar'
 import Modal from '../Utils/Modal'
@@ -9,7 +9,7 @@ import ProfileCard from './ProfileCard'
 import ProfileFull from './ProfileFull'
 
 function Profile() {
-    const user: User = useSelector((state: RootStateOrAny) => state.user.value)
+    const user: UserData = useSelector((state: RootStateOrAny) => state.user.value)
 
     const [modalMessage, setModalMessage] = useState('')
     const [modalColor, setModalColor] = useState('')

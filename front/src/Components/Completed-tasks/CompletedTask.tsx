@@ -4,14 +4,13 @@ import { convertToDate } from '../../utils/util'
 import { typeColors, priorityColors } from '../Dashboard/Task'
 
 import defaultProfileImage from '../../assets/profile.jpeg'
+import { taskData } from '../../types'
 
-function CompletedTask({ task }: any) {
+function CompletedTask({ task }: { task: taskData }) {
   const [taskInfo, setTaskInfo] = useState(false)
   const [typeColor, setTypeColor] = useState('')
   const [priorityColor, setPriorityColor] = useState('')
   const [profileImage, setProfileImage] = useState('')
-
-
 
   useEffect(() => {
     setTypeColor(typeColors[task.taskType])
@@ -20,14 +19,14 @@ function CompletedTask({ task }: any) {
     async function getImages() {
       try {
         try {
-          const response = await downloadUserImageById(task.authorId || '')        
+          const response = await downloadUserImageById(task.authorId || '')
           setProfileImage(response)
-        } catch (err :any) {
+        } catch (err: any) {
           throw new Error(err.message)
         }
-     } catch (err) {
+      } catch (err) {
         return null
-     }
+      }
     }
     getImages()
 
@@ -45,7 +44,7 @@ function CompletedTask({ task }: any) {
             <li style={{ backgroundColor: priorityColor }} className='bg-red-400 p-2 font-bold rounded-xl'>{task.taskPriority}</li>
           </div>
           <li className='w-full border-2 border-slate-600 bg-white rounded min-h-[10rem] p-1'>{task.taskDescription}</li>
-          <li className='font-bold flex w-full justify-between items-center gap-2'>Creator: <img className='h-6 w-6 xl:w-10 xl:h-10 rounded-full mr-auto' src={profileImage || defaultProfileImage} alt='Creator' /><p className=''>Completed on: {convertToDate(task.completedOn)}</p></li>
+          <li className='font-bold flex w-full justify-between items-center gap-2'>Creator: <img className='h-6 w-6 xl:w-10 xl:h-10 rounded-full mr-auto' src={profileImage || defaultProfileImage} alt='Creator' /><p className=''>Completed on: {convertToDate(task.completedOn || '')}</p></li>
         </div> : <></>}
       </div>
     </>

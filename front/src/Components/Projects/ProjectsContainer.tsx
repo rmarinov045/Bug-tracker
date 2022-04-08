@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import CreateProject from './CreateProject'
 import ProjectCard from './ProjectCard'
+import { Project } from '../../types'
 import Modal from '../Utils/Modal'
 import { useAppDispatch } from '../../store'
 import { openProject } from '../../features/userReducer'
 import { useNavigate } from 'react-router-dom'
 import { RootStateOrAny, useSelector } from 'react-redux'
 
-function ProjectsContainer({ projects = [] }: any) {
+function ProjectsContainer({ projects = [] }: { projects: Project[] }) {
 
     const [addMenu, setAddMenu] = useState(false)
     const [modalMessage, setModalMessage] = useState('')
@@ -19,7 +20,7 @@ function ProjectsContainer({ projects = [] }: any) {
 
     const navigate = useNavigate()
 
-    async function handleOpen(projectName :string, projectId :string) {
+    async function handleOpen(projectName: string, projectId: string) {
         const res = dispatch(openProject({ name: projectName, id: projectId }))
 
         if (res) {
@@ -41,7 +42,7 @@ function ProjectsContainer({ projects = [] }: any) {
 
                             <li className='w-full min-h-[10rem] rounded bg-amber-200 flex flex-col items-center justify-center font-bold text-xl text-center overflow-x-hidden'>
                                 <p className='w-full text-ellipsis overflow-x-hidden p-2'>Default</p>
-                                { currentProject.id === 'default' ? <p className='text-xs'>(Currently opened)</p> : <></>}
+                                {currentProject.id === 'default' ? <p className='text-xs'>(Currently opened)</p> : <></>}
                                 <div className='container flex w-full items-center justify-center gap-10 mt-5'>
                                     <svg onClick={() => handleOpen('default', 'default')} xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 hover:text-white transition ease-in-out 250 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />

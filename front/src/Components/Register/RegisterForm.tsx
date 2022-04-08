@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react'
+import React, { SyntheticEvent, useReducer, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -7,18 +7,11 @@ import { postUser } from '../../api/userService'
 import ErrorField from '../Utils/Error'
 
 import { registerUser } from '../../auth/auth'
+import { UserData } from '../../types'
 
-export interface userData {
-    firstName: string,
-    lastName: string,
-    company: string,
-    position: string,
-    email: string,
-    password?: string,
-    userId?: string
-}
 
-const initialState :userData = {
+
+const initialState: UserData = {
     firstName: '',
     lastName: '',
     company: '',
@@ -28,20 +21,20 @@ const initialState :userData = {
     userId: ''
 }
 
-function setUserData(state :any, action :any) {
+function setUserData(state: any, action: any) {
     switch (action.type) {
         case 'firstName':
-            return {...state, firstName: action.payload}
+            return { ...state, firstName: action.payload }
         case 'lastName':
-            return {...state, lastName: action.payload}
+            return { ...state, lastName: action.payload }
         case 'company':
-            return {...state, company: action.payload}
-        case 'position': 
-            return {...state, position: action.payload}
+            return { ...state, company: action.payload }
+        case 'position':
+            return { ...state, position: action.payload }
         case 'email':
-            return {...state, email: action.payload}
+            return { ...state, email: action.payload }
         case 'password':
-            return {...state, password: action.payload}
+            return { ...state, password: action.payload }
     }
 }
 
@@ -50,18 +43,18 @@ function RegisterForm() {
     const [state, dispatch] = useReducer(setUserData, initialState)
 
     const [confirmPass, setConfirmPass] = useState('')
-    
+
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
     const navigate = useNavigate()
 
-    function handleChange(e :any) {
+    function handleChange(e: any) {
         const { name, value } = e.target
         dispatch({ type: name, payload: value })
     }
 
-    async function handleSubmit(e: any): Promise<any> {     // check type here
+    async function handleSubmit(e: SyntheticEvent): Promise<void> {     // check type here
         e.preventDefault()
         setError('')
         setIsLoading(true)
@@ -84,11 +77,14 @@ function RegisterForm() {
         try {
             const response = await registerUser(state.email, state.password)
 
-            const userId = response.uid
+            let userId = ''
+
+            if ('uid' in response) {
+                userId = response.uid
+            }
 
             const user = { ...state, userId, profileImageUrl: userId }
 
-            // post to Firebase DB
             const dbRes = await postUser(user)
 
             if (!dbRes) {

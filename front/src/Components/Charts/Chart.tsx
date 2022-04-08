@@ -1,8 +1,9 @@
 import React from 'react'
 import { ScatterChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Scatter } from 'recharts'
+import { taskData } from '../../types'
 import { scatterChartDataCreator } from '../../utils/chartDataConstructor'
 
-function Chart(props :any) {
+function Chart(props :{tasks: taskData[]}) {
 
     const tasks = scatterChartDataCreator(props.tasks)
     

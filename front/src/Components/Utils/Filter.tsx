@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { filterTasks } from '../../features/tasksReducer'
 import AddTask from '../Dashboard/AddTask'
 
-function Filter(props :any) {
+function Filter(props: { updateModalMessage: Function, updateModalColor: Function }) {
     const [addTaskFieldOpened, setAddTaskFieldOpened] = useState(false)
     const [filterOpened, setFilterOpened] = useState(false)
 
@@ -30,7 +30,7 @@ function Filter(props :any) {
                     </svg>
                 </div>
                 : <></>}
-                {addTaskFieldOpened ? <AddTask visible={setAddTaskFieldOpened} updateModalMessage={props.updateModalMessage} updateModalColor={props.updateModalColor} /> : <></>}
+            {addTaskFieldOpened ? <AddTask visible={setAddTaskFieldOpened} updateModalMessage={props.updateModalMessage} updateModalColor={props.updateModalColor} /> : <></>}
         </div>
     )
 }

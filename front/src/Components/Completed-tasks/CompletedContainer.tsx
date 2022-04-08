@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { User } from '../../features/userReducer'
+import { UserData } from '../../types'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { getCompletedTasksByUserIdAndProject, searchCompletedTasks } from '../../features/completedTasksReducer'
 
@@ -12,10 +12,8 @@ import TaskLoader from '../Utils/TaskLoader'
 import SmallSpinner from '../Utils/SmallSpinner'
 import SearchField from '../Utils/SearchField'
 
-// change persisted Reducer upon rename or migration !!!!
-
 function CompletedContainer({ project }: { project: { name: string, id: string } }) {
-  const currentUser: User = useSelector((state: RootStateOrAny) => state.user.value)
+  const currentUser: UserData = useSelector((state: RootStateOrAny) => state.user.value)
   const completedTasks = useSelector((state: RootStateOrAny) => state.completedTasks.completed)
   const filteredTasks = useSelector((state: RootStateOrAny) => state.completedTasks.filtered)
 
@@ -40,7 +38,7 @@ function CompletedContainer({ project }: { project: { name: string, id: string }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  // make sure to style for big screens as well
+
   return (
     <div className='w-full overflow-x-hidden'>
 
@@ -64,7 +62,7 @@ function CompletedContainer({ project }: { project: { name: string, id: string }
         <main id='completed-task-container' className='w-1/2 p-2 border-2 border-slate-100 shadow-sm mr-auto min-h-full max-h-full flex items-center flex-col overflow-y-scroll'>
 
           <SearchField handleSearch={handleSearch} />
-          
+
           <p className='font-bold text-center text-xs mb-2 xl:text-base'>Issues you have resolved:</p>
 
 

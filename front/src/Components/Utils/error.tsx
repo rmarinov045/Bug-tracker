@@ -1,8 +1,5 @@
 import React from 'react'
-
-interface ErrorMessage {
-  errorMessage: string
-}
+import { ErrorMessage } from '../../types'
 
 function ErrorField(props :ErrorMessage) {  
   return (

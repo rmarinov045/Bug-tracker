@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { deleteTask, completeTask } from '../../api/taskService'
+import { taskData } from '../../types'
 
 import { auth } from '../../firebase'
 
@@ -28,15 +29,15 @@ export const priorityColors: { [char: string]: string } = {
   'Urgent': '#dc2626'
 }
 
-function Task(props: any) {
-  const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id, authorId, project } = props
-  
+function Task(props: { task: taskData, setError: Function, setModalColor: Function }) {
+  const { taskName, taskType, taskPriority, taskDescription, taskAuthor, id, authorId, project } = props.task
+
   const error = props.setError
   const modalColor = props.setModalColor
 
   const [taskMenuOpened, setTaskMenuOpened] = useState(false)
   const [edit, setEdit] = useState(false)
-  
+
   const [typeColor, setTypeColor] = useState('')
   const [priorityColor, setPriorityColor] = useState('')
 
@@ -44,7 +45,7 @@ function Task(props: any) {
 
   const dispatch = useDispatch()
 
-  function toggleEdit() :void {
+  function toggleEdit(): void {
     setEdit(!edit)
   }
 
@@ -131,7 +132,7 @@ function Task(props: any) {
         </div>
       </div>
 
-      {edit ? <EditTask task={props} visible={toggleEdit} /> : <></>}
+      {edit ? <EditTask task={props.task} visible={toggleEdit} /> : <></>}
 
       {taskMenuOpened ? <TaskMenu handleComplete={handleComplete} toggleEdit={toggleEdit} handleDelete={handleDelete} id={id} /> : <></>}
 

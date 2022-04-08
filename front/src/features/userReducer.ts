@@ -1,36 +1,28 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit'
 import { deleteUserImage, getUser, updateUser } from '../api/userService'
 import { deleteImage, downloadImage } from '../api/userService'
+import { UserData } from '../types'
 
-export interface User {
-    company: string,
-    email: string,
-    firstName: string,
-    lastName: string,
-    position: string,
-    userId: string
-}
 
-// create user slice and functionality to update state by using reducers
 
 export const getUserByEmail = createAsyncThunk(
     'users/getUserById',
-    async (email :string, thunkAPI) => {
-        const response :any = await getUser(email)
-       
-        if(response) {
+    async (email: string, thunkAPI) => {
+        const response: any = await getUser(email)
+
+        if (response) {
             return response[0]
         } else {
             return 'Error'
         }
     }
-) 
+)
 
 export const updateUserById = createAsyncThunk(
     'users/updateUserById',
-    async (userData :User, thunkAPI) => {
-        const response :any = await updateUser(userData)
-        
+    async (userData: UserData, thunkAPI) => {
+        const response: any = await updateUser(userData)
+
         return response
     }
 )
@@ -41,7 +33,7 @@ export const getUserProfilePic = createAsyncThunk(
         try {
             const response = await downloadImage()
             return response
-        } catch (err :any) {
+        } catch (err: any) {
             return ''
         }
     }
@@ -54,14 +46,14 @@ export const deleteUserProfilePic = createAsyncThunk(
             await deleteUserImage() // deletes in DB
             await deleteImage() // deletes in FB store
             return ''
-        } catch(err :any) {
+        } catch (err: any) {
             return ''
         }
     }
 )
 
-        // add rejected handling for extraReducers
-export const userSlice :Slice = createSlice({
+// add rejected handling for extraReducers
+export const userSlice: Slice = createSlice({
     name: 'user',
     initialState: { auth: false, value: {}, imageUrl: '', currentProject: { name: 'default', id: 'default' } },
     reducers: {
@@ -92,6 +84,6 @@ export const userSlice :Slice = createSlice({
     }
 })
 
-export const { updateUserState, login, register, authenticate, reset, openProject  } = userSlice.actions
+export const { updateUserState, login, register, authenticate, reset, openProject } = userSlice.actions
 
 export default userSlice.reducer

@@ -1,36 +1,24 @@
 import axios from "axios"
 import { getAuthToken } from "../auth/auth"
-
-export interface taskData {
-    taskName: string,
-    taskType: string,
-    taskPriority: string,
-    taskAuthor: string,
-    taskDescription: string
-    id: string,
-    authorId: string,
-    completedBy?: string,
-    completedOn?: string,
-    project: string | 'default',
-}
+import { taskData } from "../types"
 
 const postTaskURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'
 
 // post task to DB
 
-export const createTask = async (taskData :taskData) => {
+export const createTask = async (taskData: taskData) => {
     const userToken = await getAuthToken()
     const data = JSON.stringify(taskData)
-    
+
     try {
-        const response = await axios.post(postTaskURL + `?auth=${userToken}`, data)  
+        const response = await axios.post(postTaskURL + `?auth=${userToken}`, data)
 
         if (response.status !== 200) {
             throw new Error()
         }
 
         return true
-    } catch (err :any) {
+    } catch (err: any) {
         return err.message
     }
 }
@@ -39,10 +27,10 @@ export const createTask = async (taskData :taskData) => {
 
 const getTasksURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'
 
-export async function getAllTasks(projectId :string) :Promise<any> {
+export async function getAllTasks(projectId: string): Promise<any> {
     const userToken = await getAuthToken()
     const response = await axios.get(getTasksURL + `?auth=${userToken}&orderBy="project"&equalTo="${projectId}"`)
-    
+
     if (response.status !== 200) {
         return null
     }
@@ -51,17 +39,17 @@ export async function getAllTasks(projectId :string) :Promise<any> {
 
 // delete task
 
-export async function deleteTask(id :string) {
+export async function deleteTask(id: string) {
     const userToken = await getAuthToken()
     const currentTask = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?orderBy="id"&equalTo="${id}"&auth=${userToken}"`)
     const currentTaskID = Object.keys(currentTask.data)[0]
-    
+
     const response = axios.delete(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${currentTaskID}.json?auth=${userToken}`)
 
     if ((await response).status === 200) {
-        return {status: 'ok', message: 'Task Deleted'}
+        return { status: 'ok', message: 'Task Deleted' }
     } else {
-        return {status: 'failed', message: 'Failed to delete task, please try again later'}
+        return { status: 'failed', message: 'Failed to delete task, please try again later' }
     }
 }
 
@@ -69,26 +57,26 @@ export async function deleteTask(id :string) {
 
 const completeTaskURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/completed.json'
 
-export const completeTask = async (taskData :taskData) => {
+export const completeTask = async (taskData: taskData) => {
     const userToken = await getAuthToken()
     const data = JSON.stringify(taskData)
-    
+
     try {
-        const response = await axios.post(completeTaskURL + `?auth=${userToken}`, data)  
+        const response = await axios.post(completeTaskURL + `?auth=${userToken}`, data)
 
         if (response.status !== 200) {
             throw new Error()
         }
 
         return true
-    } catch (err :any) {
+    } catch (err: any) {
         return err.message
     }
 }
 
 // get completed tasks from DB 
 
-export const getAllCompletedTasksByIdAndProject = async (userId :string, projectId: string) => {
+export const getAllCompletedTasksByIdAndProject = async (userId: string, projectId: string) => {
     const userToken = await getAuthToken()
 
     const response = await axios.get(completeTaskURL + `?orderBy="completedBy"&equalTo="${userId}"&auth=${userToken}`)
@@ -97,12 +85,12 @@ export const getAllCompletedTasksByIdAndProject = async (userId :string, project
         throw new Error('Could not fetch tasks.')
     }
 
-    return Object.values(response.data).filter((x :any) => x.project === projectId)
+    return Object.values(response.data).filter((x: any) => x.project === projectId)
 }
 
 // edit task in DB
 
-export const editTask = async (task :any) => {
+export const editTask = async (task: taskData) => {
 
     const userToken = await getAuthToken()
 
@@ -116,7 +104,7 @@ export const editTask = async (task :any) => {
 
         return response.data
 
-    } catch(err :any) {
+    } catch (err: any) {
         return { status: 'Failed', message: err.message }
     }
 
@@ -125,7 +113,7 @@ export const editTask = async (task :any) => {
 
 // get task by ID from DB 
 
-export const getTaskById = async (id :string) => {
+export const getTaskById = async (id: string) => {
 
     const userToken = await getAuthToken()
 
@@ -138,9 +126,7 @@ export const getTaskById = async (id :string) => {
 
         return Object.keys(response.data)[0]
 
-    } catch(err :any) {
+    } catch (err: any) {
         return err.message
     }
-
-
 }

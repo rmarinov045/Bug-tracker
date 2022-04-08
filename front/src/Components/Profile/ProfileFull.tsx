@@ -1,11 +1,12 @@
-import { deleteUserProfilePic, updateUserById, User } from '../../features/userReducer'
+import { deleteUserProfilePic, updateUserById } from '../../features/userReducer'
 import React, { useState } from 'react'
 import { useAppDispatch } from '../../store'
 import { RootStateOrAny, useSelector } from 'react-redux'
 import { resetPassword } from '../../auth/auth'
+import { UserData } from '../../types'
 
-function ProfileFull(props: any) {
-    const user: User = props.user
+function ProfileFull(props: { updateModal: Function, user: UserData }) {
+    const user: UserData = props.user
     const [userData, setUserData] = useState(user)
     const [loading, setLoading] = useState(false)
 
@@ -16,7 +17,7 @@ function ProfileFull(props: any) {
     const handleChange = (e: any) => {
         const inputValue = e.currentTarget.value
 
-        setUserData(prevState => ({
+        setUserData((prevState: UserData) => ({
             ...prevState,
             [e.target.id]: inputValue
         }))
@@ -25,8 +26,6 @@ function ProfileFull(props: any) {
     async function handleUpdate(e: any) {
         e.preventDefault()
         setLoading(true)
-
-        // add error handling to reducers and here
 
         const updateAction = await dispatch(updateUserById(userData)).unwrap()
 
@@ -41,17 +40,17 @@ function ProfileFull(props: any) {
         e.preventDefault()
 
         const deleteAction = await dispatch(deleteUserProfilePic())
-        
+
         if (deleteAction) {
             props.updateModal('Profile image removed successfully!', '#16a34a')
         }
     }
 
-    async function handlePasswordReset(e :any) {
+    async function handlePasswordReset(e: any) {
         e.preventDefault()
 
-        const res : Error | any = await resetPassword()
-        
+        const res: Error | any = await resetPassword()
+
         if (res.code) {
             props.updateModal('Failed to reset password. Please try again later.', '#dc2626')
             return

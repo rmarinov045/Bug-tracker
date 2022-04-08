@@ -19,7 +19,7 @@ function LoginForm() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    async function handleLogin(email: string, password: string): Promise<any> {
+    async function handleLogin(email: string, password: string): Promise<undefined | void> {
         setIsLoading(true)
 
         if (!email || !password) {
@@ -34,9 +34,9 @@ function LoginForm() {
             return
         }
 
-        const response = await login(email, password) // can be user or error
+        const response = await login(email, password)
 
-        if (response.errorCode) {
+        if ('errorCode' in response) {
             setIsLoading(false)
             return setError('Incorrect username or password')
         } else {
@@ -44,7 +44,7 @@ function LoginForm() {
 
             dispatch(authenticate(true))
 
-            const auth = getAuth()  // Reloads user into local storage => may need to be in another function module
+            const auth = getAuth()
 
             onAuthStateChanged(auth, (user) => {
                 if (user) {

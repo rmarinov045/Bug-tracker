@@ -1,12 +1,12 @@
 import { auth } from "../firebase"
-import { createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, updateProfile, User } from "firebase/auth"
 
 // handles login with email and password and returns user object if successfull
-export const login = async function (email: string, password: string): Promise<any> {
+export const login = async function (email: string, password: string): Promise<User | { errorCode: string, errorMessage: string }> {
 
     try {
         const response = await signInWithEmailAndPassword(auth, email, password)
-        const user = await response.user
+        const user = response.user
         return user
     } catch (err: any) {
         const [errorCode, errorMessage]: string[] = [err.code, err.message]
@@ -14,10 +14,10 @@ export const login = async function (email: string, password: string): Promise<a
     }
 }
 // handles register with email and password and returns user object if successfull
-export const registerUser = async function (email: string, password: string): Promise<any> {
+export const registerUser = async function (email: string, password: string): Promise<User | { errorCode: string, errorMessage: string }> {
     const response = await createUserWithEmailAndPassword(auth, email, password)
     try {
-        const user = await response.user
+        const user = response.user
         return user
     } catch (err: any) {
         const [errorCode, errorMessage]: string[] = [err.code, err.message]
@@ -39,11 +39,11 @@ export const updateUser = async function (user: any, name: string) {
 
 // Generate Firebase ID token => to be done server-side
 
-export const generateAuthToken = async () :Promise<string | undefined | unknown> => {
+export const generateAuthToken = async (): Promise<string | undefined | unknown> => {
     try {
-        const authToken :string | undefined = await auth.currentUser?.getIdToken(true)
+        const authToken: string | undefined = await auth.currentUser?.getIdToken(true)
         return authToken
-    } catch(error) {
+    } catch (error) {
         return error
     }
 }
@@ -52,17 +52,17 @@ export const generateAuthToken = async () :Promise<string | undefined | unknown>
 
 export const getAuthToken = async () => await auth.currentUser?.getIdToken(true)
 
-export const resetPassword = async() => {
-    
+export const resetPassword = async () => {
+
     try {
-        await sendPasswordResetEmail(auth, auth.currentUser?.email || '')     
+        await sendPasswordResetEmail(auth, auth.currentUser?.email || '')
         return true
     } catch (err) {
         return err
     }
 }
 
-export const sendVerificationEmail = async() => {
+export const sendVerificationEmail = async () => {
     const user = auth.currentUser
 
     if (user) {
@@ -75,5 +75,5 @@ export const sendVerificationEmail = async() => {
     } else {
         return null
     }
-    
+
 }

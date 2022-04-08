@@ -2,9 +2,10 @@ import React from 'react'
 import { RootStateOrAny, useSelector } from 'react-redux'
 import { deleteProjectById } from '../../features/projectReducer'
 import { useAppDispatch } from '../../store'
+import { Project } from '../../types'
 import SmallSpinner from '../Utils/SmallSpinner'
 
-function ProjectCard({ currentProject ,handleOpen, project, setModalMessage, setModalColor }: any) {
+function ProjectCard({ currentProject, handleOpen, project, setModalMessage, setModalColor }: { currentProject: Project, handleOpen: Function, project: Project, setModalMessage: Function, setModalColor: Function }) {
 
     const dispatch = useAppDispatch()
 

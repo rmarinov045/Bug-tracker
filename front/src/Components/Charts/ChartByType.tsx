@@ -1,8 +1,9 @@
 import React from 'react'
 import { PieChart, ResponsiveContainer, Pie, Tooltip, Cell, Legend,  } from 'recharts'
+import { taskData } from '../../types'
 import { pieChartDataCreator } from '../../utils/chartDataConstructor'
  
-function ChartByType(props :any) {
+function ChartByType(props :{tasks: taskData[]}) {
 
     const tasks = pieChartDataCreator(props.tasks)
 
