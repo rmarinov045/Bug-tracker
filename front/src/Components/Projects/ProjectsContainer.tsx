@@ -41,11 +41,11 @@ function ProjectsContainer({ projects = [], loaded }: { projects: Project[], loa
                     <ul className='w-full'>
                         <div className='w-full min-h-[10rem] grid grid-cols-3 justify-items-center p-1 gap-1'>
 
-                            <li className='w-full min-h-[10rem] rounded bg-amber-200 flex flex-col items-center justify-center font-bold text-xl text-center overflow-x-hidden'>
+                            <li className='w-full min-h-[10rem] rounded bg-amber-200 flex flex-col items-center justify-center font-bold text-xl text-center overflow-x-hidden dark:bg-dark-secondary'>
                                 <p className='w-full text-ellipsis overflow-x-hidden p-2'>Default</p>
                                 {currentProject.id === 'default' ? <p className='text-xs'>(Currently opened)</p> : <></>}
                                 <div className='container flex w-full items-center justify-center gap-10 mt-5'>
-                                    {currentProject.id === 'default' ? <></> : <svg onClick={() => handleOpen('default', 'default')} xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 hover:text-white transition ease-in-out 250 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    {currentProject.id === 'default' ? <></> : <svg onClick={() => handleOpen('default', 'default')} xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 hover:text-white transition ease-in-out 250 cursor-pointer dark:hover:text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                                     </svg>}
                                 </div>
@@ -53,7 +53,7 @@ function ProjectsContainer({ projects = [], loaded }: { projects: Project[], loa
 
                             {loaded ? projects.map((x: any) => <ProjectCard currentProject={currentProject} handleOpen={handleOpen} key={x.id} setModalMessage={setModalMessage} setModalColor={setModalColor} project={x} />) : <SmallSpinner />}
 
-                            <li onClick={() => setAddMenu(!addMenu)} className='w-full min-h-[10rem] rounded bg-slate-100 text-green-500 flex flex-col items-center justify-center font-bold text-xl text-center overflow-x-hidden cursor-pointer transition ease-in-out 200 hover:text-green-600'>
+                            <li onClick={() => setAddMenu(!addMenu)} className='w-full min-h-[10rem] rounded bg-slate-100 text-green-500 flex flex-col items-center justify-center font-bold text-xl text-center overflow-x-hidden cursor-pointer transition ease-in-out 200 hover:text-green-600 dark:text-dark-primary'>
                                 <div className='container flex w-full items-center justify-center gap-10'>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 20 20" fill="currentColor">
                                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />

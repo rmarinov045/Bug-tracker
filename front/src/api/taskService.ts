@@ -12,7 +12,7 @@ export const createTask = async (taskData: taskData) => {
 
     try {
         const response = await axios.post(postTaskURL + `?auth=${userToken}`, data)
-
+        
         if (response.status !== 200) {
             throw new Error()
         }
@@ -27,7 +27,7 @@ export const createTask = async (taskData: taskData) => {
 
 const getTasksURL = 'https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'
 
-export async function getAllTasks(projectId: string): Promise<any> {
+export async function getAllTasks(projectId: string): Promise<taskData[] | null> {
     const userToken = await getAuthToken()
     const response = await axios.get(getTasksURL + `?auth=${userToken}&orderBy="project"&equalTo="${projectId}"`)
 

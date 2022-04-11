@@ -8,6 +8,7 @@ import ErrorField from '../Utils/Error'
 
 import { registerUser } from '../../auth/auth'
 import { UserData } from '../../types'
+import useTitle from '../../hooks/useTitle'
 
 
 
@@ -102,6 +103,8 @@ function RegisterForm() {
                 return setError('Email is already in use!')
         }
     }
+
+    useTitle('signUM - Register')
 
     return (
         <div className='h-screen pb-7 w-full overflow-x-hidden flex justify-center lg:items-center items-start pt-10 bg-gradient-to-br from-teal-200 via-teal-100 to-white'>

@@ -10,10 +10,11 @@ import Modal from '../Utils/Modal'
 import { getTasks, searchTasks } from '../../features/tasksReducer'
 import SearchField from '../Utils/SearchField'
 import ProjectModal from '../Utils/ProjectModal'
+import useTitle from '../../hooks/useTitle'
 
 function HomeMain() {
     const userFirstName = useSelector((state: RootStateOrAny) => state.user.value.firstName)
-    const project = useSelector((state :RootStateOrAny) => state.user.currentProject)
+    const project = useSelector((state: RootStateOrAny) => state.user.currentProject)
 
     const [error, setError] = useState('')
     const [modalColor, setModalColor] = useState('#dc2626')
@@ -21,7 +22,7 @@ function HomeMain() {
 
     const tasks = useSelector((state: RootStateOrAny) => state.tasks.tasks)
     const tasksLoaded = useSelector((state: RootStateOrAny) => state.tasks.loaded)
-    const filteredTasks = useSelector((state :RootStateOrAny) => state.tasks.filtered)
+    const filteredTasks = useSelector((state: RootStateOrAny) => state.tasks.filtered)
 
     function updateModalMessage(message: string) {
         setError(message)
@@ -43,14 +44,17 @@ function HomeMain() {
 
     const dispatch = useDispatch()
 
+    useTitle('signUM - Dashboard')
+
     useEffect(() => {
         dispatch(getTasks(project.id))
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
 
-        <div className='flex h-screen w-full'>
+        <div className='flex h-screen w-full dark:bg-gray-900 dark:text-white'>
 
             <Modal message={error} bgColor={modalColor} />
 

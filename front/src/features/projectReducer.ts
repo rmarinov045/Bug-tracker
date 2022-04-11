@@ -38,19 +38,29 @@ const projectSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getProjects.fulfilled, (state, action) => {
-            state.loaded = false
             state.list = Object.values(action.payload || [])
             state.loaded = true
         })
-        builder.addCase(deleteProjectById.fulfilled, (state, action) => {
+        builder.addCase(getProjects.rejected, (state, action) => {
+            state.list = []
+            state.loaded = true
+        })
+        builder.addCase(getProjects.pending, (state, action) => {
             state.loaded = false
+        })
+        builder.addCase(deleteProjectById.fulfilled, (state, action) => {
             state.list = [...state.list.filter((x: any) => x.id !== action.payload)]
             state.loaded = true
         })
-        builder.addCase(createProject.fulfilled, (state, action) => {
+        builder.addCase(deleteProjectById.pending, (state, action) => {
             state.loaded = false
+        })
+        builder.addCase(createProject.fulfilled, (state, action) => {
             state.list.push(action.payload)
             state.loaded = true
+        })
+        builder.addCase(createProject.pending, (state, action) => {
+            state.loaded = false
         })
     }
 })

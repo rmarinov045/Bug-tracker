@@ -60,22 +60,22 @@ function ProfileFull(props: { updateModal: Function, user: UserData }) {
     }
 
     return (
-        <form onSubmit={(e) => handleUpdate(e)} className='w-3/4 xl:w-1/2 flex flex-col gap-10 border-2 border-slate-50 shadow-md p-2 bg-white'>
+        <form onSubmit={(e) => handleUpdate(e)} className='w-3/4 xl:w-1/2 flex flex-col gap-10 border-2 border-slate-50 shadow-md p-2 bg-white dark:bg-dark-primary dark:text-white'>
             <div className='flex gap-7 items-center justify-center border-b-2 p-2 w-full focus-within:border-green-500 transition ease-in-out 150'>
                 <label className='font-bold w-40' htmlFor="firstName">First Name</label>
-                <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full' value={userData.firstName} type="text" name="firstName" id="firstName" />
+                <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full dark:text-white dark:bg-transparent' value={userData.firstName} type="text" name="firstName" id="firstName" />
             </div>
             <div className='flex gap-7 items-center justify-center border-b-2 p-2 focus-within:border-green-500 transition ease-in-out 150'>
                 <label className='font-bold w-40' htmlFor="lastName">Last Name</label>
-                <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full' value={userData.lastName} type="text" name="lastName" id="lastName" />
+                <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full dark:text-white dark:bg-transparent' value={userData.lastName} type="text" name="lastName" id="lastName" />
             </div>
             <div className='flex gap-7 items-center justify-center border-b-2 p-2 focus-within:border-green-500 transition ease-in-out 150'>
                 <label className='font-bold w-40' htmlFor="company">Company</label>
-                <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full' value={userData.company} type="text" name="company" id="company" />
+                <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full dark:text-white dark:bg-transparent' value={userData.company} type="text" name="company" id="company" />
             </div>
             <div className='flex gap-7 items-center justify-center border-b-2 p-2 focus-within:border-green-500 transition ease-in-out 150'>
                 <label className='font-bold w-40' htmlFor="position">Position</label>
-                <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full' value={userData.position} type="text" name="firstName" id="position" />
+                <input onChange={(e) => handleChange(e)} className='focus:outline-none text-slate-500 text-sm w-full dark:text-white dark:bg-transparent' value={userData.position} type="text" name="firstName" id="position" />
             </div>
             <div>
                 {userProfileImage ? <button onClick={(e) => handleImageDelete(e)} className='font-bold text-xs text-red-600 hover:underline transition ease-in-out 150'>Remove profile picture</button> : <></>}

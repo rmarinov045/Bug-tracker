@@ -5,6 +5,7 @@ import ProjectsContainer from './ProjectsContainer'
 import { useAppDispatch } from '../../store'
 import { getProjects } from '../../features/projectReducer'
 import { RootStateOrAny, useSelector } from 'react-redux'
+import useTitle from '../../hooks/useTitle'
 
 
 function Projects() {
@@ -22,9 +23,10 @@ function Projects() {
         return () => { }
     }, [dispatch])
 
+    useTitle('signUM - Projects')
 
     return (
-        <div className='flex w-full h-screen'>
+        <div className='flex w-full h-screen dark:bg-dark-background dark:text-white'>
             <Navbar />
             <main className='flex flex-col space-y-6 w-full p-2 pt-4'>
                 <section className='border-b-2 pb-2'>

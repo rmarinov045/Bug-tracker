@@ -14,10 +14,12 @@ function PublicRoute({ component }: { component: ReactChild }) {
             if (user && user.emailVerified) {
                 setLoading(false)
                 navigate('/admin')
+                return
             }
             setLoading(false)
         })
         return () => {
+            setLoading(false)
             auth.currentUser?.reload()
         }
     }, [navigate])

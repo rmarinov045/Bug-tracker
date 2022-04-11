@@ -19,11 +19,13 @@ function PrivateRoute({ component }: { component: ReactChild }) {
         setLoading(false)
       } else {
         navigate('/')
+        return
       }
     })
 
     return () => {
-      auth.currentUser?.reload()
+      setUserAuth(false)
+      setLoading(false)
     }
   }, [navigate])
 

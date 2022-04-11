@@ -109,7 +109,7 @@ function Task(props: { task: taskData, setError: Function, setModalColor: Functi
 
   return (
 
-    <div className='flex flex-col text-xs md:text-sm'>
+    <div className='flex flex-col text-xs md:text-sm dark:text-black'>
       <div className='bg-indigo-50 rounded-xl p-2 transform transition ease-in-out 150 min-w-full'>
         <div className='flex w-full items-center border-b-2 border-black pb-4'>
           <p className='font-bold whitespace-nowrap w-full text-ellipsis overflow-x-hidden'>{taskName}</p>

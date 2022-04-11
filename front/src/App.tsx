@@ -1,31 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import PrivateRoute from './Components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 
-import { store } from './store';
-import { persistor } from './store';
+import LoginForm from './components/Login/LoginForm'
+import RegisterForm from './components/Register/RegisterForm'
+import ConfirmEmail from './components/Register/ConfirmEmail'
+import HomeMain from './components/Dashboard/HomeMain'
+import Completed from './components/Completed-tasks/Completed';
+import Profile from './components/Profile/Profile';
+import PublicRoute from './components/PublicRoute';
+import Projects from './components/Projects/Projects';
+import { RootStateOrAny, useSelector } from 'react-redux';
 
-import { Provider } from 'react-redux'
-
-import { PersistGate } from 'redux-persist/integration/react'
-
-import LoginForm from './Components/Login/LoginForm'
-import RegisterForm from './Components/Register/RegisterForm'
-import ConfirmEmail from './Components/Register/ConfirmEmail'
-import HomeMain from './Components/Dashboard/HomeMain'
-import Completed from './Components/Completed-tasks/Completed';
-import Profile from './Components/Profile/Profile';
-import Spinner from './Components/Utils/Spinner';
-import PublicRoute from './Components/PublicRoute';
-import Projects from './Components/Projects/Projects';
-
-// added router and store
 function App() {
+
+  const darkMode = useSelector((state: RootStateOrAny) => state.user.darkMode)
+  const root = document.getElementById('root')
+
+  useEffect(() => {
+      darkMode ? root?.classList.add('dark') : root?.classList.remove('dark')
+  }, [darkMode, root])
+
   return (
-    <Provider store={store}>
-      <PersistGate loading={<Spinner />} persistor={persistor}>
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<PublicRoute component={<LoginForm />} />} />
@@ -38,8 +36,6 @@ function App() {
             <Route path='/profile' element={<PrivateRoute component={<Profile />}></PrivateRoute>} />
           </Routes>
         </BrowserRouter>
-      </PersistGate>
-    </Provider>
   );
 }
 

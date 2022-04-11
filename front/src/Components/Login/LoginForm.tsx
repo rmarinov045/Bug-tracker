@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { authenticate, getUserByEmail } from '../../features/userReducer'
 
-import logo from '../../assets/logo.svg'
+import logo from '../../assets/logo-new.jpg'
 
 import { login } from '../../auth/auth'
 import ErrorField from '../Utils/Error'
+import useTitle from '../../hooks/useTitle'
 
 function LoginForm() {
 
@@ -58,10 +59,12 @@ function LoginForm() {
 
     }
 
+    useTitle('signUM - Login')
+
     return (
         <div className="flex flex-col justify-center w-2/3 lg:w-1/3 m-auto h-screen">
             <div className="flex flex-col justify-center items-center">
-                <p className="font-extrabold text-3xl lg:text-4xl flex items-center gap-4">Log in to <img src={logo} className='h-20 w-28' alt='logo' /></p>
+                <p className="font-extrabold text-3xl lg:text-4xl flex items-center gap-4">Log in to <img src={logo} className='h-26 w-28' alt='logo' /></p>
                 <hr className="mt-4 w-full" />
 
                 {error ? <ErrorField errorMessage={error} /> : ''}

@@ -34,7 +34,7 @@ function CompletedTask({ task }: { task: taskData }) {
 
   return (
     <>
-      <div style={taskInfo ? { backgroundColor: "#d4d4d8" } : { backgroundColor: '#e2e8f0' }} className='w-full mt-1 text-xs xl:text-base'>
+      <div style={taskInfo ? { backgroundColor: "#d4d4d8" } : { backgroundColor: '#e2e8f0' }} className='w-full mt-1 text-xs xl:text-base dark:text-black'>
         <li onClick={() => setTaskInfo(!taskInfo)} className='hover:bg-slate-400 cursor-pointer transform transition ease-in-out 150 w-full flex pl-2 pr-2 p-1 xl:p-3 items-center font-bold hover:text-slate-900'>{task.taskName}<svg xmlns="http://www.w3.org/2000/svg" tabIndex={0} className="h-6 w-6 ml-auto focus:outline-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
           <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
         </svg></li>

@@ -19,9 +19,9 @@ export const getTasks = createAsyncThunk(
     'tasks/getTasks',
     async (projectId: string, thunkAPI) => {
         const response = await getAllTasks(projectId || 'default')
-
+        
         if (response === null && response) {
-            throw new Error('Fail in loading tasks in tasksReducer')
+            throw new Error('Failed loading tasks')
         }
 
         return response
@@ -80,6 +80,10 @@ export const tasksSlice: Slice = createSlice({
         },
         searchTasks: (state, action): void => {
             state.filtered = [...state.tasks.filter((x: taskData) => x.taskName.toLowerCase().includes(action.payload))]
+        },
+        resetTasks: (state, action) => {
+            state.tasks = []
+            state.loaded = false
         }
     },
     extraReducers: (builder) => {
@@ -87,8 +91,14 @@ export const tasksSlice: Slice = createSlice({
             state.tasks = [...state.tasks.filter((task: taskData) => task.id !== action.payload)]
         })
         builder.addCase(getTasks.fulfilled, (state: any, action: any) => {
-            state.loaded = false
             state.tasks = [...action.payload]
+            state.loaded = true
+        })
+        builder.addCase(getTasks.pending, (state, action) => {
+            state.loaded = false
+        })
+        builder.addCase(getTasks.rejected, (state, action) => {
+            state.tasks = []
             state.loaded = true
         })
         builder.addCase(editTaskById.fulfilled, (state: any, action: any) => {
@@ -99,4 +109,4 @@ export const tasksSlice: Slice = createSlice({
 
 export default tasksSlice.reducer
 
-export const { addTask, updateAllTasks, filterTasks, searchTasks } = tasksSlice.actions
+export const { addTask, updateAllTasks, filterTasks, searchTasks, resetTasks } = tasksSlice.actions
