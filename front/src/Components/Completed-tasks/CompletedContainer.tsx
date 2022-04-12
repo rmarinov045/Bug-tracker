@@ -6,8 +6,8 @@ import { getCompletedTasksByUserIdAndProject, searchCompletedTasks } from '../..
 
 import CompletedTask from './CompletedTask'
 
-import Chart from '../Charts/Chart'
-import ChartByType from '../Charts/ChartByType'
+import Chart from '../Charts/Scatter'
+import ChartByType from '../Charts/Pie'
 import TaskLoader from '../Utils/TaskLoader'
 import SmallSpinner from '../Utils/SmallSpinner'
 import SearchField from '../Utils/SearchField'
