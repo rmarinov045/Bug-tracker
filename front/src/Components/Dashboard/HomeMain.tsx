@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import Navbar from '../Navbar'
 import TasksContainer from './TaskContainer'
 
 import '../../App.css'
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
+import { RootStateOrAny, useSelector } from 'react-redux'
 import Filter from '../Utils/Filter'
 import Modal from '../Utils/Modal'
 import { getTasks, searchTasks } from '../../features/tasksReducer'
 import SearchField from '../Utils/SearchField'
 import ProjectModal from '../Utils/ProjectModal'
 import useTitle from '../../hooks/useTitle'
+import RefreshButton from '../Utils/RefreshButton'
+import { useAppDispatch } from '../../store'
 
 function HomeMain() {
     const userFirstName = useSelector((state: RootStateOrAny) => state.user.value.firstName)
@@ -42,15 +44,20 @@ function HomeMain() {
         }
     }
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
-    useTitle('signUM - Dashboard')
+    const fetchTasks = useCallback(
+        (projectID: string) => {
+            dispatch(getTasks(projectID))
+        },
+        [dispatch],
+    )
 
     useEffect(() => {
-        dispatch(getTasks(project.id))
+        fetchTasks(project.id)
+    }, [fetchTasks, project.id, tasks.length])
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    useTitle('signUM - Dashboard')
 
     return (
 
@@ -64,6 +71,7 @@ function HomeMain() {
 
                 <ProjectModal project={project} />
 
+
                 <div className="w-full flex flex-col pt-10 items-center">
 
                     <p className='font-bold text-2xl md:text-3xl border-b-2 w-5/6 text-center pb-2'>Greetings {userFirstName}!</p>
@@ -72,9 +80,12 @@ function HomeMain() {
 
                     <div className='flex w-full p-2 mt-3 items-center justify-center'>
 
-                        <div className='flex-col w-full'>
+                        <div className='flex-col w-2/3'>
                             <SearchField handleSearch={handleSearch} />
-                            <h1 className='font-bold text-center text-xl lg:text-2xl'>Current issues:</h1>
+                            <div className='flex w-full items-center min-h-[2rem]'>
+                                <h1 className='font-bold text-center mx-auto text-xl lg:text-2xl'>Current issues:</h1>
+                                <RefreshButton type='tasks' action={fetchTasks} projectID={project.id} />
+                            </div>
                         </div>
 
                     </div>

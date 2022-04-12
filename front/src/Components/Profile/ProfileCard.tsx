@@ -1,5 +1,5 @@
 import { getUserProfilePic } from '../../features/userReducer'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { UserData } from '../../types'
 
 import defaultProfileImage from '../../assets/profile.jpeg'
@@ -39,20 +39,25 @@ function ProfileCard(props: { updateModal: Function, user: UserData }) {
         }
     }
 
-    useEffect(() => {
-        async function getImage() {
+    const getImage = useCallback(
+        async () => {
             const res = await dispatch(getUserProfilePic())
             if (res) {
                 setLoading(false)
             }
-        }
+        },
+        [dispatch],
+    )
+
+
+    useEffect(() => {
         getImage()
 
         return () => {
             setLoading(false)
         }
 
-    }, [dispatch, updateImg])
+    }, [getImage, updateImg])
 
     return (
 

@@ -3,12 +3,12 @@ import { getAllCompletedTasksByIdAndProject } from "../api/taskService";
 
 export const getCompletedTasksByUserIdAndProject = createAsyncThunk(
     'completedTasks/getCompletedTasksByUserIdAndProject',
-    async ({ userId = '', projectId }: { userId: string | undefined, projectId: string }, thunkAPI) => {
+    async ({ userId, projectId }: { userId: string | undefined, projectId: string }, thunkAPI) => {
         try {
             if (userId === '') {
                 throw new Error('No user logged in!')
             }
-            const response = await getAllCompletedTasksByIdAndProject(userId, projectId)
+            const response = await getAllCompletedTasksByIdAndProject(userId || '', projectId)
             return response
         } catch (err: any) {
             return []

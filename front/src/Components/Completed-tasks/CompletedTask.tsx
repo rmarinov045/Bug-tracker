@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { downloadUserImageById } from '../../api/userService'
 import { convertToDate } from '../../utils/util'
 import { typeColors, priorityColors } from '../Dashboard/Task'
@@ -12,11 +12,8 @@ function CompletedTask({ task }: { task: taskData }) {
   const [priorityColor, setPriorityColor] = useState('')
   const [profileImage, setProfileImage] = useState('')
 
-  useEffect(() => {
-    setTypeColor(typeColors[task.taskType])
-    setPriorityColor(priorityColors[task.taskPriority])
-
-    async function getImages() {
+  const getImages = useCallback(
+    async () => {
       try {
         try {
           const response = await downloadUserImageById(task.authorId || '')
@@ -27,10 +24,23 @@ function CompletedTask({ task }: { task: taskData }) {
       } catch (err) {
         return null
       }
-    }
+    },
+    [task.authorId],
+  )
+
+
+  useEffect(() => {
+    setTypeColor(typeColors[task.taskType])
+    setPriorityColor(priorityColors[task.taskPriority])
+
     getImages()
 
-  }, [task.taskType, task.taskPriority, task.authorId])
+    return () => {
+      setTypeColor('')
+      setPriorityColor('')
+    }
+
+  }, [getImages, task.taskPriority, task.taskType])
 
   return (
     <>

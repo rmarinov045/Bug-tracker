@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { UserData } from '../../types'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
@@ -11,6 +11,7 @@ import ChartByType from '../Charts/ChartByType'
 import TaskLoader from '../Utils/TaskLoader'
 import SmallSpinner from '../Utils/SmallSpinner'
 import SearchField from '../Utils/SearchField'
+import RefreshButton from '../Utils/RefreshButton'
 
 function CompletedContainer({ project }: { project: { name: string, id: string } }) {
   const currentUser: UserData = useSelector((state: RootStateOrAny) => state.user.value)
@@ -33,13 +34,19 @@ function CompletedContainer({ project }: { project: { name: string, id: string }
     }
   }
 
+  const fetchTasks = useCallback(
+    (userId :string | undefined, projectId: string) => {
+      dispatch(getCompletedTasksByUserIdAndProject({ userId, projectId }))
+    },
+    [dispatch],
+  )
+
   useEffect(() => {
-      dispatch(getCompletedTasksByUserIdAndProject({ userId: currentUser.userId, projectId: project.id }))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    fetchTasks(currentUser.userId, project.id)
+  }, [currentUser.userId, project.id, fetchTasks])
 
   return (
-    <div className='w-full overflow-x-hidden'>
+    <div className='w-full overflow-x-hidden' id='completed-container'>
 
       <div className='flex items-center justify-center p-2 mt-3 border-b-2 w-2/3 m-auto border-slate-500'>
 
@@ -53,7 +60,7 @@ function CompletedContainer({ project }: { project: { name: string, id: string }
       <div className='flex mt-2 p-2 gap-10 items-start pl-10 flex-row-reverse h-5/6'>
 
 
-        {loaded ? completedTasks.length > 0 ? <aside id='charts-container' className='w-1/2 p-2 bg-white border-2 border-slate-100 shadow-sm flex h-full flex-col overflow-y-scroll'>
+        {loaded ? completedTasks.length > 0 ? <aside id='charts-container' className='w-1/2 p-2 bg-white dark:bg-slate-900 border-2 border-slate-100 shadow-sm flex h-full flex-col overflow-y-scroll'>
           {completedTasks.length ? <Chart tasks={completedTasks} /> : <></>}
           {completedTasks.length ? <ChartByType tasks={completedTasks} /> : <></>}
         </aside> : <></> : <div className='w-1/2 h-full flex items-center'><SmallSpinner /></div>}
@@ -62,8 +69,10 @@ function CompletedContainer({ project }: { project: { name: string, id: string }
 
           <SearchField handleSearch={handleSearch} />
 
-          <p className='font-bold text-center text-xs mb-2 xl:text-base'>Issues you have resolved:</p>
-
+          <div className='min-h-[2rem] w-full flex items-center mb-2'>
+            <p className='font-bold text-center text-xs xl:text-base'>Issues you have resolved:</p>
+            <RefreshButton type='completed' action={fetchTasks} projectID={project.id} />
+          </div>
 
           <ul className='flex flex-col items-center justify-center min-w-full'>
             {loaded

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { deleteTask, completeTask } from '../../api/taskService'
@@ -90,20 +90,30 @@ function Task(props: { task: taskData, setError: Function, setModalColor: Functi
 
   }
 
-  useEffect(() => {
-    setTypeColor(typeColors[taskType])
-    setPriorityColor(priorityColors[taskPriority])
-
-    async function getImages() {
+  const getImages = useCallback(
+    async () => {
       try {
         const imageUrl = await downloadUserImageById(authorId)
         setAuthorImage(imageUrl)
       } catch (err) {
         return
       }
-    }
+    },
+    [authorId],
+  )
+
+
+  useEffect(() => {
+    setTypeColor(typeColors[taskType])
+    setPriorityColor(priorityColors[taskPriority])
     getImages()
-  }, [taskType, taskPriority, authorId])
+
+    return () => {
+      setTypeColor('')
+      setPriorityColor('')
+    }
+
+  }, [taskType, taskPriority, authorId, getImages])
 
   // fix styling for large screens
 
