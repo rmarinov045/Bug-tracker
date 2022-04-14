@@ -35,7 +35,6 @@ function AddTask(props: { visible: Function, updateModalMessage: Function, updat
             return
         }
 
-
         const data = { taskName, taskType, taskPriority, taskAuthor: user.firstName, taskDescription, id: generateTaskId(), authorId: userId, project: project.id }    // add created on for sorting
         const createResponse = await createTask(data)
 
@@ -43,6 +42,7 @@ function AddTask(props: { visible: Function, updateModalMessage: Function, updat
             setError('Failed to create a task. Please try again later')
             return
         }
+        
         dispatch(addTask(data))
         updateModalMessage('Task created successfully!')
         updateModalColor('#16a34a')
@@ -60,7 +60,7 @@ function AddTask(props: { visible: Function, updateModalMessage: Function, updat
 
     return (
 
-        <div className='fixed w-9/12 left-1/2 ml-2  xl:w-1/2 -translate-x-1/2 transform z-10'>
+        <section className='fixed w-9/12 left-1/2 ml-2  xl:w-1/2 -translate-x-1/2 transform z-10'>
             <div className='w-full bg-white font-bold m-auto rounded-xl shadow-2xl min-h-fit p-2 border-2 border-green-500 dark:bg-dark-primary dark:border-dark-secondary'>
                 <div className='flex items-center'>
                     <h1 className='text-3xl text-center font-bold m-auto'>Create a new issue..</h1>
@@ -68,7 +68,7 @@ function AddTask(props: { visible: Function, updateModalMessage: Function, updat
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg></div>
                 </div>
-                <form onSubmit={handleSubmit} className='flex flex-col p-2 gap-2'>
+                <form aria-label='add-task' onSubmit={handleSubmit} className='flex flex-col p-2 gap-2'>
                     <label htmlFor="issueName" className=''>Issue name</label>
                     <input onChange={(e) => setTaskName(e.target.value)} className='transform transition ease-in-out 150 border-2 border-black pr-2 pl-2 p-1 rounded-xl focus:outline-none focus:border-green-500 dark:text-black' type="text" name="issueName" />
                     <label className=''>Issue type</label>
@@ -110,7 +110,7 @@ function AddTask(props: { visible: Function, updateModalMessage: Function, updat
 
                 </form>
             </div>
-        </div>
+        </section>
     )
 }
 

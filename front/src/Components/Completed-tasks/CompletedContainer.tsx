@@ -65,7 +65,7 @@ function CompletedContainer({ project }: { project: { name: string, id: string }
           {completedTasks.length ? <ChartByType tasks={completedTasks} /> : <></>}
         </aside> : <></> : <div className='w-1/2 h-full flex items-center'><SmallSpinner /></div>}
 
-        <main id='completed-task-container' className='w-1/2 p-2 border-2 border-slate-100 shadow-sm mr-auto min-h-full max-h-full flex items-center flex-col overflow-y-scroll dark:bg-slate-700'>
+        <section id='completed-task-container' className='w-1/2 p-2 border-2 border-slate-100 shadow-sm mr-auto min-h-full max-h-full flex items-center flex-col overflow-y-scroll dark:bg-slate-700'>
 
           <SearchField handleSearch={handleSearch} />
 
@@ -83,7 +83,7 @@ function CompletedContainer({ project }: { project: { name: string, id: string }
               : <TaskLoader />}
           </ul>
 
-        </main>
+        </section>
 
       </div>
 

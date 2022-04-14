@@ -11,13 +11,13 @@ function Completed() {
   useTitle('signUM - Resolved issues')
 
   return (
-    <div className='flex w-full h-screen dark:bg-dark-background dark:text-white'>
+    <main className='flex w-full h-screen dark:bg-dark-background dark:text-white'>
       <Navbar />
 
       <ProjectModal project={project} />
 
       <CompletedContainer project={project} />
-    </div>
+    </main>
 
   )
 }

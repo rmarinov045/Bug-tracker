@@ -35,7 +35,7 @@ function Navbar() {
     }
 
     return (
-        <div id='navbar' className='flex-col h-full pt-2 pb-2 bg-green-500 items-center flex z-0 filter dark:bg-indigo-900'>
+        <nav id='navbar' className='flex-col h-full pt-2 pb-2 bg-green-500 items-center flex z-0 filter dark:bg-indigo-900'>
 
             <div className='w-full flex items-center justify-center pt-4'>
                 <img src={logo} alt="logo" className='h-12 w-12 rounded-full' />
@@ -85,7 +85,7 @@ function Navbar() {
                 </svg>
             </div>
 
-        </div>
+        </nav>
     )
 }
 export default Navbar

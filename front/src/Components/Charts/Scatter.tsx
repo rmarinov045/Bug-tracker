@@ -8,6 +8,7 @@ function Chart(props :{tasks: taskData[]}) {
     const tasks = scatterChartDataCreator(props.tasks)
     
     return (
+        props.tasks.length > 0 ? 
         <ResponsiveContainer width="100%" height="100%">
             <ScatterChart width={1000} height={1000}>
                 <XAxis stroke='#475569' dataKey='date' name='Date' />
@@ -15,7 +16,7 @@ function Chart(props :{tasks: taskData[]}) {
                 <Tooltip cursor={{ strokeDasharray: '3 3' }} />
                 <Scatter line name='Resolved Issues' data={tasks} fill="#4caf50" />
             </ScatterChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer> : <></>
     )
 }
 
