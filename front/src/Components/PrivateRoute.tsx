@@ -11,7 +11,7 @@ function PrivateRoute({ component }: { component: ReactChild }) {
   const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate()
-  // add cleanup function
+
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if (user) {

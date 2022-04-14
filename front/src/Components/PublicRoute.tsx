@@ -2,7 +2,7 @@ import React, { ReactChild, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebase'
 import Spinner from './Utils/Spinner'
-// add cleanup function
+
 function PublicRoute({ component }: { component: ReactChild }) {
 
     const navigate = useNavigate()
