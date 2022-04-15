@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit'
-import { deleteUserImage, getUser, updateUser } from '../api/userService'
-import { deleteImage, downloadImage } from '../api/userService'
+import { deleteUserImage, getUser, updateUser, deleteImage, downloadImage } from '../api/userService'
 import { UserData } from '../types'
 
 
@@ -52,7 +51,6 @@ export const deleteUserProfilePic = createAsyncThunk(
     }
 )
 
-// add rejected handling for extraReducers
 export const userSlice: Slice = createSlice({
     name: 'user',
     initialState: { auth: false, value: {}, imageUrl: '', currentProject: { name: 'default', id: 'default' }, darkMode: false },
@@ -63,6 +61,8 @@ export const userSlice: Slice = createSlice({
         reset: (state, action) => {
             state.value = {}
             state.imageUrl = ''
+            state.darkMode = false
+            state.currentProject = { name: 'default', id: 'default' }
         },
         openProject: (state, action) => {
             state.currentProject = action.payload

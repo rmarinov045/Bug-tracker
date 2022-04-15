@@ -18,13 +18,19 @@ const typeFilters: { [key: string]: number } = {
 export const getTasks = createAsyncThunk(
     'tasks/getTasks',
     async (projectId: string, thunkAPI) => {
-        const response = await getAllTasks(projectId || 'default')
-        
-        if (response === null && response) {
-            throw new Error('Failed loading tasks')
+        try {
+
+            const response = await getAllTasks(projectId || 'default')
+
+            if (response === null) {
+                throw new Error('Failed loading tasks')
+            }
+
+            return response
+        } catch (err: any) {
+            return []
         }
 
-        return response
     }
 )
 
@@ -61,20 +67,25 @@ export const tasksSlice: Slice = createSlice({
     reducers: {
         addTask: (state, action): void => {
             state.tasks.push(action.payload)
+            state.loaded = true
         },
         updateAllTasks: (state, action): void => {
             state.tasks = [...action.payload]
+            state.loaded = true
         },
         filterTasks: (state, action): void => {
             switch (action.payload) {
                 case 'Priority':
                     state.tasks = [...state.tasks.sort((a: taskData, b: taskData) => priorityFilters[b.taskPriority] - priorityFilters[a.taskPriority])]
+                    state.loaded = true
                     break
                 case 'Type':
                     state.tasks = [...state.tasks.sort((a: taskData, b: taskData) => typeFilters[b.taskType] - typeFilters[a.taskType])]
+                    state.loaded = true
                     break
                 default:
                     state.tasks = [...state.tasks.sort((a: taskData, b: taskData) => Number(a.id) - Number(b.id))]
+                    state.loaded = true
                     break
             }
         },
@@ -83,12 +94,17 @@ export const tasksSlice: Slice = createSlice({
         },
         resetTasks: (state, action) => {
             state.tasks = []
-            state.loaded = false
+            state.filtered = []
+            state.loaded = true
         }
     },
     extraReducers: (builder) => {
+        builder.addCase(deleteTaskById.pending, (state, action) => {
+            state.loaded = false
+        })
         builder.addCase(deleteTaskById.fulfilled, (state, action) => {
             state.tasks = [...state.tasks.filter((task: taskData) => task.id !== action.payload)]
+            state.loaded = true
         })
         builder.addCase(getTasks.fulfilled, (state: any, action: any) => {
             state.tasks = [...action.payload]
@@ -103,6 +119,10 @@ export const tasksSlice: Slice = createSlice({
         })
         builder.addCase(editTaskById.fulfilled, (state: any, action: any) => {
             state.tasks = [...state.tasks.filter((x: taskData) => x.id !== action.payload.id), action.payload]
+            state.loaded = true
+        })
+        builder.addCase(editTaskById.pending, (state, action) => {
+            state.loaded = false
         })
     }
 })
