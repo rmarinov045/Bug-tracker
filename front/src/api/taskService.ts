@@ -12,9 +12,9 @@ export const createTask = async (taskData: taskData) => {
 
     try {
         const response = await axios.post(postTaskURL + `?auth=${userToken}`, data)
-        
+
         if (response.status !== 200) {
-            throw new Error()
+            throw new Error('Failed to create task')
         }
 
         return true
@@ -44,9 +44,9 @@ export async function deleteTask(id: string) {
     const currentTask = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?orderBy="id"&equalTo="${id}"&auth=${userToken}"`)
     const currentTaskID = Object.keys(currentTask.data)[0]
 
-    const response = axios.delete(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${currentTaskID}.json?auth=${userToken}`)
+    const response = await axios.delete(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/tasks/${currentTaskID}.json?auth=${userToken}`)
 
-    if ((await response).status === 200) {
+    if (response.status === 200) {
         return { status: 'ok', message: 'Task Deleted' }
     } else {
         return { status: 'failed', message: 'Failed to delete task, please try again later' }
@@ -65,10 +65,10 @@ export const completeTask = async (taskData: taskData) => {
         const response = await axios.post(completeTaskURL + `?auth=${userToken}`, data)
 
         if (response.status !== 200) {
-            throw new Error()
+            throw new Error('Failed to move task to completed')
         }
 
-        return true
+        return { status: 'ok', message: 'Task Completed' }
     } catch (err: any) {
         return err.message
     }
@@ -79,13 +79,17 @@ export const completeTask = async (taskData: taskData) => {
 export const getAllCompletedTasksByIdAndProject = async (userId: string, projectId: string) => {
     const userToken = await getAuthToken()
 
-    const response = await axios.get(completeTaskURL + `?orderBy="completedBy"&equalTo="${userId}"&auth=${userToken}`)
+    try {
+        const response = await axios.get(completeTaskURL + `?orderBy="completedBy"&equalTo="${userId}"&auth=${userToken}`)
+            if (response.status !== 200) {
+                throw new Error('Could not fetch tasks.')
+            }
 
-    if (response.status !== 200) {
-        throw new Error('Could not fetch tasks.')
+        return Object.values(response.data).filter((x: any) => x.project === projectId)
+        
+    } catch (err: any) {
+        return err.message
     }
-
-    return Object.values(response.data).filter((x: any) => x.project === projectId)
 }
 
 // edit task in DB

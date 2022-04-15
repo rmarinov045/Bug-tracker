@@ -75,12 +75,14 @@ function Task(props: { task: taskData, setError: Function, setModalColor: Functi
       setTimeout(() => {
         error('')
       }, 4000)
+      return null
     }
 
     const res = dispatch(deleteTaskById(id))
 
     if (typeof res === 'string') {
       error(res)
+      return null
     }
 
     error('Issue resolved successfully!')
@@ -114,8 +116,6 @@ function Task(props: { task: taskData, setError: Function, setModalColor: Functi
     }
 
   }, [taskType, taskPriority, authorId, getImages])
-
-  // fix styling for large screens
 
   return (
 

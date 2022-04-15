@@ -9,9 +9,14 @@ const singleProjectDbUrl = (id :string) => `https://bug-tracker-9edf3-default-rt
 export const getCurrentProjectDbId = async (id: string) => {
     try {
         const response = await axios.get(projectDBUrl + `?auth=${await getAuthToken()}&orderBy="id"&equalTo="${id}"`)
+
+        if (response.status !== 200) {
+            throw new Error(response.data.message)
+        }
+
         return Object.keys(response.data)[0] as string
     } catch (err :any) {
-        return null
+        return err.message
     }
 }
 
@@ -19,8 +24,12 @@ export const createProjectInDb = async (name :string) => {
     const id = generateTaskId()
 
     try {
-        await axios.post(projectDBUrl + `?auth=${await getAuthToken()}`, JSON.stringify( { name, id } ))
+        const response = await axios.post(projectDBUrl + `?auth=${await getAuthToken()}`, JSON.stringify( { name, id } ))
         
+        if (response.status !== 200) {
+            throw new Error(response.data.message)
+        }
+
         return { name, id }
     } catch (err :any) {
         return err.message
@@ -31,7 +40,12 @@ export const getProjectsFromDb = async () => {
     try {
         const response = await axios.get(projectDBUrl + `?auth=${await getAuthToken()}`)
         
+        if (response.status !== 200) {
+            throw new Error(response.data.message)
+        }
+
         return response.data
+
     } catch (err :any) {
         return err.message
     }
@@ -44,6 +58,10 @@ export const deleteProject = async (id :string) => {
         try {
             const response = await axios.delete(`${singleProjectDbUrl(currentProjectDbId)}?auth=${await getAuthToken()}&`)
             
+            if (response.status !== 200) {
+                throw new Error(response.data.message)
+            }
+
             return response
         } catch (err :any) {
             return err.message

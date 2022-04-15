@@ -10,7 +10,14 @@ export async function postUser(user: UserData) {
     const userToken = await getAuthToken()
 
     try {
-        await axios.post(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${userToken}`, JSON.stringify(user))
+        const response = await axios.post(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?auth=${userToken}`, JSON.stringify(user))
+
+        if (response.status !== 200) {
+            throw new Error(response.data.message)
+        }
+
+        return true
+
     } catch (err) {
         return false
     }
@@ -24,6 +31,10 @@ export async function getUser(email: string) {
     try {
         const response = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?orderBy="email"&equalTo="${email}"&auth=${userToken}`)
 
+        if (response.status !== 200) {
+            throw new Error(response.data.message)
+        }
+
         return Object.values(response.data)
     } catch (err) {
         return false
@@ -36,9 +47,13 @@ export async function getUserDBId(email: string) {
     const userToken = await getAuthToken()
 
     try {
-        const currentUser = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?orderBy="email"&equalTo="${email}"&auth=${userToken}`)
+        const response = await axios.get(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users.json?orderBy="email"&equalTo="${email}"&auth=${userToken}`)
 
-        const id = Object.keys(currentUser.data)[0]
+        if (response.status !== 200) {
+            throw new Error()
+        }
+
+        const id = Object.keys(response.data)[0]
 
         return id
     } catch (err) {
@@ -55,6 +70,10 @@ export async function updateUser(userData: UserData) {
         const id = await getUserDBId(userData.email)
 
         const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}`, JSON.stringify(userData))
+
+        if (response.status !== 200) {
+            throw new Error(response.data.message)
+        }
 
         return response.data
 
@@ -74,6 +93,10 @@ export async function updateUserImage(URL: string) {
 
         const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}&updateMask.fieldPaths=profileImageUrl`, JSON.stringify({ profileImageUrl: URL || '' }))
 
+        if (response.status !== 200) {
+            throw new Error(response.data.message)
+        }
+
         return response
 
     } catch (err: any) {
@@ -91,6 +114,10 @@ export async function deleteUserImage() {
         const id = await getUserDBId(userEmail || '')
 
         const response = await axios.patch(`https://bug-tracker-9edf3-default-rtdb.europe-west1.firebasedatabase.app/users/${id}.json?auth=${userToken}&updateMask.fieldPaths=profileImageUrl`, JSON.stringify({ profileImageUrl: '' }))
+
+        if (response.status !== 200) {
+            throw new Error(response.data.message)
+        }
 
         return response
     } catch (err: any) {
