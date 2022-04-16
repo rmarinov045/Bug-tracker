@@ -140,7 +140,7 @@ function RegisterForm() {
                         <label htmlFor="confirm-password">Confirm Password:<span className='text-red-400 pl-1'>*</span></label>
                         <input onChange={(e) => setConfirmPass(e.target.value)} type="password" name="confirm-password" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
-                        <button type='submit' className='bg-green-500 mt-4 w-1/2 rounded-xl m-auto p-2 text-white font-bold filter hover:brightness-90 transition ease-in-out 150'>
+                        <button disabled={isLoading ? true : false} type='submit' className='bg-green-500 mt-4 w-1/2 rounded-xl m-auto p-2 text-white font-bold filter hover:brightness-90 transition ease-in-out 150'>
                             {isLoading ? <svg version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg" className='h-6 w-6 m-auto'
                                 viewBox="0 0 100 100" enableBackground="new 0 0 0 0">
                                 <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">
