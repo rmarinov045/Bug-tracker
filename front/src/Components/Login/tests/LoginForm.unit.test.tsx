@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { store } from '../../../store'
 import * as redux from 'react-redux'
-// import { wait } from "@testing-library/user-event/dist/utils";
 
 const Wrapper = ({ children }: any) => {
     return <Provider store={store}>

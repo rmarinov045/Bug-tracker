@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit'
 import { deleteUserImage, getUser, updateUser, deleteImage, downloadImage } from '../api/userService'
 import { UserData } from '../types'
 
-
-
 export const getUserByEmail = createAsyncThunk(
     'users/getUserById',
     async (email: string, thunkAPI) => {

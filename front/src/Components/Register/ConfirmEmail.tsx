@@ -6,7 +6,7 @@ import useTitle from '../../hooks/useTitle'
 function ConfirmEmail() {
 
     const [emailSent, setEmailSent] = useState(false)
-
+    // add error handling here
     useEffect(() => {
         if (!emailSent) {
             sendVerificationEmail()
