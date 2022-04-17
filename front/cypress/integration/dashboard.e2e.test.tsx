@@ -31,6 +31,11 @@ describe('Dashboard tests', () => {
         cy.get('aside > div').first().click()
         cy.get('div').should('contain.text', 'Create')
     })
+    it('closes the add task modal when clicking the X button', () => {
+        cy.get('aside > div').first().click()
+        cy.get('#close-add-task').click()
+        cy.get('div').should('not.contain.text', 'Create')
+    })
     it('should show filters when clicking on the filter button', () => {
         cy.get('aside > div').first().next().click()
         cy.get('div').should('contain.text', 'Priority')
@@ -95,6 +100,62 @@ describe('Dashboard tests', () => {
 
         cy.get('div').should('contain.text', 'Current project:')
     })
+    it('Adds a task via the add task menu', () => {
+        cy.wait(1000)
+        cy.get('aside > div').first().click()
+        cy.get('form > input').type('Cypress')
+        cy.get('#arrow-priority').click()
+        cy.get('#drop-down-priority').first().first().click()
+        cy.get('#arrow-type').click()
+        cy.get('#drop-down-type').first().first().click()
+        cy.get('textarea').type('Cypress')
+        cy.get('button').click()
+
+        cy.wait(1000)
+
+        cy.get('div').should('contain.text', 'Cypress')
+    })
+    it('Shows error if one of the fields is missing', () => {
+        cy.wait(1000)
+
+        cy.get('aside > div').first().click()
+
+        cy.get('#arrow-priority').click()
+        cy.get('#drop-down-priority').first().first().click()
+        cy.get('#arrow-type').click()
+        cy.get('#drop-down-type').first().first().click()
+        cy.get('textarea').type('Cypress')
+        cy.get('button').click()
+
+        cy.wait(1000)
+
+        cy.get('div').should('contain.text', 'Please')
+    })
+    it('Deletes a task when clicking the menu', () => {
+        cy.wait(1000)
+
+        cy.get('#task-menu').click()
+        cy.get('#task-delete').click()
+        cy.get('div').should('not.contain.text', 'Cypress')
+    })
+    it('Shows edit task menu with correct data when clicking the edit button', () => {
+        cy.wait(1000)
+
+        cy.get('#task-menu').click()
+        cy.get('#task-edit').click()
+        cy.get('div').should('contain.text', 'Edit')
+    })
+    it.only('Completed task when clicking completed', () => {
+        cy.wait(1000)
+
+        cy.get('#task-menu').click()
+        cy.get('#complete-task').click()
+
+        cy.wait(1000)
+
+        cy.get('#navbar > div > a').eq(2).click()
+
+        cy.get('div').should('contain.text', 'Pesho')
+    })
 })
 
-// to do - test add/remove/edit task functionalities

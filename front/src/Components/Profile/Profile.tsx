@@ -27,15 +27,15 @@ function Profile() {
     return (
         <>
             <Modal message={modalMessage} bgColor={modalColor} />
-            <div className='flex h-screen w-full overflow-x-hidden dark:bg-dark-background'>
+            <main className='flex h-screen w-full overflow-x-hidden dark:bg-dark-background'>
                 <Navbar />
-                <main id='profile-container' className='w-full p-4 overflow-y-scroll'>
+                <section id='profile-container' className='w-full p-4 overflow-y-scroll'>
                     <div className='flex flex-col items-center gap-10'>
                         <ProfileCard updateModal={updateModal} user={user} />
                         <ProfileFull updateModal={updateModal} user={user} />
                     </div>
-                </main>
-            </div>
+                </section>
+            </main>
         </>
     )
 }

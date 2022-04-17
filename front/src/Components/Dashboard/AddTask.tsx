@@ -64,7 +64,7 @@ function AddTask(props: { visible: Function, updateModalMessage: Function, updat
             <div className='w-full bg-white font-bold m-auto rounded-xl shadow-2xl min-h-fit p-2 border-2 border-green-500 dark:bg-dark-primary dark:border-dark-secondary'>
                 <div className='flex items-center'>
                     <h1 className='text-3xl text-center font-bold m-auto'>Create a new issue..</h1>
-                    <div onClick={() => visible(false)} className='cursor-pointer'><svg xmlns="http://www.w3.org/2000/svg" className="transform transition ease-in-out 150 hover:brightness-75 h-10 w-10 text-red-500 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <div id='close-add-task' onClick={() => visible(false)} className='cursor-pointer'><svg xmlns="http://www.w3.org/2000/svg" className="transform transition ease-in-out 150 hover:brightness-75 h-10 w-10 text-red-500 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg></div>
                 </div>
