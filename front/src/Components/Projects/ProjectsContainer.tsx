@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import CreateProject from './CreateProject'
 import ProjectCard from './ProjectCard'
 import { Project } from '../../types'
-import Modal from '../Utils/Modal'
+import Modal from '../utils/Modal'
 import { useAppDispatch } from '../../store'
 import { openProject } from '../../features/userReducer'
 import { useNavigate } from 'react-router-dom'
 import { RootStateOrAny, useSelector } from 'react-redux'
-import SmallSpinner from '../Utils/SmallSpinner'
+import SmallSpinner from '../utils/SmallSpinner'
 
 function ProjectsContainer({ projects = [], loaded }: { projects: Project[], loaded: boolean }) {
 

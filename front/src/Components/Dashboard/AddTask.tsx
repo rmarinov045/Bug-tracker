@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useState } from 'react'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 
-import ErrorField from '../Utils/Error'
+import ErrorField from '../utils/Error'
 import { createTask } from '../../api/taskService'
 import { generateTaskId } from '../../utils/util'
 import { addTask } from '../../features/tasksReducer'

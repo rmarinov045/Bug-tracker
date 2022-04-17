@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { persistor, store } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
-import Spinner from './components/Utils/Spinner';
+import Spinner from './components/utils/Spinner';
 
 ReactDOM.render(
   <React.StrictMode>

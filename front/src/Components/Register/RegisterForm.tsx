@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { postUser } from '../../api/userService'
 
-import ErrorField from '../Utils/Error'
+import ErrorField from '../utils/Error'
 
 import { registerUser } from '../../auth/auth'
 import { UserData } from '../../types'

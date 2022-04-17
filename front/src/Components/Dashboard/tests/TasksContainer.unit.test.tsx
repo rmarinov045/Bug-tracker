@@ -1,16 +1,16 @@
 import React from "react";
 import { render, screen, cleanup } from '@testing-library/react'
-import TaskContainer from './TaskContainer'
+import TaskContainer from '../TaskContainer'
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { store } from '../../store'
+import { store } from '../../../store'
 
 const tasks = [
     { taskName: 'ABCD', authorId: '2', id: '3', project: 'default', taskAuthor: 'testAuthor2', taskDescription: 'testDesc2', taskPriority: 'Low', taskType: 'Minor Bug', completedOn: '4' },
     { taskName: 'XYZ', authorId: '2', id: '3', project: 'default', taskAuthor: 'testAuthor2', taskDescription: 'testDesc2', taskPriority: 'Low', taskType: 'Minor Bug', completedOn: '4' }
 ]
 
-jest.mock('../../firebase', () => {
+jest.mock('../../../firebase', () => {
     return {
         auth: jest.fn().mockReturnThis(),
         onAuthStateChanged: jest.fn(),

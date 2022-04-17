@@ -5,7 +5,7 @@ import useTitle from '../../hooks/useTitle'
 import { UserData } from '../../types'
 
 import Navbar from '../Navbar'
-import Modal from '../Utils/Modal'
+import Modal from '../utils/Modal'
 import ProfileCard from './ProfileCard'
 import ProfileFull from './ProfileFull'
 

@@ -1,7 +1,7 @@
 import React, { ReactChild, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebase'
-import Spinner from './Utils/Spinner'
+import Spinner from './utils/Spinner'
 
 function PublicRoute({ component }: { component: ReactChild }) {
 

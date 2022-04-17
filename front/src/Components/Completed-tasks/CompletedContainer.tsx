@@ -6,12 +6,12 @@ import { getCompletedTasksByUserIdAndProject, searchCompletedTasks } from '../..
 
 import CompletedTask from './CompletedTask'
 
-import Chart from '../Charts/Scatter'
-import ChartByType from '../Charts/Pie'
-import TaskLoader from '../Utils/TaskLoader'
-import SmallSpinner from '../Utils/SmallSpinner'
-import SearchField from '../Utils/SearchField'
-import RefreshButton from '../Utils/RefreshButton'
+import Chart from '../charts/Scatter'
+import ChartByType from '../charts/Pie'
+import TaskLoader from '../utils/TaskLoader'
+import SmallSpinner from '../utils/SmallSpinner'
+import SearchField from '../utils/SearchField'
+import RefreshButton from '../utils/RefreshButton'
 
 function CompletedContainer({ project }: { project: { name: string, id: string } }) {
   const currentUser: UserData = useSelector((state: RootStateOrAny) => state.user.value)

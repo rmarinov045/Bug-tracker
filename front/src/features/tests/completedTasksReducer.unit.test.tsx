@@ -1,6 +1,6 @@
-import * as reducer from './completedTasksReducer'
+import * as reducer from '../completedTasksReducer'
 
-jest.mock('../api/taskService', () => {
+jest.mock('../../api/taskService', () => {
     return {
         getAllCompletedTasksByIdAndProject: () => Promise.resolve(mockPayload)
     }

@@ -1,8 +1,8 @@
-import * as reducer from './projectReducer'
+import * as reducer from '../projectReducer'
 
 const mockProject = { name: 'test', id: '1' }
 
-jest.mock('../api/projectService', () => {
+jest.mock('../../api/projectService', () => {
     return {
         createProjectInDb: { name: 'test', id: '1' },
         deleteProject: true,

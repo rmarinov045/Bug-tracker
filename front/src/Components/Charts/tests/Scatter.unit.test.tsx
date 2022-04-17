@@ -3,7 +3,7 @@
 
 import { cleanup, render } from "@testing-library/react";
 import React from "react";
-import Chart from './Scatter'
+import Chart from '../Scatter'
 
 const tasks = [{ taskName: 'testName', taskType: 'major bug', taskPriority: 'urgent', taskAuthor: 'pesho', taskDescription: 'test', id: '123', authorId: 'testPesho', project: 'testingProject' }]
 

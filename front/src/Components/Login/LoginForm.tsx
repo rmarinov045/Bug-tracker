@@ -7,7 +7,7 @@ import { authenticate, getUserByEmail } from '../../features/userReducer'
 import logo from '../../assets/logo-new.jpg'
 
 import { login } from '../../auth/auth'
-import ErrorField from '../Utils/Error'
+import ErrorField from '../utils/Error'
 import useTitle from '../../hooks/useTitle'
 
 function LoginForm() {

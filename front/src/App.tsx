@@ -4,14 +4,14 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PrivateRoute from './components/PrivateRoute';
 
-import LoginForm from './components/Login/LoginForm'
-import RegisterForm from './components/Register/RegisterForm'
-import ConfirmEmail from './components/Register/ConfirmEmail'
-import HomeMain from './components/Dashboard/HomeMain'
-import Completed from './components/Completed-tasks/Completed';
-import Profile from './components/Profile/Profile';
+import LoginForm from './components/login/LoginForm'
+import RegisterForm from './components/register/RegisterForm'
+import ConfirmEmail from './components/register/ConfirmEmail'
+import HomeMain from './components/dashboard/HomeMain'
+import Completed from './components/completed-tasks/Completed';
+import Profile from './components/profile/Profile';
 import PublicRoute from './components/PublicRoute';
-import Projects from './components/Projects/Projects';
+import Projects from './components/projects/Projects';
 import { RootStateOrAny, useSelector } from 'react-redux';
 
 function App() {

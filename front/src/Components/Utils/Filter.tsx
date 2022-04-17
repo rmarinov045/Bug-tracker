@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { filterTasks } from '../../features/tasksReducer'
-import AddTask from '../Dashboard/AddTask'
+import AddTask from '../dashboard/AddTask'
 
 function Filter(props: { updateModalMessage: Function, updateModalColor: Function }) {
     const [addTaskFieldOpened, setAddTaskFieldOpened] = useState(false)

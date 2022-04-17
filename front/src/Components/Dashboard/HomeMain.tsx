@@ -5,13 +5,13 @@ import TasksContainer from './TaskContainer'
 
 import '../../App.css'
 import { RootStateOrAny, useSelector } from 'react-redux'
-import Filter from '../Utils/Filter'
-import Modal from '../Utils/Modal'
+import Filter from '../utils/Filter'
+import Modal from '../utils/Modal'
 import { getTasks, searchTasks } from '../../features/tasksReducer'
-import SearchField from '../Utils/SearchField'
-import ProjectModal from '../Utils/ProjectModal'
+import SearchField from '../utils/SearchField'
+import ProjectModal from '../utils/ProjectModal'
 import useTitle from '../../hooks/useTitle'
-import RefreshButton from '../Utils/RefreshButton'
+import RefreshButton from '../utils/RefreshButton'
 import { useAppDispatch } from '../../store'
 
 function HomeMain() {

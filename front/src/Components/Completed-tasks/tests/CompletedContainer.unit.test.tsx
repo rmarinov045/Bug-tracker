@@ -1,9 +1,9 @@
 import React from "react";
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
-import CompletedContainer from './CompletedContainer'
+import CompletedContainer from '../CompletedContainer'
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { store } from '../../store'
+import { store } from '../../../store'
 import * as redux from 'react-redux'
 
 afterEach(cleanup)
@@ -29,7 +29,7 @@ const Wrapper = ({ children }: any) => {
     return <Provider store={store}><BrowserRouter>{children}</BrowserRouter></Provider>
 }
 
-jest.mock('../../firebase', () => {
+jest.mock('../../../firebase', () => {
     return {
         auth: jest.fn().mockReturnThis(),
         onAuthStateChanged: jest.fn(),

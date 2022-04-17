@@ -6,7 +6,7 @@ import defaultProfileImage from '../../assets/profile.jpeg'
 import { uploadImage } from '../../api/userService'
 import { RootStateOrAny, useSelector } from 'react-redux'
 import { useAppDispatch } from '../../store'
-import SmallSpinner from '../Utils/SmallSpinner'
+import SmallSpinner from '../utils/SmallSpinner'
 import { updateUserImage } from '../../api/userService'
 
 function ProfileCard(props: { updateModal: Function, user: UserData }) {

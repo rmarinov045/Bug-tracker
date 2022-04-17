@@ -1,7 +1,7 @@
 import axios from 'axios'
-import * as project from './projectService'
+import * as project from '../projectService'
 
-jest.mock('../firebase', () => {
+jest.mock('../../firebase', () => {
     return {
         auth: jest.fn().mockReturnThis(),
         onAuthStateChanged: jest.fn(),

@@ -2,7 +2,7 @@ import React from 'react'
 import { RootStateOrAny, useSelector } from 'react-redux'
 import useTitle from '../../hooks/useTitle'
 import Navbar from '../Navbar'
-import ProjectModal from '../Utils/ProjectModal'
+import ProjectModal from '../utils/ProjectModal'
 import CompletedContainer from './CompletedContainer'
 
 function Completed() {

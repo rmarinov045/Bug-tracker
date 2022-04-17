@@ -1,6 +1,6 @@
-import * as reducer from './userReducer'
+import * as reducer from '../userReducer'
 
-jest.mock('../api/userService', () => {
+jest.mock('../../api/userService', () => {
     return {
         deleteUserImage: true,
         getUser: { firstName: 'test', lastName: 'test2', company: 'testCompany', position: 'testPosition', email: 'testmail', userId: '1', profileImageUrl: 'url' },

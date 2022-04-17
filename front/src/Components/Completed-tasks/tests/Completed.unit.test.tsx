@@ -1,13 +1,13 @@
 import React from "react";
 import { render, screen, cleanup } from '@testing-library/react'
-import Completed from "./Completed";
+import Completed from "../Completed";
 import { Provider } from "react-redux";
-import { store } from "../../store";
+import { store } from "../../../store";
 import { BrowserRouter } from "react-router-dom";
 
 afterEach(cleanup)
 
-jest.mock('../../firebase', () => {
+jest.mock('../../../firebase', () => {
     return {
         auth: jest.fn().mockReturnThis(),
         onAuthStateChanged: jest.fn()

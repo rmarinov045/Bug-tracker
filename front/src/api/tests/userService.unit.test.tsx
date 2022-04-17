@@ -1,7 +1,7 @@
 import axios from 'axios'
-import * as user from './userService'
+import * as user from '../userService'
 
-jest.mock('../firebase', () => {
+jest.mock('../../firebase', () => {
     return {
         auth: jest.fn().mockReturnThis(),
         onAuthStateChanged: jest.fn(),
@@ -78,5 +78,3 @@ describe('Delete user image unit tests', () => {
 })
 
 // tests for firebase must be done via FB emulator
-
-

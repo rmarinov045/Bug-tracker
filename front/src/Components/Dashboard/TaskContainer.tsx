@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Task from './Task'
-import TaskLoader from '../Utils/TaskLoader'
+import TaskLoader from '../utils/TaskLoader'
 
 import '../../App.css'
 import { taskData } from '../../types'

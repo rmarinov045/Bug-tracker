@@ -1,14 +1,14 @@
 /* eslint-disable testing-library/no-node-access */
 import React from "react";
 import { render, screen, cleanup, fireEvent } from '@testing-library/react'
-import AddTask from './AddTask'
+import AddTask from '../AddTask'
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { store } from '../../store'
+import { store } from '../../../store'
 import * as redux from 'react-redux'
 import { wait } from "@testing-library/user-event/dist/utils";
 
-jest.mock('../../firebase', () => {
+jest.mock('../../../firebase', () => {
     return {
         auth: jest.fn().mockReturnThis(),
         onAuthStateChanged: jest.fn(),
@@ -16,13 +16,13 @@ jest.mock('../../firebase', () => {
     }
 })
 
-jest.mock('../../features/tasksReducer', () => {
+jest.mock('../../../features/tasksReducer', () => {
     return {
         addTask: (data :any) => jest.fn().mockReturnValue(true)
     }
 })
 
-jest.mock('../../api/taskService', () => {
+jest.mock('../../../api/taskService', () => {
     return {
         createTask: (data :any) => jest.fn().mockReturnValue(true)
     }

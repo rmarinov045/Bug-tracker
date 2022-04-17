@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { downloadUserImageById } from '../../api/userService'
 import { convertToDate } from '../../utils/util'
-import { typeColors, priorityColors } from '../Dashboard/Task'
+import { typeColors, priorityColors } from '../dashboard/Task'
 
 import defaultProfileImage from '../../assets/profile.jpeg'
 import { taskData } from '../../types'

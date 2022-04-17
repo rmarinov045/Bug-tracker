@@ -1,6 +1,6 @@
-import * as reducer from './tasksReducer'
+import * as reducer from '../tasksReducer'
 
-jest.mock('../api/taskService', () => {
+jest.mock('../../api/taskService', () => {
     return {
         deleteTask: false,
         editTask: false,

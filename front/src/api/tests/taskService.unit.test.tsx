@@ -1,9 +1,9 @@
 import axios from 'axios'
-import * as taskService from './taskService'
+import * as taskService from '../taskService'
 
 const task = { taskName: 'testName', authorId: '1', id: '2', project: 'default', taskAuthor: 'testAuthor', taskDescription: 'testDesc', taskPriority: 'High', taskType: 'Major Bug', completedOn: '3' }
 
-jest.mock('../firebase', () => {
+jest.mock('../../firebase', () => {
     return {
         auth: jest.fn().mockReturnThis(),
         onAuthStateChanged: jest.fn(),

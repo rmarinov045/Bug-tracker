@@ -2,7 +2,7 @@ import React, { SyntheticEvent, useReducer, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { taskData } from '../../types'
 import { editTaskById } from '../../features/tasksReducer'
-import Modal from '../Utils/Modal'
+import Modal from '../utils/Modal'
 import { taskTypes, taskPriorities } from './AddTask'
 
 function reducer(state: any, action: any) {
