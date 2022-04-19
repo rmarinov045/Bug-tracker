@@ -12,6 +12,8 @@ import Completed from './components/completed-tasks/Completed';
 import Profile from './components/profile/Profile';
 import PublicRoute from './components/PublicRoute';
 import Projects from './components/projects/Projects';
+import PasswordReset from './components/login/PasswordReset';
+
 import { RootStateOrAny, useSelector } from 'react-redux';
 
 function App() {
@@ -34,6 +36,7 @@ function App() {
             <Route path='/admin' element={<PrivateRoute component={<HomeMain />}></PrivateRoute>} />
             <Route path='/completed' element={<PrivateRoute component={<Completed />}></PrivateRoute>} />
             <Route path='/profile' element={<PrivateRoute component={<Profile />}></PrivateRoute>} />
+            <Route path='/reset-password' element={<PublicRoute component={<PasswordReset />}></PublicRoute>} />
           </Routes>
         </BrowserRouter>
   );

@@ -10,8 +10,6 @@ import { registerUser } from '../../auth/auth'
 import { UserData } from '../../types'
 import useTitle from '../../hooks/useTitle'
 
-
-
 const initialState: UserData = {
     firstName: '',
     lastName: '',
@@ -55,7 +53,7 @@ function RegisterForm() {
         dispatch({ type: name, payload: value })
     }
 
-    async function handleSubmit(e: SyntheticEvent): Promise<void> {     // check type here
+    async function handleSubmit(e: SyntheticEvent): Promise<void> {     
         e.preventDefault()
         setError('')
         setIsLoading(true)
@@ -77,7 +75,7 @@ function RegisterForm() {
 
         try {
             const response = await registerUser(state.email, state.password)
-
+            
             let userId = ''
 
             if ('uid' in response) {
@@ -87,7 +85,7 @@ function RegisterForm() {
             const user = { ...state, userId, profileImageUrl: userId }
 
             const dbRes = await postUser(user)
-
+            
             if (!dbRes) {
                 setError('Failed to register. Please try again.')
             }
@@ -99,8 +97,11 @@ function RegisterForm() {
             return
         } catch (err: any) {
             setIsLoading(false)
-            if (err.message.includes('email-already-in-use'))
+            if (err.message.includes('email-already-in-use')) {
                 return setError('Email is already in use!')
+            } else {
+                setError('Failed to register. Please try again later!')
+            }
         }
     }
 
@@ -118,7 +119,7 @@ function RegisterForm() {
                 {error ? <ErrorField errorMessage={error || ''} /> : <></>}
 
                 <div className='mt-4'>
-                    <form action="" className='flex flex-col gap-4' onSubmit={(e) => handleSubmit(e)}>
+                    <form data-testid='form' className='flex flex-col gap-4' onSubmit={(e) => handleSubmit(e)}>
                         <label htmlFor="firstName">First Name:<span className='text-red-400 pl-1'>*</span></label>
                         <input onChange={(e) => handleChange(e)} value={state.firstName} type="text" name="firstName" className='pl-2 p-1 pr-2 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
@@ -132,13 +133,13 @@ function RegisterForm() {
                         <input onChange={(e) => handleChange(e)} value={state.position} type="text" name="position" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
                         <label htmlFor="email">Email:<span className='text-red-400 pl-1'>*</span></label>
-                        <input onChange={(e) => handleChange(e)} value={state.email} type="email" name="email" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
+                        <input data-testid='email' onChange={(e) => handleChange(e)} value={state.email} type="email" name="email" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
                         <label htmlFor="password">Password:<span className='text-red-400 pl-1'>*</span></label>
-                        <input onChange={(e) => handleChange(e)} value={state.password} type="password" name="password" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
+                        <input data-testid='pass' onChange={(e) => handleChange(e)} value={state.password} type="password" name="password" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
                         <label htmlFor="confirm-password">Confirm Password:<span className='text-red-400 pl-1'>*</span></label>
-                        <input onChange={(e) => setConfirmPass(e.target.value)} type="password" name="confirm-password" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
+                        <input data-testid='conf-pass' onChange={(e) => setConfirmPass(e.target.value)} type="password" name="confirm-password" className='pl-2 p-1 border-2 rounded-xl focus:outline-none focus:border-green-500 transform transition ease-in-out 150' />
 
                         <button disabled={isLoading ? true : false} type='submit' className='bg-green-500 mt-4 w-1/2 rounded-xl m-auto p-2 text-white font-bold filter hover:brightness-90 transition ease-in-out 150'>
                             {isLoading ? <svg version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg" className='h-6 w-6 m-auto'

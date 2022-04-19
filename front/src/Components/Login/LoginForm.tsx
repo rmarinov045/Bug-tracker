@@ -85,6 +85,7 @@ function LoginForm() {
                         <input onChange={(e) => setEmail(e.target.value)} className="pl-2 pr-2 p-1 w-full border-b-2 bg-transparent border-black transform transition ease-in-out 150 focus:outline-none focus:border-green-500" name="email" type="email" placeholder="lorem@ipsum.com" />
                         <label className="pl-2 font-bold text-xl" htmlFor="password">Password:</label>
                         <input onChange={(e) => setPassword(e.target.value)} className="pl-2 pr-2 p-1 w-full bg-transparent border-b-2 border-black transform transition ease-in-out 150 focus:outline-none focus:border-green-500" name="password" type="password" placeholder="**********" />
+                        <Link to='reset-password' className='text-xs cursor-pointer border-b-2 border-transparent hover:border-green-500 transform transition ease-in-out 150'>Forgot password?</Link>
                     </form>
                     <div className="flex flex-col gap-8 w-full justify-center items-center mt-10">
                         <button disabled={isLoading ? true : false} onClick={() => handleLogin(email, password)} className="bg-green-500 pl-2 pr-2 pt-2 pb-2 w-1/2 text-white font-bold rounded-xl transform transition ease-in-out 150 filter hover:brightness-90" type="submit">
