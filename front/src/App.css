@@ -1,0 +1,97 @@
+body {
+  background-image: url('./assets/blob.svg');
+  background-repeat: no-repeat;
+  background-size: 50rem 50rem;
+  background-position: right -20rem bottom -30rem;
+}
+
+.errorTransition {
+  animation-name: drop-in;
+  animation-duration: 0.5s;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: red;
+  height: 3rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  /* @apply absolute top-0 bg-red-500 h-10 w-full font-bold flex items-center justify-center text-white */
+}
+
+.errorTransition-exit {
+  animation-name: drop-in;
+  animation-duration: 0.5s;
+  animation-direction: reverse;
+}
+
+@keyframes drop-in {
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+
+  100% {
+    opacity: 1;
+    height: 3rem;
+    /* transition: height 100ms; */
+  }
+}
+
+#navbar {
+  min-width: 4rem;
+}
+
+#completed-task-container::-webkit-scrollbar,
+#task-container::-webkit-scrollbar,
+#scheduled-tasks-container::-webkit-scrollbar,
+#charts-container::-webkit-scrollbar,
+#profile-container::-webkit-scrollbar, #completed-container::-webkit-scrollbar {
+  background-color: transparent;
+  width: 3px;
+}
+
+/* @media (prefers-color-scheme: light) { */
+
+#completed-task-container::-webkit-scrollbar-thumb,
+#task-container::-webkit-scrollbar-thumb,
+#scheduled-tasks-container::-webkit-scrollbar-thumb,
+#charts-container::-webkit-scrollbar-thumb,
+#profile-container::-webkit-scrollbar-thumb, #completed-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #282c34;
+}
+
+/* } */
+
+.dark #completed-task-container::-webkit-scrollbar-thumb,
+#task-container::-webkit-scrollbar-thumb,
+#scheduled-tasks-container::-webkit-scrollbar-thumb,
+#charts-container::-webkit-scrollbar-thumb,
+#profile-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #1e40af;
+}
+
+.dark #completed-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: whitesmoke;
+}
+
+
+
+/* @media (prefers-color-scheme: light) { */
+.active {
+  background-color: #16a34a;
+  color: whitesmoke;
+}
+
+/* } */
+
+.dark .active {
+  background-color: #4338ca;
+  color: whitesmoke;
+}
