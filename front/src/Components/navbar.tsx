@@ -15,11 +15,11 @@ function Navbar() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
-    const [error, setError] = useState('')
+    const [error, setError] = useState('')    
 
-    async function handleLogout(): Promise<any> {
-        try {
-            await signOut(auth)
+    async function handleLogout(): Promise<any> {        
+        try {            
+            await signOut(auth)                                   
             dispatch(authenticate(false))
             dispatch(reset(null))
             await persistor.purge()
@@ -68,7 +68,7 @@ function Navbar() {
                     </svg>
                 </NavLink>
 
-                <div onClick={() => handleDarkModeChange()} className='cursor-pointer min-h-[3rem] flex items-center transform transition ease-in-out 150 hover:fill-white hover:text-white w-full dark:hover:fill-white'>
+                <div data-testid='mode' onClick={() => handleDarkModeChange()} className='cursor-pointer min-h-[3rem] flex items-center transform transition ease-in-out 150 hover:fill-white hover:text-white w-full dark:hover:fill-white'>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 m-auto" fill="" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
@@ -80,7 +80,7 @@ function Navbar() {
 
             <div className='flex flex-col mt-auto pb-4 cursor-pointer transform transition ease-in-out 150 hover:text-white w-full items-center justify-center gap-7 dark:hover:text-green-500'>
                 {error ? <p className='bg-red-500 absolute left-12 rounded-xl pl-2 pr-2 p-1 text-white font-bold text-center w-full'>{error}</p> : ''}
-                <svg onClick={handleLogout} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg data-testid='logout' onClick={handleLogout} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
             </div>
