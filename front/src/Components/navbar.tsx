@@ -35,10 +35,10 @@ function Navbar() {
     }
 
     return (
-        <nav id='navbar' className='flex-col h-full pt-2 pb-2 bg-green-500 items-center flex z-0 filter dark:bg-indigo-900'>
+        <nav id='navbar' className='flex-col min-w-[3rem] lg:min-w-[4rem] h-full pt-2 pb-2 bg-green-500 items-center flex z-0 filter dark:bg-indigo-900'>
 
             <div className='w-full flex items-center justify-center pt-4'>
-                <img src={logo} alt="logo" className='h-12 w-12 rounded-full' />
+                <img src={logo} alt="logo" className='lg:h-12 lg:w-12 h-9 w-9 rounded-full' />
             </div>
 
             <div className='flex flex-col gap-2 pt-10 items-center w-full'>

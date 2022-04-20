@@ -41,15 +41,12 @@ body {
   }
 }
 
-#navbar {
-  min-width: 4rem;
-}
-
 #completed-task-container::-webkit-scrollbar,
 #task-container::-webkit-scrollbar,
 #scheduled-tasks-container::-webkit-scrollbar,
 #charts-container::-webkit-scrollbar,
-#profile-container::-webkit-scrollbar, #completed-container::-webkit-scrollbar {
+#profile-container::-webkit-scrollbar, #completed-container::-webkit-scrollbar,
+#analytics-container::-webkit-scrollbar {
   background-color: transparent;
   width: 3px;
 }
@@ -60,7 +57,8 @@ body {
 #task-container::-webkit-scrollbar-thumb,
 #scheduled-tasks-container::-webkit-scrollbar-thumb,
 #charts-container::-webkit-scrollbar-thumb,
-#profile-container::-webkit-scrollbar-thumb, #completed-container::-webkit-scrollbar-thumb {
+#profile-container::-webkit-scrollbar-thumb, #completed-container::-webkit-scrollbar-thumb,
+#analytics-container::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #282c34;
 }
@@ -71,7 +69,8 @@ body {
 #task-container::-webkit-scrollbar-thumb,
 #scheduled-tasks-container::-webkit-scrollbar-thumb,
 #charts-container::-webkit-scrollbar-thumb,
-#profile-container::-webkit-scrollbar-thumb {
+#profile-container::-webkit-scrollbar-thumb,
+#analytics-container::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #1e40af;
 }
