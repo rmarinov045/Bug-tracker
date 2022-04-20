@@ -1,11 +1,11 @@
 # signUM Issue tracker
 
-Educational project built with React, Typescript and Firebase realtime database, storage & auth
+Educational SPA app project built with React, Typescript and Firebase realtime database, storage & auth.
 
 Features:
-- Creation/deletion/update of issues
+- Issues management
 - User management
-- Projects and management
+- Projects management
 - Simple analytics with recharts react charts
 
 Highlights:
@@ -14,6 +14,7 @@ Highlights:
 - User management
 - State management (RTK)
 - Tested with Cypress and Jest
+- Responsive (not very well suited for mobile at the moment)
 
 Live demo @ https://signum045.netlify.app/admin
 
