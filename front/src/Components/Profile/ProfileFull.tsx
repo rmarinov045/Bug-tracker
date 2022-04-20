@@ -81,7 +81,7 @@ function ProfileFull(props: { updateModal: Function, user: UserData }) {
                 {userProfileImage ? <button onClick={(e) => handleImageDelete(e)} className='font-bold text-xs text-red-600 hover:underline transition ease-in-out 150'>Remove profile picture</button> : <></>}
             </div>
             <div className='flex gap-7 items-center justify-center'>
-                <button className='p-2 w-36 transition ease-in-out 150 hover:brightness-90 bg-blue-400 text-white font-bold rounded-md dark:bg-dark-background dark:hover:text-green-500'>{loading ? <svg version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg" className='h-6 w-6 m-auto'
+                <button className='p-2 w-36 text-xs lg:text-base transition ease-in-out 150 hover:brightness-90 bg-blue-400 text-white font-bold rounded-md dark:bg-dark-background dark:hover:text-green-500'>{loading ? <svg version="1.1" id="L5" xmlns="http://www.w3.org/2000/svg" className='h-6 w-6 m-auto'
                     viewBox="0 0 100 100" enableBackground="new 0 0 0 0">
                     <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">
                         <animateTransform
@@ -111,7 +111,7 @@ function ProfileFull(props: { updateModal: Function, user: UserData }) {
                             begin="0.3" />
                     </circle>
                 </svg> : 'Update Profile'}</button>
-                <button onClick={(e) => handlePasswordReset(e)} className='p-2 w-36 transition ease-in-out 150 hover:brightness-90 bg-red-400 text-white font-bold rounded-md dark:hover:text-green-500 dark:bg-dark-background'>Reset Password</button>
+                <button onClick={(e) => handlePasswordReset(e)} className='p-2 w-36 text-xs lg:text-base transition ease-in-out 150 hover:brightness-90 bg-red-400 text-white font-bold rounded-md dark:hover:text-green-500 dark:bg-dark-background'>Reset Password</button>
             </div>
         </form>
     )

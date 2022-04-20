@@ -39,7 +39,7 @@ function ProjectsContainer({ projects = [], loaded }: { projects: Project[], loa
             <section className='w-full xl:w-2/3 xl:m-auto'>
                 <div className='w-full p-2'>
                     <ul className='w-full'>
-                        <div className='w-full min-h-[10rem] grid grid-cols-3 justify-items-center p-1 gap-1'>
+                        <div className='w-full min-h-[10rem] flex flex-col md:grid md:grid-cols-3 justify-items-center p-1 gap-1'>
 
                             <li className='w-full min-h-[10rem] rounded bg-amber-200 flex flex-col items-center justify-center font-bold text-xl text-center overflow-x-hidden dark:bg-dark-secondary'>
                                 <p className='w-full text-ellipsis overflow-x-hidden p-2'>Default</p>

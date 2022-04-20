@@ -46,26 +46,26 @@ function CompletedContainer({ project }: { project: { name: string, id: string }
   }, [currentUser.userId, project.id, fetchTasks])
 
   return (
-    <div className='w-full overflow-x-hidden' id='completed-container'>
+    <div className='w-full overflow-x-hidden overflow-y-scroll gap-10 flex flex-col lg:block' id='completed-container'>
 
-      <div className='flex items-center justify-center p-2 mt-3 border-b-2 w-2/3 m-auto border-slate-500'>
+      <div className='flex items-center justify-center p-2 mt-3 border-b-2 w-2/3 mx-auto border-slate-500'>
 
-        <div className='font-bold flex flex-col items-center justify-center p-2 gap-4'>
-          <p className='text-4xl text-green-500'>Resolved issues:</p>
+        <div className='font-bold flex flex-col items-center justify-center p-2 gap-4 mt-4 lg:mt-0'>
+          <p className='text-2xl lg:text-4xl text-green-500'>Resolved issues:</p>
           <p className='text-xs xl:text-base'>Here you can see more information about resolved issues and analytics</p>
         </div>
 
       </div>
 
-      <div className='flex mt-2 p-2 gap-10 items-start pl-10 flex-row-reverse h-5/6'>
+      <div id='analytics-container' className='flex overflow-y-scroll flex-col-reverse mt-2 p-2 gap-10 items-start pl-10 lg:flex-row-reverse'>
 
 
-        {loaded ? completedTasks.length > 0 ? <aside id='charts-container' className='w-1/2 p-2 bg-white dark:bg-slate-900 border-2 border-slate-100 shadow-sm flex h-full flex-col overflow-y-scroll'>
+        {loaded ? completedTasks.length > 0 ? <aside id='charts-container' className='w-full min-h-[27rem] h-full lg:w-1/2 p-2 bg-white dark:bg-slate-900 border-2 border-slate-100 shadow-sm flex flex-col lg:overflow-y-scroll'>
           {completedTasks.length ? <Chart tasks={completedTasks} /> : <></>}
           {completedTasks.length ? <ChartByType tasks={completedTasks} /> : <></>}
-        </aside> : <></> : <div className='w-1/2 h-full flex items-center'><SmallSpinner /></div>}
+        </aside> : <></> : <div className='w-full lg:w-1/2 h-full flex items-center'><SmallSpinner /></div>}
 
-        <section id='completed-task-container' className='w-1/2 p-2 border-2 border-slate-100 shadow-sm mr-auto min-h-full max-h-full flex items-center flex-col overflow-y-scroll dark:bg-slate-700'>
+        <section id='completed-task-container' className='w-full lg:w-1/2 p-2 border-2 border-slate-100 shadow-sm mr-auto min-h-full max-h-full flex items-center flex-col overflow-y-scroll dark:bg-slate-700'>
 
           <SearchField handleSearch={handleSearch} />
 
